@@ -1,0 +1,68 @@
+#! /usr/bin/env bash
+
+if [ $# -lt 1 ] ; then
+  echo "Usage:   " $0 " <start | stop | restart>"
+  exit 1
+fi
+
+action=$1
+
+if [ "$RAILS_ENV" == "" ]; then
+	RAILS_ENV=development
+fi
+
+if [ "$RAILS_ENV" != "production" ]; then
+	script_dir=`dirname $(readlink -f $0)`
+	deploy_dir=`dirname $(readlink -f $script_dir)`
+	pid_dir=`readlink -f $deploy_dir/tmp/pids`
+	if [ ! -d "$pid_dir" ]; then
+		echo "Creating Unicorn PID dir: $pid_dir"
+		mkdir -p $pid_dir
+	fi
+else
+	script_dir=`dirname $(readlink -f $0)`
+	deploy_dir=`dirname $(readlink -f $script_dir)`
+  shared_dir=`readlink -f $deploy_dir/../../shared`
+  deploy_dir=`readlink -f $deploy_dir/../..`/current
+	pid_dir=$shared_dir/pids
+ 	if [ ! -d $pid_dir ]; then
+		echo "Couldn't find Unicorn PID dir"
+	fi
+fi
+
+NAME=unicorn_rails
+DESC=unicorn_rails
+DAEMON="bundle exec unicorn_rails"
+DAEMON_OPTS="-E $RAILS_ENV -c $deploy_dir/config/unicorn.rb -D"
+PID=$pid_dir/unicorn.pid
+
+if [ "$action" == "restart" ]; then
+  if [ -f "$PID" ]; then
+    kill -s 0 `cat $PID`
+    if [ $? == 1 ]; then #pid not running
+      action=start
+    fi
+  else #pid file doesn't exist
+    action=start
+  fi
+fi
+
+cd $deploy_dir
+case "$action" in
+  start)
+    echo -n "Starting $DESC: "
+    $DAEMON $DAEMON_OPTS
+    echo "$NAME."
+    ;;
+  stop)
+    echo -n "Stopping $DESC: "
+    kill -QUIT `cat $PID`
+    echo "$NAME."
+    ;;
+  restart)
+    echo -n "Restarting $DESC: "
+    kill -s USR2 `cat $PID`
+    echo "$NAME."
+esac
+
+exit 0

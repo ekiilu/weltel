@@ -1,0 +1,15 @@
+= render({:partial => "shared/errors", :object => @message})
+= form_for([@patient, @message], :url=> weltel_patient_messages_path) do |m|
+  %fieldset
+    %legend= t(".legend")
+    %ol
+      %li
+        = label_tag(:body, "Message")
+        = select_tag(:body, options_from_collection_for_select(@message_templates, :name, :body))
+      %li
+      %li
+        = m.label(:body)
+        = m.text_area(:body, {:size => "41x3", :maxlength => 160})
+  %fieldset
+    = link_to(t(".cancel"), weltel_patient_messages_path, :class => "button")
+    = m.submit(t(".commit"), :disable_with => t(".commit_disable"))

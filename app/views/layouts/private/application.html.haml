@@ -1,0 +1,34 @@
+!!!
+%html
+  %head
+    %title WelTel Administration
+    = stylesheet_link_tag    "application"
+    = javascript_include_tag "application"
+    = stylesheet_link_tag    "feedbacker/application"
+    = javascript_include_tag "feedbacker/application"
+
+    = csrf_meta_tags
+  %body
+    #container
+      #header
+        = render(:partial => "shared/header")
+        = render(:partial => "shared/flash", :locals => { :flash => flash })
+
+        #nav
+          = link_to(t(".dashboard_link"), main_app.weltel_dashboard_path, :class => "button")
+          = link_to(t(".patients_link"), main_app.weltel_patients_path, :class => "button")
+          = link_to(t(".message_templates_link"), sms.message_templates_path, :class => "button")
+          -if authenticated_user.has_role("Administrator")
+            = link_to(t(".users_link"), authentication.users_path, :class => "button")
+            = link_to(t(".roles_link"), authorization.roles_path, :class => "button")
+          - unless authenticated_user.nil?
+            = link_to(t(".logout_link"), authentication.session_path(request.session_options[:id]), :method => :delete, :class => "logout")
+
+        #actions
+          = yield(:actions)
+
+      #content
+        = yield
+
+      #footer
+        = render(:partial => "shared/footer")

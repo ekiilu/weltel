@@ -1,0 +1,7 @@
+%table
+  %tr
+    %th Phone Number
+    %th Message
+    %th Status
+    %th Date
+  = render(:collection => @messages, :partial => "row", :as => :message)

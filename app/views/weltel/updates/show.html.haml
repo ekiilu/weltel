@@ -1,0 +1,7 @@
+%h2 Welcome to WelTel Administration
+
+- if @update_needed
+  = link_to('Update WelTel Application', admin_update_path, {:method=> :post, :class => 'button'})
+
+- if !flash[:output].nil?
+  = text_area_tag('', flash[:output], :size => '80x10')

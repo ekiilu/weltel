@@ -1,0 +1,111 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  #
+  time:
+    formats:
+      default: "%B %d, %Y %H:%M:%S"
+  date:
+    formats:
+      default: "%B %d, %Y"
+  layouts:
+    private:
+      application:
+        dashboard_link: "Dashboard"
+        patients_link: "Patients"
+        message_templates_link: "Message Templates"
+        users_link: "Users"
+        roles_link: "Roles"
+        logout_link: "Logout"
+  weltel:
+    patients:
+      created: "Patient Created"
+      updated: "Patient Updated"
+      destroyed: "Patient Destroyed"
+      index:
+        add_link: "Add Patient..."
+        search: "Find Patients"
+        no_patients: "No Patients"
+      form:
+        legend: "Patient"
+        cancel: "Cancel"
+        commit: "Save Patient"
+        commit_disable: "Saving Patient..."
+      edit:
+        messages_link: "Messages..."
+        legend: "Administration"
+        created_at: "Created"
+        updated_at: "Updated"
+        destroy_link: "Delete Patient"
+        destroy_confirm: "Are you sure you want to delete this Patient?"
+        destroy_disable: "Deleting Patient..."
+    patient_messages:
+      index:
+        add_link: "Send Message..."
+        no_messages: "No Messages"
+      form:
+        legend: "Send Message"
+        cancel: "Cancel"
+        commit: "Send Message"
+        commit_disable: "Sending Message..."
+    dashboards:
+      show:
+        search: "Find Patients"
+      item:
+        messages_link: "Messages..."
+        ok: "Okay"
+        not_ok: "Not Okay"
+        unknown: "Unknown"
+    messages:
+      help_reply: "Please contact the administrator at 778-858-0004"
+      start_reply: "You will now receive messages again.  Reply STOP to stop"
+      stop_reply: "You will not receive more messages from this number. Reply START to start"
+      unknown_patient_reply: "Your number is not recognized. Please contact the administrator at 778-858-0004"
+      inactive_patient_reply: "You are no longer registered. Please contact the administrator at 778-858-0004"
+      patient_reminder: "Are you ok?"
+
+
+  ##feedback
+  submit_title: 'Submit feedback'
+  submit_text: 'Help us improve WelTel!'
+
+  ## messages
+  messages_link: 'View Messages...'
+  message_add: 'Send a Message'
+  message_add_link: 'Send a Message...'
+  message_created: 'Message Sent'
+  message_commit: 'Send Message'
+  message_committing: 'Sending Message...'
+  message_ok: "Great. I will text you next week"
+  message_not_ok: "Okay. I will call you soon"
+  message_no_response: "Haven't heard from you... how's it going?"
+  message_no_answer: "Got your text, tried calling, how are things?"
+  message_no_answer_again: "Got your text, tried calling again, how are things?"
+
+  ## patients
+  patients_link: 'Patients'
+  patient_add_link: 'Add a Patient...'
+  patient_commit: 'Save Patient'
+  patient_committing: 'Saving Patient...'
+  patient_created: 'Patient Created'
+  patient_updated: 'Patient Updated'
+  patient_destroy: 'Delete Patient'
+  patient_destroy_confirmation: 'Are you sure you want to delete this Patient?'
+  patient_destroyed: 'Patient Deleted'
+  patient_find: 'Find Patients'
+
+  ## entries
+  entries_nav: 'Entries'
+  entries_link: 'View Entries...'
+
+  ## validation messages
+  name_format: "Name must contain only alphanumeric characters"
+  phone_number_format: 'Phone number must contain only numbers'
+  study_number_format: 'Study Number must be valid'
+
+  helpers:
+    label:
+      weltel_patient:
+        username: 'User Name'
+        study_number: 'Study Number'

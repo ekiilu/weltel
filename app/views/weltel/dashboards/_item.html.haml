@@ -1,0 +1,21 @@
+= content_tag_for(:li, patient, :class => 'dashboard_item') do
+
+  .sidebar
+    = link_to(t(".messages_link"), weltel_patient_messages_path(patient), :class => 'button')
+
+  %h2= "#{patient.username} - #{patient.study_number} - #{patient.subscriber.phone_number}"
+
+  - if patient.state == true
+    %h3= t(".ok")
+  - elsif patient.state == false
+    %h3= t(".not_ok")
+  - else
+    %h3= t(".unknown")
+
+  #last_exchange
+    #outgoing
+      - if !patient.reminder.nil?
+        = patient.reminder.body
+    #incoming
+    - if !patient.response.nil?
+      = patient.response.body

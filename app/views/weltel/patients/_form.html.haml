@@ -1,0 +1,19 @@
+= render({:partial => "shared/errors", :object => @patient})
+= form_for([@patient]) do |p|
+  %fieldset
+    %legend= t(".legend")
+    %ol
+      %li
+        = p.fields_for(:subscriber, @patient.subscriber) do |s|
+          = s.label(:phone_number)
+          = s.telephone_field(:phone_number, {:required => true, :placeholder => "2223334444", :size => 10, :maxlength => 10})
+      %li
+        = p.label(:username)
+        = p.text_field(:username, :required => true)
+      %li
+        = p.label(:study_number)
+        = p.text_field(:study_number, {:size => 16})
+  %fieldset
+    .center
+      = link_to(t(".cancel"), weltel_patients_path, :class => "button")
+      = p.submit(t(".commit"), :disable_with => t(".commit_disable"))

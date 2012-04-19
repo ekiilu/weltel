@@ -1,0 +1,4 @@
+.page_footer
+  = yield :footer
+  = feedbacker_tag(nil, nil, {:name => @user.nil? ? nil : @user.name, :email => @user.nil? ? nil : @user.email_address})
+

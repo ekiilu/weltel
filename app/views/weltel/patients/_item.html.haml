@@ -1,0 +1,2 @@
+= content_tag_for(:li, patient, :class => "item") do
+  %h2= link_to("#{patient.username} - #{patient.study_number} - #{patient.subscriber.phone_number}", edit_weltel_patient_path(patient))

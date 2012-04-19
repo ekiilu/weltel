@@ -1,0 +1,20 @@
+!!!
+%html
+  %head
+    %title WelTel Administration
+    = stylesheet_link_tag    "application"
+    = javascript_include_tag "application"
+    = stylesheet_link_tag    "feedbacker/application"
+    = javascript_include_tag "feedbacker/application"
+    = csrf_meta_tags
+
+  %body
+    #container
+      #header
+        = render(:partial => 'shared/header')
+        = render(:partial => 'shared/flash', :locals => { :flash => flash })
+        #nav
+      #content
+        = yield
+      #footer
+        = render(:partial => 'shared/footer')
