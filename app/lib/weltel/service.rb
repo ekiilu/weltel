@@ -5,20 +5,14 @@ module Weltel
 		def send_reminders
 			patients = Weltel::Patient.active
 
+			body = Sms::MessageTemplate.get_by_name(:reminder).body
+
 			patients.each do |patient|
 				Weltel::Patient.transaction do
-					patient.reminder = Message.create_to_subscriber(patient.subscriber, t(:patient_reminder))
-					patient.response = nil
-					patient.save
-					sender.send(patient.reminder)
+					message = Sms::Message.create_to_subscriber(patient.subscriber, body)
+					sender.send(message)
 				end
 			end
-		end
-
-	private
-		#
-		def t(key)
-			I18n.t(key, :scope => [:weltel, :messages])
 		end
 	end
 end

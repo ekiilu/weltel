@@ -10,8 +10,8 @@ Weltel::Application.routes.draw do
 	# admin
 	namespace(:weltel) do
 		resource(:task, :only => []) do
-			post(:send_reminders)
-			post(:receive_responses)
+			post(:reminders)
+			post(:responses)
 		end
 
 		# admin controller

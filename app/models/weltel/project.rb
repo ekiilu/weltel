@@ -5,7 +5,7 @@ module Weltel
 		# properties
 		property(:id, Serial)
 		property(:name, String, {:required => true, :unique => true, :length => 64})
-		property(:state, Json, :default => '{}')
+		property(:state, Json, {:default => "{}", :lazy => false})
 		property(:active, Boolean, {:required => true, :default => true})
 		property(:created_at, DateTime)
 		property(:updated_at, DateTime)
@@ -22,7 +22,7 @@ module Weltel
 
 		#
 		def self.get_active_by_name(name)
-			active.first(:name => name) || raise('not_found')
+			active.first(:name => name) || raise("not_found")
 		end
 
 		#

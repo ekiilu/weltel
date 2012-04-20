@@ -18,69 +18,54 @@ module Weltel
 		attr_reader(:alerter)
 
 		#
-		def help_reply(message)
-			t(:help_reply)
-		end
-
-		#
-		def start_reply(message)
-			t(:start_reply)
-		end
-
-		#
-		def stop_reply(message)
-			t(:stop_reply)
-		end
-
-		#
 		def reply(message)
-			# find patient
+			# subscriber
 			subscriber = message.subscriber
 
 			# unknown subscriber
 			if subscriber.nil?
-				return t(:unknown_patient_reply)
+				return Sms::MessageTemplate.get_by_name(:unknown).body
 			end
 
 			# inactive subscriber
 			if !subscriber.active?
-				return t(:inactive_patient_reply)
+				return Sms::MessageTemplate.get_by_name(:inactive).body
 			end
 
-			# load patient
-			patient = Weltel::Patient.first_by_subscriber(subscriber)
+			# patient
+			patient = subscriber.patient
 
 			# alert
 			alerter.alert(patient, message)
 
-			if patient.response.nil?
-				# update patient state
-				command = message.body.downcase
-				case
-				when NEGATIVE.include?(command)
-					patient.state = false
-				when POSITIVE.include?(command)
-					patient.state = true
-				else
-					patient.state = nil
-				end
-
-				# save response
-				patient.response = message
+			command = message.body.downcase
+			case
+			when HELP_COMMANDS.include?(command)
+				return Sms::MessageTemplate.get_by_name(:help).body
+			when STOP_COMMANDS.include?(command)
+				return Sms::MessageTemplate.get_by_name(:stop).body
+			when START_COMMANDS.include?(command)
+				return Sms::MessageTemplate.get_by_name(:start).body
+			when NEGATIVE_COMMANDS.include?(command)
+				patient.state = :not_ok
 				patient.save
+				return nil
+			when POSITIVE_COMMANDS.include?(command)
+				patient.state = :ok
+				patient.save
+				return nil
+			else
+				patient.state = :unknown
+				patient.save
+				return nil
 			end
-
-			# no reply
-			nil
 		end
 
 	private
-		POSITIVE = ['yes']
-		NEGATIVE = ['no']
-
-		# translate
-		def t(key)
-			I18n.t(key, :scope => [:weltel, :messages])
-		end
+		HELP_COMMANDS = ["help"]
+		STOP_COMMANDS = ["stop", "cancel", "quit", "unsubscribe"]
+		START_COMMANDS = ["start"]
+		POSITIVE_COMMANDS = ['yes']
+		NEGATIVE_COMMANDS = ['no']
 	end
 end

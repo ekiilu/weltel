@@ -4,7 +4,7 @@ module Weltel
 		respond_to(:html)
 		layout("private/application")
 
-		# list messages for subscriber
+		# list messages for patient
 		def index
 			@page = params[:page]
 			@patient = Weltel::Patient.get!(params[:patient_id])
@@ -13,7 +13,7 @@ module Weltel
 			respond_with(@patient, @messages)
 		end
 
-		# new message form for subscriber
+		# new message form for patient
 		def new
 			@patient = Weltel::Patient.get!(params[:patient_id])
 			@message = @patient.subscriber.messages.new
@@ -22,44 +22,37 @@ module Weltel
 			respond_with(@patient, @message)
 		end
 
-		# create a new message for subscriber
+		# create a new message for patient
 		def create
 			begin
 				@patient = Weltel::Patient.get!(params[:patient_id])
 
-				if params[:message][:body].empty?
-					body = t(params[:message_body])
-				else
-					body = params[:message][:body]
+				body = params[:message][:body]
+				if body.empty?
+					body = Sms::MessageTemplate.get!(params[:message_template_id]).body
 				end
 
-				@message = Message.create_to_subscriber(@patient.subscriber, body)
+				Weltel::Patient.transaction do
+					@message = Sms::Message.create_to_subscriber(@patient.subscriber, body)
+					Weltel::Factory.new.sender.send(@message)
+				end
 
-				Weltel::Factory.new.sender.send(@message)
-
-				flash[:notice] = t(:message_created)
+				flash[:notice] = t(:created)
 
 				respond_with(@message, :location => weltel_patient_messages_path(@patient))
 
 			rescue DataMapper::SaveFailureError => error
 				@message = error.resource
-				@message_templates = Sms::MessageTemplates.user
+				@message_templates = Sms::MessageTemplate.user
 				respond_with(@message) do |format|
 					format.html { render(:new) }
 				end
 			end
 		end
-
 	private
 		#
-		def message_body_options
-			[
-				[t(:message_ok), :message_ok],
-				[t(:message_not_ok), :message_not_ok],
-				[t(:message_no_response), :message_no_response],
-				[t(:message_no_answer), :message_no_answer],
-				[t(:message_no_answer_again), :message_no_answer_again]
-			]
+		def t(key)
+			I18n.t(key, :scope => [:weltel, :patient_messages])
 		end
 	end
 end

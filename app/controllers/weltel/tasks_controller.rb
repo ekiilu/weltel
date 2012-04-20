@@ -1,21 +1,18 @@
 module Weltel
 	class TasksController < ApplicationController
 		#
-		def send_reminders
-			project = Project.get_active_by_name(Mambo.project)
+		def reminders
+			project = Project.get_active_by_name(Settings.project)
 
 			if project.state[LAST_SEND] == Date.today.cweek
 				render(:text => "OK")
 				return
 			end
 
-			# create service
-			service = Weltel::Factory.new.service
+			# send reminders
+			service = Weltel::Factory.new.service.send_reminders
 
-			# send reminder
-			service.send_reminders
-
-			# update state
+			# update project
 			project.state[LAST_SEND] = Date.today.cweek
 			project.save
 
@@ -23,21 +20,26 @@ module Weltel
 		end
 
 		#
-		def receive_responses
-			project = Project.get_active_by_name(Mambo.project)
+		def responses
+			project = Project.get_active_by_name(Settings.project)
+
+			if project.state[RECEIVING] == true
+				render(:text => "OK")
+				return
+			end
 
 			begin
-				last_receive = project.state[LAST_RECEIVE]
-				last_receive = last_receive.nil? ? DateTime.now : DateTime.parse(last_receive)
+				project.state[RECEIVING] = true
+				project.save
 
-				# create service
-				responder = Weltel::Factory.new.responder
-
-				# send reminder
-				responder.receive_responses(last_receive)
+				# receive responses
+				responder = Weltel::Factory.new.responder.receive_responses(
+					DateTime.parse(project.state[LAST_RECEIVE])
+				)
 
 			ensure
-				# update state
+				# update project
+				project.state[RECEIVING] = false
 				project.state[LAST_RECEIVE] = DateTime.now
 				project.save
 			end
@@ -46,7 +48,8 @@ module Weltel
 		end
 
 	private
-		LAST_SEND = 'last_send'
-		LAST_RECEIVE = 'last_receive'
+		LAST_SEND = "last_send"
+		RECEIVING = "receiving"
+		LAST_RECEIVE = "last_receive"
 	end
 end

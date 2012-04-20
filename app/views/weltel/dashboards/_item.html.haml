@@ -13,9 +13,11 @@
     %h3= t(".unknown")
 
   #last_exchange
-    #outgoing
-      - if !patient.reminder.nil?
-        = patient.reminder.body
-    #incoming
-    - if !patient.response.nil?
-      = patient.response.body
+    - last_sent = patient.subscriber.messages.sent.last
+    - if !last_sent.nil?
+      #outgoing
+        = last_sent.body
+      - last_received = last_sent.children.last
+      - if !last_received.nil?
+        #incoming
+          = last_received.body

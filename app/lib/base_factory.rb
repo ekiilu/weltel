@@ -1,2 +1,0 @@
-class BaseFactory
-end
