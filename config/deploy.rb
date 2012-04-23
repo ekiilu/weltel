@@ -40,6 +40,8 @@ task :staging do
 	set :normal_user, "web"
 	set :user, normal_user
 
+	set :ssh_options, {:forward_agent => true}
+
 	after "deploy:setup", "deploy:upload_config"
 	before "deploy:assets:precompile", "deploy:symlink_config"
 	after "deploy:symlink_config", "deploy:migrate"

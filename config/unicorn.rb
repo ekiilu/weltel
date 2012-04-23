@@ -1,10 +1,10 @@
 worker_processes 1
 
-app_name = 'weltel'
-is_production = ENV['RAILS_ENV'] == 'production'
+app_name = "weltel"
+is_production = ENV["RAILS_ENV"] == "production"
 deploy_directory = File.expand_path(is_production ? "/www/#{app_name}/shared" : "#{File.dirname(__FILE__)}/../tmp")
 pid_directory = "#{deploy_directory}/pids"
-socket_directory = "#{deploy_directory}"
+socket_directory = "#{deploy_directory}/sockets"
 log_directory = File.expand_path(is_production ? "/www/#{app_name}/shared/log" : "#{File.dirname(__FILE__)}/../log")
 
 listen "#{socket_directory}/unicorn.sock", :backlog => 64
