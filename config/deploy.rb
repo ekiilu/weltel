@@ -41,7 +41,7 @@ task :staging do
 	set :user, normal_user
 
 	after "deploy:setup", "deploy:upload_config"
-	after "deploy:update_code", "deploy:symlink_config"
+	before "deploy:assets:precompile", "deploy:symlink_config"
 	after "deploy:symlink_config", "deploy:migrate"
 end
 

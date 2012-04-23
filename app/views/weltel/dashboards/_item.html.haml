@@ -1,7 +1,7 @@
-= content_tag_for(:li, patient, :class => 'dashboard_item') do
+= content_tag_for(:li, patient, :class => "item") do
 
   .sidebar
-    = link_to(t(".messages_link"), weltel_patient_messages_path(patient), :class => 'button')
+    = link_to(t(".messages_link"), weltel_patient_messages_path(patient), :class => "button")
 
   %h2= "#{patient.username} - #{patient.study_number} - #{patient.subscriber.phone_number}"
 
