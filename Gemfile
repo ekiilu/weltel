@@ -22,7 +22,6 @@ gem "dm-pager"
 # some fork that updates gemspec to work with dm-core 1.2.0
 gem "dm-accepts_nested_attributes", :git => "https://github.com/waelchatila/dm-accepts_nested_attributes.git"
 
-
 # jquery
 gem "jquery-rails"
 
@@ -51,22 +50,22 @@ gem "thin"
 gem "vertical-feedbacker", "0.0.1"
 gem "exception_notification"
 
-gem "mambo-authentication", :path => "/home/cdion/mambo/gems/authentication"
+#gem "mambo-authentication", :path => "/home/cdion/mambo/gems/authentication"
 #gem "mambo-authentication", :git => "http://dev.verticallabs.ca/git/mambo/gems/authentication.git"
-#gem "mambo-authentication", "0.0.1"
+gem "mambo-authentication"
 
-gem "mambo-authorization", :path => "/home/cdion/mambo/gems/authorization"
+#gem "mambo-authorization", :path => "/home/cdion/mambo/gems/authorization"
 #gem "mambo-authorization", :git => "http://dev.verticallabs.ca/git/mambo/gems/authorization.git"
-#gem "mambo-authorization", "0.0.1"
+gem "mambo-authorization"
 
-gem "mambo-twilio_adapter", :path => "/home/cdion/mambo/gems/twilio_adapter"
+#gem "mambo-twilio_adapter", :path => "/home/cdion/mambo/gems/twilio_adapter"
 #gem "mambo-twilio_adapter", :git => "http://dev.verticallabs.ca/git/mambo/gems/twilio_adapter.git"
-#gem "mambo-twilio_adapter", "0.0.1"
+gem "mambo-twilio_adapter"
 
-gem "mambo-sms", :path => "/home/cdion/mambo/gems/sms"
+#gem "mambo-sms", :path => "/home/cdion/mambo/gems/sms"
 #gem "mambo-sms", :git => "http://dev.verticallabs.ca/git/mambo/gems/sms.git"
-#gem "mambo-sms", "0.0.1"
+gem "mambo-sms"
 
 #gem "mambo-messaging", :path => "/home/cdion/mambo/gems/messaging"
 #gem "mambo-messaging", :git => "http://dev.verticallabs.ca/git/mambo/gems/messaging.git"
-gem "mambo-messaging", "0.0.1"
+gem "mambo-messaging"
