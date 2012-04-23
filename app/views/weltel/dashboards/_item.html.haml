@@ -1,23 +1,26 @@
 = content_tag_for(:li, patient, :class => "item") do
 
   .sidebar
-    = link_to(t(".messages_link"), weltel_patient_messages_path(patient), :class => "button")
+    = link_to( |
+        t(".messages_link", :count => patient.subscriber.messages.received.count), |
+        weltel_patient_messages_path(patient), :class => "button")
 
-  %h2= "#{patient.username} - #{patient.study_number} - #{patient.subscriber.phone_number}"
+  .body
+    %h3= "#{patient.username} - #{patient.study_number} - #{patient.subscriber.phone_number}"
 
-  - if patient.state == true
-    %h3= t(".ok")
-  - elsif patient.state == false
-    %h3= t(".not_ok")
-  - else
-    %h3= t(".unknown")
+    - if patient.state == :ok
+      %h3= t(".ok")
+    - elsif patient.state == :not_ok
+      %h3= t(".not_ok")
+    - else
+      %h3= t(".unknown")
 
-  #last_exchange
+  .last_exchange
     - last_sent = patient.subscriber.messages.sent.last
     - if !last_sent.nil?
-      #outgoing
+      .outgoing
         = last_sent.body
       - last_received = last_sent.children.last
       - if !last_received.nil?
-        #incoming
+        .incoming
           = last_received.body

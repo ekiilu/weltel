@@ -35,22 +35,24 @@ module Weltel
 			# patient
 			patient = subscriber.patient
 
+			Rails.logger.debug(patient.inspect)
+
 			# alert
 			alerter.alert(patient, message)
 
 			command = message.body.downcase
-			case
-			when HELP_COMMANDS.include?(command)
+
+			if HELP_COMMANDS.include?(command)
 				return Sms::MessageTemplate.get_by_name(:help).body
-			when STOP_COMMANDS.include?(command)
+			elsif STOP_COMMANDS.include?(command)
 				return Sms::MessageTemplate.get_by_name(:stop).body
-			when START_COMMANDS.include?(command)
+			elsif START_COMMANDS.include?(command)
 				return Sms::MessageTemplate.get_by_name(:start).body
-			when NEGATIVE_COMMANDS.include?(command)
+			elsif NEGATIVE_COMMANDS.include?(command)
 				patient.state = :not_ok
 				patient.save
 				return nil
-			when POSITIVE_COMMANDS.include?(command)
+			elsif POSITIVE_COMMANDS.include?(command)
 				patient.state = :ok
 				patient.save
 				return nil
@@ -65,7 +67,7 @@ module Weltel
 		HELP_COMMANDS = ["help"]
 		STOP_COMMANDS = ["stop", "cancel", "quit", "unsubscribe"]
 		START_COMMANDS = ["start"]
-		POSITIVE_COMMANDS = ['yes']
-		NEGATIVE_COMMANDS = ['no']
+		POSITIVE_COMMANDS = ["yes"]
+		NEGATIVE_COMMANDS = ["no"]
 	end
 end

@@ -9,6 +9,8 @@ module Weltel
 
 			patients.each do |patient|
 				Weltel::Patient.transaction do
+					patient.state = :unknown
+					patient.save
 					message = Sms::Message.create_to_subscriber(patient.subscriber, body)
 					sender.send(message)
 				end

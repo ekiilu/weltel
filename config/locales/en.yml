@@ -22,11 +22,15 @@ en:
     patients:
       created: "Patient Created"
       updated: "Patient Updated"
-      destroyed: "Patient Destroyed"
+      destroyed: "Patient Deleted"
       index:
         add_link: "Add Patient..."
         search: "Find Patients"
         no_patients: "No Patients"
+      item:
+        destroy_link: "Delete"
+        destroy_disable: "Deleting..."
+        destroy_confirm: "Are you sure you want to delete this Patient?"
       form:
         legend: "Patient"
         cancel: "Cancel"
@@ -34,12 +38,9 @@ en:
         commit_disable: "Saving Patient..."
       edit:
         messages_link: "Messages..."
-        legend: "Administration"
+        legend: "Audit"
         created_at: "Created"
         updated_at: "Updated"
-        destroy_link: "Delete Patient"
-        destroy_confirm: "Are you sure you want to delete this Patient?"
-        destroy_disable: "Deleting Patient..."
     patient_messages:
       created: "Message Created"
       index:
@@ -57,7 +58,10 @@ en:
       show:
         search: "Find Patients"
       item:
-        messages_link: "Messages..."
+        messages_link:
+          zero: "No New Messages..."
+          one: "1 New Message..."
+          others: "%{count} New Messages..."
         ok: "Okay"
         not_ok: "Not Okay"
         unknown: "Unknown"
