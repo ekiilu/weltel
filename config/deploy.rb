@@ -1,29 +1,26 @@
 require "bundler/capistrano"
 
+abort('Please set the cap environment: "cap staging deploy" or "cap local deploy"') unless ARGV[0].match /(local|staging)/
+
 set :application, "weltel"
-
-set :using_rvm, false
-
-set :scm, :git
 set :repository,  "ssh://git@dev.verticallabs.ca/git/mambo/apps/weltel.git"
-set :branch, "master"
-set :deploy_via, :remote_cache
-
-set :rake, "bundle exec rake"
-
-set :shared_children, %w(system log pids sockets config)
-
-set :sudo_user, ENV["USER"]
-set :use_sudo, false
-
 set :deploy_to, "/www/weltel"
+set :branch, "master"
+set :shared_children, %w(system log pids sockets config)
+set :sudo_user, ENV["USER"]
+
+set :use_sudo, false
+set :using_rvm, false
+set :scm, :git
+set :rake, "bundle exec rake"
+set :deploy_via, :remote_cache
 
 task :local do
 	role :web, "localhost"
 	role :app, "localhost"
 	role :db, "localhost", :primary => true
 
-	set :normal_user, "cdion"
+	set :normal_user, ENV["USER"]
 	set :user, normal_user
 
 	after "deploy:setup", "deploy:upload_config"
@@ -47,9 +44,8 @@ task :staging do
 	after "deploy:symlink_config", "deploy:migrate"
 end
 
-namespace :deploy do
-  abort('Please set the cap environment: "cap staging deploy" or "cap local deploy"') unless exists?(:normal_user)
 
+namespace :deploy do
 	desc "Deletes deploy file"
 	task :delete_deploy_file do
 		run("rm -f #{shared_path}/deploy")
