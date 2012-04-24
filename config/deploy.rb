@@ -27,7 +27,7 @@ task :local do
 	set :user, normal_user
 
 	after "deploy:setup", "deploy:upload_config"
-	after "deploy:update_code", "deploy:symlink_config"
+	before "deploy:assets:precompile", "deploy:symlink_config"
 	after "deploy:symlink_config", "deploy:migrate"
 	after "deploy:restart", "deploy:delete_deploy_file"
 end
@@ -48,7 +48,7 @@ task :staging do
 end
 
 namespace :deploy do
-  abort('Please set the cap environment: "cap staging deploy" or "cap local deploy"') unless exists?(:normal_user)
+  #abort('Please set the cap environment: "cap staging deploy" or "cap local deploy"') unless exists?(:normal_user)
 
 	desc "Deletes deploy file"
 	task :delete_deploy_file do
