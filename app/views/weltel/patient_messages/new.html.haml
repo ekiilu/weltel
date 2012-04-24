@@ -1,7 +1,7 @@
 - content_for(:actions) do
   = link_to( |
     "#{@patient.username} - #{@patient.study_number} - #{@patient.subscriber.phone_number}", |
-    edit_weltel_patient_path(@patient), |
+    weltel_patient_messages_path(@patient), |
     :class => "button")
 
 = render("form")
