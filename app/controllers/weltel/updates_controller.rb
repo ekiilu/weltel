@@ -1,5 +1,8 @@
 module Weltel
 	class UpdatesController < ApplicationController
+		include Authentication::AuthenticatedController
+		layout("private/application")
+
 		#
 		def show
 			script = Rails.root.to_s + "/script/update_needed"

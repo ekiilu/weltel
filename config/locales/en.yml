@@ -17,6 +17,7 @@ en:
         message_templates_link: "Message Templates"
         users_link: "Users"
         roles_link: "Roles"
+        update_link: "Update"
         logout_link: "Logout"
   weltel:
     patients:
@@ -66,6 +67,13 @@ en:
         ok: "Okay"
         not_ok: "Not Okay"
         unknown: "Unknown"
+    updates:
+      show:
+        no_update: "Application is up to date"
+        update_link: "Update"
+      status:
+        complete: "Complete"
+        updating: "Updating"
 
   ##feedback
   submit_title: 'Submit feedback'

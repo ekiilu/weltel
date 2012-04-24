@@ -4,4 +4,4 @@ script_dir=`dirname $(readlink -f $0)`
 deploy_dir=`dirname $(readlink -f $script_dir)`
 
 cd $deploy_dir
-cap deploy
+cap local deploy
