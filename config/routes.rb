@@ -3,7 +3,6 @@ Weltel::Application.routes.draw do
 	root(:to => "Weltel::Patients#index")
 
 	mount Authentication::Engine => "/authentication"
-	mount Authorization::Engine => "/authorization"
 	mount Sms::Engine => "/sms"
   mount Feedbacker::Engine => "/feedback"
 

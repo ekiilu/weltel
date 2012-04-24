@@ -20,7 +20,7 @@ module Weltel
 		# associations
 		belongs_to(:subscriber, "Sms::Subscriber")
 
-		#
+		# nested
 		accepts_nested_attributes_for(:subscriber)
 
 		# class methods

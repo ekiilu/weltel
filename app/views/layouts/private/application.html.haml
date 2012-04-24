@@ -17,8 +17,8 @@
         #nav
           = link_to(t(".dashboard_link"), main_app.weltel_dashboard_path, :class => "button")
           = link_to(t(".patients_link"), main_app.weltel_patients_path, :class => "button")
-          = link_to(t(".message_templates_link"), sms.message_templates_path, :class => "button")
           -if authenticated_user.has_role(:administrator)
+            = link_to(t(".message_templates_link"), sms.message_templates_path, :class => "button")
             = link_to(t(".users_link"), authentication.users_path, :class => "button")
           - unless authenticated_user.nil?
             = link_to(t(".logout_link"), authentication.session_path(request.session_options[:id]), :method => :delete, :class => "logout")
