@@ -20,12 +20,17 @@ begin
 		:password_confirmation => "weltel",
 	)
 
-	admin = Authorization::Role.create(
+	admin = Authentication::Role.create(
 		:name => :administrator.to_s,
 		:desc => "Administrator"
 	)
 
-	Authorization::UserRole.create(
+	Authentication::Role.create(
+		:name => :clinician.to_s,
+		:desc => "Clinician"
+	)
+
+	Authentication::UserRole.create(
 		:user => system,
 		:role => admin,
 	)
@@ -59,42 +64,42 @@ begin
 		:name => :reminder.to_s,
 		:desc => "Weekly Reminder",
 		:body => "Are you ok?",
-		:type => :system
+		:type => :System
 	)
 
 	Sms::MessageTemplate.create(
 		:name => :help.to_s,
 		:desc => "Help Reply",
 		:body => "Please contact the administrator at 778-858-0004",
-		:type => :system
+		:type => :System
 	)
 
 	Sms::MessageTemplate.create(
 		:name => :stop.to_s,
 		:desc => "Stop Reply",
 		:body => "You will not receive more messages from this number. Reply START to start",
-		:type => :system
+		:type => :System
 	)
 
 	Sms::MessageTemplate.create(
 		:name => :start.to_s,
 		:desc => "Start Reply",
 		:body => "You will now receive messages again.  Reply STOP to stop",
-		:type => :system
+		:type => :System
 	)
 
 	Sms::MessageTemplate.create(
 		:name => :unknown.to_s,
 		:desc => "Unknown Patient Reply",
 		:body => "Your number is not recognized. Please contact the administrator at 778-858-0004",
-		:type => :system
+		:type => :System
 	)
 
 	Sms::MessageTemplate.create(
 		:name => :inactive.to_s,
 		:desc => "Inactive Patient Reply",
 		:body => "You are no longer registered. Please contact the administrator at 778-858-0004",
-		:type => :system
+		:type => :System
 	)
 
 rescue DataMapper::SaveFailureError => error

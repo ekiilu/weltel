@@ -24,7 +24,7 @@ task :local do
 	set :user, normal_user
 
 	after "deploy:setup", "deploy:upload_config"
-	after "deploy:update_code", "deploy:symlink_config"
+	before "deploy:assets:precompile", "deploy:symlink_config"
 	after "deploy:symlink_config", "deploy:migrate"
 	after "deploy:restart", "deploy:delete_deploy_file"
 end
@@ -43,7 +43,6 @@ task :staging do
 	before "deploy:assets:precompile", "deploy:symlink_config"
 	after "deploy:symlink_config", "deploy:migrate"
 end
-
 
 namespace :deploy do
 	desc "Deletes deploy file"

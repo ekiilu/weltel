@@ -151,7 +151,7 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    mambo-authentication (0.0.4)
+    mambo-authentication (0.0.5)
       dm-constraints (~> 1.2)
       dm-pager
       dm-rails (~> 1.2)
@@ -160,21 +160,10 @@ GEM
       dm-types (~> 1.2)
       dm-validations (~> 1.2)
       haml-rails
-      rails (~> 3.1)
-    mambo-authorization (0.0.4)
-      dm-constraints (~> 1.2)
-      dm-pager
-      dm-rails (~> 1.2)
-      dm-timestamps (~> 1.2)
-      dm-transactions (~> 1.2)
-      dm-types (~> 1.2)
-      dm-validations (~> 1.2)
-      haml-rails
-      mambo-authentication
       rails (~> 3.1)
     mambo-messaging (0.0.4)
       mambo-sms
-    mambo-sms (0.0.4)
+    mambo-sms (0.0.5)
       dm-constraints (~> 1.2)
       dm-migrations (~> 1.2)
       dm-pager
@@ -294,10 +283,9 @@ DEPENDENCIES
   factory_girl_rails
   haml-rails
   jquery-rails
-  mambo-authentication (= 0.0.4)
-  mambo-authorization (= 0.0.4)
+  mambo-authentication (= 0.0.5)
   mambo-messaging (= 0.0.4)
-  mambo-sms (= 0.0.4)
+  mambo-sms (= 0.0.5)
   mambo-twilio_adapter (= 0.0.4)
   rails (~> 3.1)
   sass-rails

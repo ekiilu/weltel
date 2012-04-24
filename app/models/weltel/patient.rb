@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module Weltel
 	class Patient
 		include DataMapper::Resource
@@ -21,6 +19,8 @@ module Weltel
 
 		# associations
 		belongs_to(:subscriber, "Sms::Subscriber")
+
+		# nested
 		accepts_and_validates_nested_attributes_for(:subscriber)
 
 		# class methods
