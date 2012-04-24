@@ -56,6 +56,7 @@ en:
         commit_disable: "Sending Message..."
     dashboards:
       show:
+        no_patients: "No Patients"
         search: "Find Patients"
       item:
         messages_link:

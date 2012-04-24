@@ -12,6 +12,7 @@ module Weltel
 			begin
 				# send reminders
 				service = Weltel::Factory.new.service.send_reminders
+
 				render(:text => "OK")
 
 			ensure
