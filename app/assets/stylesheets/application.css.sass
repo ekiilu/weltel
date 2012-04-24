@@ -1,0 +1,275 @@
+/*
+ * This is a manifest file that'll automatically include all the stylesheets available in this directory
+ * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
+ * the top of the compiled file, but it's generally better to create a new file per style scope.
+ *= require_self
+ *= require_tree .
+ */
+
+@import compass
+@import compass/reset
+@import compass/css3
+
+$radius: 2px
+$pager-radius: 2px
+
+$background: #f5edd7
+
+$themecolor: #3861b8
+$pagecolor: white
+
+$gray: #dddddd
+$darkred: #660000
+$colorshift: 7%
+$fontcolor: #333333
+
+=bg-gradient($top, $bottom)
+  +background(linear-gradient(color-stops($top, $bottom)))
+  +filter-gradient($top, $bottom)
+
+html
+  padding: 0
+
+html, body, #container
+  min-height: 100%
+
+body, input, select, textarea
+  font-family: Lucida Grande, Arial, sans-serif
+
+body
+  background-color: #ccc
+  font-size: 1.1em
+  color: $fontcolor
+
+body *
+  outline: none
+
+input, select, textarea
+  font-size: 1em
+
+a
+  text-decoration: none
+  color: darken($themecolor, $colorshift * 2)
+  text-shadow: 0px 1px #eee
+
+b
+  font-weight: bold
+
+h2
+  font-size: 21px
+  font-weight: bold
+  margin: 10px 0px
+
+h3
+  font-size: 18px
+  font-weight: bold
+  margin: 10px 0px
+
+ol
+  +border-radius($radius)
+  list-style-type: none
+
+li
+  +border-radius($radius)
+  border: 1px solid darken($gray, 7%)
+  padding: 10px
+  background: $gray
+  margin: 0px 0px 10px 0px
+  label
+    padding: 6px 0px 0px 0px
+
+fieldset label, .label
+  width: 200px
+  display: inline-block
+  text-align: left
+
+fieldset
+  +border-radius($radius)
+  background-color: #fff
+  margin-bottom: 20px
+  border: solid 1px $themecolor
+  padding: 10px
+
+legend
+  +border-radius($radius)
+  border: solid 1px $themecolor
+  background-color: #fff
+  color: darken($themecolor, $colorshift)
+  font-size: 1.4em
+  padding: 6px
+
+table
+  width: 100%
+  margin-bottom: 20px
+  th
+    background: $themecolor
+    color: white
+  th, td
+    padding: 5px
+
+.sent
+  background: #fff
+
+.received, .read
+  background: #ddd
+
+.list
+  list-style-type: none
+  padding: 10px
+  background: #fff
+
+.translation_missing
+  background-color: $darkred
+
+.button, input[type="submit"]
+  +bg-gradient($themecolor, darken($themecolor, $colorshift))
+  +border-radius($radius)
+  +box-shadow(1px 2px 3px rgba(0, 0, 0, 0.15))
+  text-shadow: 0px 2px 2px darken($themecolor, $colorshift * 2)
+  border: 1px solid darken($themecolor, $colorshift * 2)
+  line-height: 18px
+  display: inline-block
+  padding: 6px
+  color: white
+  &:hover
+    +bg-gradient(lighten($themecolor, $colorshift), $themecolor)
+  &:active
+    +bg-gradient(darken($themecolor, $colorshift), $themecolor)
+
+#container
+  width: 1020px
+  margin: 0px auto
+  background: #fff
+  +box-shadow(0px 0px 8px rgba(0, 0, 0, 0.3))
+
+#header
+  padding-bottom: 30px
+  .page_header
+    padding: 5px 0px 2px 0px
+    margin: 0px 20px 10px 20px
+    .brand
+      display: inline-block
+      width: 250px
+      height: 145px
+      img
+        height: 130px
+      .slogan
+        padding-left: 25px
+        text-align: center
+  #nav
+    +clearfix
+    +bg-gradient($themecolor, darken($themecolor, $colorshift))
+    background: $themecolor
+    //background: #5599ff;
+    padding: 10px 20px
+    margin-left: 0
+    display: block
+    min-height: 32px
+    a
+      +box-shadow(1px 2px 2px rgba(0, 0, 0, 0.3))
+      background: #fff
+      +bg-gradient(white, darken(white, $colorshift * 2))
+      color: darken($themecolor, $colorshift * 3)
+      text-shadow: 0px 1px #fff
+      float: left
+      margin: 0px
+      list-style: none
+      margin-right: 5px
+      padding: 6px 15px
+      &:hover
+        background: #fff
+      &:active
+        +bg-gradient(darken(white, $colorshift * 2), white)
+      &:first-of-type
+        border-left: none
+      &.logout
+        float: right
+        margin-right: 0px
+
+#footer
+  padding-bottom: 30px
+  .page_footer
+    text-align: center
+    background: $gray
+    padding: 10px 10px
+    height: 30px
+
+#actions
+  +clearfix
+  min-height: 30px
+  background: $gray
+  padding: 10px 20px
+  > a
+    float: left
+    margin-right: 10px
+  form
+    float: right
+
+#content
+  padding: 0px 20px 20px 20px
+
+ul.pager
+  text-align: center
+  display: inline-block
+  padding: 5px
+  li
+    +border-radius($pager-radius)
+    background: #fff
+    color: #fff
+    display: inline-block
+    font-size: 15px
+    margin: 0px
+    padding: 4px
+    color: darken($themecolor, $colorshift)
+  li.active
+    background: darken($themecolor, $colorshift)
+    border: solid 1px darken($themecolor, $colorshift)
+    a
+      color: #fff
+      font-weight: bold
+
+.flash_messages
+  padding: 5px
+  +clearfix
+  +border-radius($radius)
+  background: $gray
+  border: 1px solid darken($gray, $colorshift * 2)
+  +box-shadow(0px 1px 3px darken($gray, $colorshift * 2))
+  padding: 10x
+  margin: 10px 20px
+  text-shadow: darken($gray, $colorshift * 2)
+
+.item
+  .body
+    width: 780px
+  .sidebar
+    float: right
+    a
+      +box-sizing(border-box)
+      margin-bottom: 10px
+      width: 100%
+
+.last_exchange
+  .outgoing
+    +border-radius($radius)
+    +box-shadow(0px 1px 0px rgba(0, 0, 0, 0.15))
+    padding: 8px
+    color: #fff
+    background: #888888
+    border: 1px solid darken(#888888, $colorshift * 2)
+    margin-bottom: 10px
+  .outgoing
+    +border-radius($radius)
+    +box-shadow(0px 1px 0px rgba(0, 0, 0, 0.15))
+    padding: 8px
+    color: $fontcolor
+    background: #ffbb3a
+    border: 1px solid darken(#ffbb3a, $colorshift * 2)
+  padding: 10px 0px
+
+.new_credentials
+  width: 600px
+  margin: 0 auto
+
+.field_with_errors
+  display: inline
