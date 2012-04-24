@@ -21,7 +21,7 @@ module Weltel
 		belongs_to(:subscriber, "Sms::Subscriber")
 
 		# nested
-		accepts_nested_attributes_for(:subscriber)
+		accepts_and_validates_nested_attributes_for(:subscriber)
 
 		# class methods
 		#

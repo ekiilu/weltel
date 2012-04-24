@@ -48,6 +48,8 @@ task :staging do
 end
 
 namespace :deploy do
+  abort('Please set the cap environment: "cap staging deploy" or "cap local deploy"') unless exists?(:normal_user)
+
 	desc "Deletes deploy file"
 	task :delete_deploy_file do
 		run("rm -f #{shared_path}/deploy")
