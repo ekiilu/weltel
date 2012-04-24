@@ -1,5 +1,5 @@
 Feedbacker::Engine.config.mail_settings = {
-      :to => 'chris@verticallabs.ca',
+      :to => 'support@verticallabs.ca',
       :from => 'Weltel Application <weltel@verticallabs.ca>',
       :subject => 'Weltel feedback'
     }
