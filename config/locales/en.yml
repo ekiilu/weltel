@@ -62,7 +62,7 @@ en:
         messages_link:
           zero: "No New Messages..."
           one: "1 New Message..."
-          others: "%{count} New Messages..."
+          other: "%{count} New Messages..."
         ok: "Okay"
         not_ok: "Not Okay"
         unknown: "Unknown"

@@ -2,7 +2,7 @@ module Weltel
 	class TasksController < ApplicationController
 		#
 		def reminders
-			project = Project.get_active_by_name(Settings.project)
+			project = Project.get_active_by_name(CONFIG[:project])
 
 			if project.state[LAST_SEND] == Date.today.cweek
 				render(:text => "OK")
@@ -24,7 +24,7 @@ module Weltel
 
 		#
 		def responses
-			project = Project.get_active_by_name(Settings.project)
+			project = Project.get_active_by_name(CONFIG[:project])
 
 			if project.state[RECEIVING] == true
 				render(:text => "OK")
