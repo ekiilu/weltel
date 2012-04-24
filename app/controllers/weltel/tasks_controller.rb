@@ -9,14 +9,16 @@ module Weltel
 				return
 			end
 
-			# send reminders
-			service = Weltel::Factory.new.service.send_reminders
+			begin
+				# send reminders
+				service = Weltel::Factory.new.service.send_reminders
+				render(:text => "OK")
 
-			# update project
-			project.state[LAST_SEND] = Date.today.cweek
-			project.save
-
-			render(:text => "OK")
+			ensure
+				# update project
+				project.state[LAST_SEND] = Date.today.cweek
+				project.save
+			end
 		end
 
 		#
@@ -37,14 +39,14 @@ module Weltel
 					DateTime.parse(project.state[LAST_RECEIVE])
 				)
 
+				render(:text => "OK")
+
 			ensure
 				# update project
 				project.state[RECEIVING] = false
 				project.state[LAST_RECEIVE] = DateTime.now
 				project.save
 			end
-
-			render(:text => "OK")
 		end
 
 	private
