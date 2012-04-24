@@ -1,35 +1,55 @@
-worker_processes 1
+#init config
+config_filename = File.expand_path("#{File.dirname(__FILE__)}/unicorn.yml")
+config_file = YAML.load(File.read(config_filename))
+rails_env = ENV["RAILS_ENV"] || "development"
+config = config_file[rails_env]
+raise "No config for environment #{rails_env}" unless config
 
-app_name = 'weltel'
-is_production = ENV['RAILS_ENV'] == 'production'
-deploy_directory = File.expand_path(is_production ? "/www/#{app_name}/shared" : "#{File.dirname(__FILE__)}/../tmp")
-pid_directory = "#{deploy_directory}/pids"
-socket_directory = "#{deploy_directory}"
-log_directory = File.expand_path(is_production ? "/www/#{app_name}/shared/log" : "#{File.dirname(__FILE__)}/../log")
+#directories
+deploy_dir = config["app_root"]
+runtime_dir = config["app_runtime"]
+pid_dir = "#{runtime_dir}/pids"
+socket_dir = "#{runtime_dir}/sockets"
+log_dir = "#{deploy_dir}/log"
+gemfile_dir = "#{deploy_dir}"
 
-listen "#{socket_directory}/unicorn.sock", :backlog => 64
-listen 3000, :tcp_nopush => true
+#workers
+worker_processes(config["workers"])
+listen("#{socket_dir}/unicorn.sock", :backlog => 64)
+listen(config["port"], :tcp_nopush => true)
+timeout(30)
+pid("#{pid_dir}/unicorn.pid")
+working_directory(deploy_dir)
 
-timeout 30
+#logging
+stderr_path("#{log_dir}/unicorn.stderr.log")
+stdout_path("#{log_dir}/unicorn.stdout.log")
 
-pid "#{pid_directory}/unicorn.pid"
+#preloading
+preload_app(true)
+GC.copy_on_write_friendly = true if GC.respond_to?(:copy_on_write_friendly=)
 
-stderr_path "#{log_directory}/unicorn.stderr.log"
-stdout_path "#{log_directory}/unicorn.stdout.log"
-
-preload_app true
-
-GC.respond_to?(:copy_on_write_friendly=) and
-  GC.copy_on_write_friendly = true
-
+#disconnect before fork
 before_fork do |server, worker|
-  old_pid = "#{pid_directory}/unicorn.pid.oldbin"
+  ActiveRecord::Base.connection.disconnect! if defined?(ActiveRecord::Base)
+
+  old_pid = "#{pid_dir}/unicorn.pid.oldbin"
   if File.exists?(old_pid) && server.pid != old_pid
     begin
       Process.kill("QUIT", File.read(old_pid).to_i)
-      `service nginx reload`
     rescue Errno::ENOENT, Errno::ESRCH
       # someone else did our job for us
     end
   end
 end
+
+#reconnect after fork
+after_fork do |server, worker|
+    ActiveRecord::Base.establish_connection if defined?(ActiveRecord::Base)
+end
+
+#make sure it"s using the correct gemfile and executable every time
+before_exec do |server|
+  ENV["BUNDLE_GEMFILE"] = "#{gemfile_dir}/Gemfile"
+end
+Unicorn::HttpServer::START_CTX[0] = config["unicorn"]

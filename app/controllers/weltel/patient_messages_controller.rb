@@ -10,6 +10,11 @@ module Weltel
 			@patient = Weltel::Patient.get!(params[:patient_id])
 			@messages = @patient.subscriber.messages.search(@page, 6)
 
+			@messages.select {|message| message.status == :Received}.each do |message|
+				message.status = :Read
+				message.save
+			end
+
 			respond_with(@patient, @messages)
 		end
 

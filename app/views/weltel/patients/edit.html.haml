@@ -12,8 +12,3 @@
     %li
       %span.label= t(".updated_at")
       = l(@patient.updated_at)
-  %span
-    = link_to( |
-        t(".destroy_link"), |
-        weltel_patient_path, |
-        {:method => :delete, :confirm => t(".destroy_confirm"), :disable_with => t(".destroy_disable"), :class => "button"})

@@ -18,7 +18,7 @@ $themecolor: #3861b8;
 $pagecolor: #ffffff;
 
 $gray: #dddddd;
-$darkred: #666;
+$darkred: #600;
 $colorshift: 7%;
 
 @mixin bg-gradient($top, $bottom) {
@@ -118,15 +118,21 @@ legend {
 table {
   width: 100%;
   margin-bottom: 20px;
+  th {
+  	background: $themecolor;
+  	color: #fff
+  }
   th, td {
     padding: 5px;
   }
-  tr:nth-child(even) {
-    background: #ddd;
-  }
-  tr:nth-child(odd) {
-    background: #aaa;
-  }
+}
+
+.sent {
+	background: #fff;
+}
+
+.received, .read {
+	background: #ddd;
 }
 
 .list {
@@ -301,23 +307,23 @@ ul.pager {
       width: 100%;
     }
   }
+}
 
-  .last_exchange {
-    .outgoing {
-      @include border-radius($radius);
-      padding: 8px;
-      background: #fff;
-      border: 1px solid darken(#fff, $colorshift * 2);
-      margin-bottom: 10px;
-    }
-    .incoming {
-      @include border-radius($radius);
-      padding: 8px;
-      background: #fff;
-      border: 1px solid darken(#fff, $colorshift * 2);
-    }
-    padding: 10px 0px;
-  }
+.last_exchange {
+	.outgoing {
+		@include border-radius($radius);
+		padding: 8px;
+		background: #fff;
+		border: 1px solid darken(#fff, $colorshift * 2);
+		margin-bottom: 10px;
+	}
+	.incoming {
+		@include border-radius($radius);
+		padding: 8px;
+		background: #fff;
+		border: 1px solid darken(#fff, $colorshift * 2);
+	}
+	padding: 10px 0px;
 }
 
 .new_credentials {
