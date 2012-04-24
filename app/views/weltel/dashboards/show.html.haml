@@ -8,3 +8,5 @@
 -else
   %ol#patient_list.list
     = render(:collection => @patients, :partial => 'item', :as => :patient)
+  - content_for(:footer) do
+    = raw(@patients.pager.to_html(""))
