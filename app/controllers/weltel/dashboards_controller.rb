@@ -1,6 +1,7 @@
 module Weltel
 	class DashboardsController < ApplicationController
 		include Authentication::AuthenticatedController
+		respond_to(:html)
 		layout("private/application")
 
 		#
@@ -8,6 +9,8 @@ module Weltel
 			@page = params[:page]
 			@search = params[:search]
 			@patients = Weltel::Patient.search(@page, 6, @search, [:state, :username])
+
+			respond_with(@patients)
 		end
 	end
 end
