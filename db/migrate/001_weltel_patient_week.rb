@@ -6,6 +6,7 @@ migration 1, :weltel_patient_week do
   			patient.week = 17
   			patient.save
   		end
+	rescue
 	end
   end
 
