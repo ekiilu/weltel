@@ -4,12 +4,15 @@ module Weltel
 		def reminders
 			project = Project.get_active_by_name(CONFIG[:project])
 
-			if project.state[LAST_SEND] == Date.today.cweek
+			if project.state[SENDING] == true
 				render(:text => "OK")
 				return
 			end
 
 			begin
+				project.state[SENDING] = true
+				project.save
+
 				# send reminders
 				service = Weltel::Factory.new.service.send_reminders
 
@@ -17,7 +20,7 @@ module Weltel
 
 			ensure
 				# update project
-				project.state[LAST_SEND] = Date.today.cweek
+				project.state[SENDING] = false
 				project.save
 			end
 		end
@@ -36,23 +39,19 @@ module Weltel
 				project.save
 
 				# receive responses
-				responder = Weltel::Factory.new.responder.receive_responses(
-					DateTime.parse(project.state[LAST_RECEIVE])
-				)
+				responder = Weltel::Factory.new.responder.receive_responses
 
 				render(:text => "OK")
 
 			ensure
 				# update project
 				project.state[RECEIVING] = false
-				project.state[LAST_RECEIVE] = DateTime.now
 				project.save
 			end
 		end
 
 	private
-		LAST_SEND = "last_send"
+		SENDING = "sending"
 		RECEIVING = "receiving"
-		LAST_RECEIVE = "last_receive"
 	end
 end

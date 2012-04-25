@@ -7,6 +7,7 @@ module Weltel
 		property(:username, String, {:required => true, :unique => true, :length => 32})
 		property(:study_number, String, {:unique => true, :length => 32})
 		property(:state, Enum[:not_ok, :unknown, :ok], {:required => true, :default => :unknown})
+		property(:week, Integer, {:index => true, :required => true, :default => 0})
 		property(:created_at, DateTime)
 		property(:updated_at, DateTime)
 
@@ -27,6 +28,11 @@ module Weltel
 		#
 		def self.active
 			all(:subscriber => {:active => true})
+		end
+
+		#
+		def self.pending
+			active.all(:week.lt => Date.today.cweek)
 		end
 
 		#
