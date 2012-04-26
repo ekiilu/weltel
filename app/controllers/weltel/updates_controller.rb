@@ -17,7 +17,7 @@ module Weltel
 			err = Rails.root.to_s + "/tmp/update_err"
 			pid = Kernel.spawn(script, {:out => out, :err => err})
 			Process.detach(pid)
-			logger.debug(pid)
+			logger.error(pid)
 			FileUtils.touch("/www/weltel/shared/deploy")
 			redirect_to(status_weltel_update)
 		end
