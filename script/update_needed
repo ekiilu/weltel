@@ -6,7 +6,7 @@ deploy_dir=`dirname $(readlink -f $script_dir)`
 
 cd $deploy_dir
 local_head=`git rev-list --max-count=1 deploy 2>/dev/null` 
-remote_head=`git ls-remote $repo | grep ltbi | awk '{print $1}' 2>/dev/null` 
+remote_head=`git ls-remote $repo | grep master | awk '{print $1}' 2>/dev/null` 
 
 echo "Local head is   $local_head"
 echo "Remote head is  $remote_head"
