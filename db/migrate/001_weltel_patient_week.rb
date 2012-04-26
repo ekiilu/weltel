@@ -1,13 +1,11 @@
 migration 1, :weltel_patient_week do
 
   up do
-	begin
-  		Weltel::Patient.all.each do |patient|
-  			patient.week = 17
-  			patient.save
-  		end
-	rescue
-	end
+  	Weltel::Patient.auto_upgrade!(:default)
+		Weltel::Patient.all(:week => nil).each do |patient|
+			patient.week = 17
+			patient.save
+		end
   end
 
   down do
