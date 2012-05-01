@@ -30,7 +30,7 @@ module Weltel
 			rescue DataMapper::SaveFailureError => error
 				@patient = error.resource
 				respond_with(@patient) do |format|
-					format.html {	render(:new) }
+					format.html { render(:new) }
 				end
 			end
 		end

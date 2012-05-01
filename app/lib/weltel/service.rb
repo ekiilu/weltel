@@ -16,6 +16,7 @@ module Weltel
 					message = Sms::Message.create_to_subscriber(patient.subscriber, body)
 
 					sender.send(message)
+					sleep(1)
 				end
 			end
 		end

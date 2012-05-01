@@ -15,7 +15,7 @@ module Weltel
 		validates_length_of(:username, :within => 2..32)
 		validates_format_of(:username, :with => /^\w*$/)
 
-		validates_length_of(:study_number, :within => 1..32, :allow_blank => true)
+		validates_length_of(:study_number, {:within => 1..32, :allow_blank => true})
 		validates_format_of(:study_number, {:with => /^\w*$/, :allow_blank => true})
 
 		# associations

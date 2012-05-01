@@ -2,6 +2,11 @@ module Weltel
 	class TasksController < ApplicationController
 		#
 		def reminders
+			if DateTime.now.wday == 1 && DateTime.now.hour < 12
+				render(:text => "OK")
+				return
+			end
+
 			project = Project.get_active_by_name(CONFIG[:project])
 
 			if project.state[SENDING] == true
