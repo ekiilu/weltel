@@ -161,9 +161,9 @@ GEM
       dm-validations (~> 1.2)
       haml-rails
       rails (~> 3.1)
-    mambo-messaging (0.0.4)
+    mambo-messaging (0.0.5)
       mambo-sms
-    mambo-sms (0.0.7)
+    mambo-sms (0.0.8)
       dm-constraints (~> 1.2)
       dm-migrations (~> 1.2)
       dm-pager
@@ -176,7 +176,7 @@ GEM
       haml-rails
       mambo-authentication
       rails (~> 3.1)
-    mambo-twilio_adapter (0.0.7)
+    mambo-twilio_adapter (0.0.8)
       mambo-sms
       rails (~> 3.1)
       twilio-rb
@@ -285,9 +285,9 @@ DEPENDENCIES
   haml-rails
   jquery-rails
   mambo-authentication (= 0.0.5)
-  mambo-messaging (= 0.0.4)
-  mambo-sms (= 0.0.7)
-  mambo-twilio_adapter (= 0.0.7)
+  mambo-messaging (= 0.0.5)
+  mambo-sms (= 0.0.8)
+  mambo-twilio_adapter (= 0.0.8)
   rails (~> 3.1)
   sass-rails
   therubyracer

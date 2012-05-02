@@ -1,3 +1,5 @@
+Twilio::SMS.default_timeout(5)
+
 if Rails.env.production?
 	Twilio::Config.setup(
 		:account_sid  => 'AC237b652f53a64bd19e62f62ee2a3d2e4',
