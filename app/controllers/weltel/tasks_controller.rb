@@ -7,8 +7,6 @@ module Weltel
 				return
 			end
 
-			project = Project.get_active_by_name(CONFIG[:project])
-
 			# send reminders
 			service = Weltel::Factory.new.service.send_reminders
 
@@ -17,8 +15,6 @@ module Weltel
 
 		#
 		def responses
-			project = Project.get_active_by_name(CONFIG[:project])
-
 			# receive responses
 			responder = Weltel::Factory.new.responder.receive_responses
 
