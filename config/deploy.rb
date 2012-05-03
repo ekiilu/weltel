@@ -57,11 +57,13 @@ namespace :deploy do
 
   desc "Uploads config"
   task :upload_config, :roles => :app do
+  	top.upload("./config/config.yml", "#{shared_path}/config/config.yml")
     top.upload("./config/database.yml", "#{shared_path}/config/database.yml")
   end
 
   desc "Symlinks config"
   task :symlink_config, :roles => :app do
+  	run("ln -nfs #{deploy_to}/shared/config/config.yml #{release_path}/config/config.yml")
     run("ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml")
   end
 end

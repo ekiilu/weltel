@@ -56,12 +56,12 @@ gem "mambo-authentication", "0.0.5"
 
 #gem "mambo-twilio_adapter", :path => "/home/cdion/mambo/gems/twilio_adapter"
 #gem "mambo-twilio_adapter", :git => "http://dev.verticallabs.ca/git/mambo/gems/twilio_adapter.git"
-gem "mambo-twilio_adapter", "0.0.4"
+gem "mambo-twilio_adapter", "0.0.8"
 
 #gem "mambo-sms", :path => "/home/cdion/mambo/gems/sms"
 #gem "mambo-sms", :git => "http://dev.verticallabs.ca/git/mambo/gems/sms.git"
-gem "mambo-sms", "0.0.5"
+gem "mambo-sms", "0.0.8"
 
 #gem "mambo-messaging", :path => "/home/cdion/mambo/gems/messaging"
 #gem "mambo-messaging", :git => "http://dev.verticallabs.ca/git/mambo/gems/messaging.git"
-gem "mambo-messaging", "0.0.4"
+gem "mambo-messaging", "0.0.5"

@@ -7,6 +7,7 @@ module Weltel
 		property(:username, String, {:required => true, :unique => true, :length => 32})
 		property(:study_number, String, {:unique => true, :length => 32})
 		property(:state, Enum[:not_ok, :unknown, :ok], {:required => true, :default => :unknown})
+		property(:week, Integer, {:index => true, :required => true, :default => 0})
 		property(:created_at, DateTime)
 		property(:updated_at, DateTime)
 
@@ -14,7 +15,7 @@ module Weltel
 		validates_length_of(:username, :within => 2..32)
 		validates_format_of(:username, :with => /^\w*$/)
 
-		validates_length_of(:study_number, :within => 1..32, :allow_blank => true)
+		validates_length_of(:study_number, {:within => 1..32, :allow_blank => true})
 		validates_format_of(:study_number, {:with => /^\w*$/, :allow_blank => true})
 
 		# associations
@@ -27,6 +28,11 @@ module Weltel
 		#
 		def self.active
 			all(:subscriber => {:active => true})
+		end
+
+		#
+		def self.pending
+			active.all(:week.lt => Date.today.cweek)
 		end
 
 		#

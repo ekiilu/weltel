@@ -102,6 +102,21 @@ begin
 		:type => :System
 	)
 
+	50.times do |p|
+		subscriber = Sms::Subscriber.create(
+			:phone_number => "60470000%02d" % p,
+			:active => true
+		)
+
+		Weltel::Patient.create(
+			:subscriber => subscriber,
+			:username => "patient%02d" % p,
+			:study_number => "number%02d" % p,
+			:state => :ok,
+			:week => 0,
+		)
+	end
+
 rescue DataMapper::SaveFailureError => error
 	Rails.logger.error(error.resource.errors.inspect)
 	raise error

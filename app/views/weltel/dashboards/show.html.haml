@@ -3,5 +3,10 @@
     = search_field_tag(:search, @search, {:size => 40, :tabindex => 1})
     = submit_tag(t(".search"))
 
-%ol
-  = render(:collection => @patients, :partial => 'item', :as => :patient)
+- if @patients.empty?
+  = t(".no_patients")
+-else
+  %ol#patient_list.list
+    = render(:collection => @patients, :partial => 'item', :as => :patient)
+  - content_for(:footer) do
+    = raw(@patients.pager.to_html(""))

@@ -8,8 +8,8 @@ module Weltel
 		end
 
 		#
-		def receive_responses(last_receive)
-			messages = poller.poll(last_receive)
+		def receive_responses
+			messages = poller.poll
 			respond_to_messages(messages, true)
 		end
 
@@ -34,8 +34,6 @@ module Weltel
 
 			# patient
 			patient = subscriber.patient
-
-			Rails.logger.debug(patient.inspect)
 
 			# alert
 			alerter.alert(patient, message)
