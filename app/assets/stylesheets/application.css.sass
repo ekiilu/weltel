@@ -15,7 +15,8 @@ $pager-radius: 2px
 
 $background: #f5edd7
 
-$themecolor: #3861b8
+$themecolor: #9a0101 
+//#3861b8
 $pagecolor: white
 
 $gray: #dddddd
@@ -153,9 +154,11 @@ table
       height: 145px
       img
         height: 130px
+        padding: 0px 60px
       .slogan
         padding-left: 25px
         text-align: center
+        color: darken($themecolor, $colorshift)
   #nav
     +clearfix
     +bg-gradient($themecolor, darken($themecolor, $colorshift))
