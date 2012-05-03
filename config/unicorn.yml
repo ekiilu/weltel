@@ -1,14 +1,14 @@
 development:
   unicorn: unicorn_rails
-  app_root: /home/paul/weltel
-  app_runtime: /home/paul/weltel/tmp
+  app_root: /home/paul/mambo/apps/weltel
+  app_runtime: /home/paul/mambo/apps/weltel/tmp
   workers: 1
   port: 3000
 
 test:
   unicorn: unicorn_rails
-  app_root: /home/paul/weltel
-  app_runtime: /home/paul/weltel/tmp
+  app_root: /home/paul/mambo/apps/weltel
+  app_runtime: /home/paul/mambo/apps/weltel/tmp
   workers: 1
   port: 3000
 

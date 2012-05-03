@@ -11,10 +11,11 @@ if [ "$RAILS_ENV" == "" ]; then
 	RAILS_ENV=development
 fi
 
+
 if [ "$RAILS_ENV" != "production" ]; then
 	script_dir=`dirname $(readlink -f $0)`
 	deploy_dir=`dirname $(readlink -f $script_dir)`
-	pid_dir=`readlink -f $deploy_dir/tmp/pids`
+  pid_dir=$(readlink -f $deploy_dir)/tmp/pids
 	if [ ! -d "$pid_dir" ]; then
 		echo "Creating Unicorn PID dir: $pid_dir"
 		mkdir -p $pid_dir
