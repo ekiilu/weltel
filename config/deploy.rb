@@ -1,6 +1,6 @@
 require "bundler/capistrano"
 
-abort('Please set the cap environment: "cap staging deploy" or "cap local deploy"') unless ARGV[0].match /(local|staging)/
+abort('Please set the cap environment: "cap demo deploy" or "cap local deploy"') unless ARGV[0].match /(local|demo)/
 
 set :application, "weltel"
 set :repository,  "ssh://git@dev.verticallabs.ca/git/mambo/apps/weltel.git"
@@ -29,7 +29,7 @@ task :local do
 	after "deploy:restart", "deploy:delete_deploy_file"
 end
 
-task :staging do
+task :demo do
 	role :web, "dev.verticallabs.ca"
 	role :app, "dev.verticallabs.ca"
 	role :db, "dev.verticallabs.ca", :primary => true
