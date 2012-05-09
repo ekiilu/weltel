@@ -1,4 +1,4 @@
-Twilio::SMS.default_timeout(5)
+Twilio::SMS.default_timeout(30)
 
 if Rails.env.production?
 	Twilio::Config.setup(
