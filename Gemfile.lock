@@ -176,13 +176,13 @@ GEM
       haml-rails
       mambo-authentication
       rails (~> 3.1)
-    mambo-twilio_adapter (0.0.8)
+    mambo-twilio_adapter (0.0.11)
       mambo-sms
       rails (~> 3.1)
       twilio-rb
     mime-types (1.18)
     multi_json (1.0.4)
-    multi_xml (0.4.4)
+    multi_xml (0.5.1)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-sftp (2.0.5)
@@ -287,7 +287,7 @@ DEPENDENCIES
   mambo-authentication (= 0.0.5)
   mambo-messaging (= 0.0.5)
   mambo-sms (= 0.0.8)
-  mambo-twilio_adapter (= 0.0.8)
+  mambo-twilio_adapter (= 0.0.11)
   rails (~> 3.1)
   sass-rails
   therubyracer
