@@ -1,14 +1,14 @@
 module Weltel
 	class TasksController < ApplicationController
 		#
-		def reminders
+		def checkups
 			if DateTime.now.wday == 1 && DateTime.now.hour < 12
 				render(:text => "OK")
 				return
 			end
 
 			# send reminders
-			service = Weltel::Factory.new.service.send_reminders
+			service = Weltel::Factory.new.service.send_checkups
 
 			render(:text => "OK")
 		end

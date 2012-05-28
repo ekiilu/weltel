@@ -19,46 +19,11 @@ module Weltel
 
 		#
 		def reply(message)
-			# subscriber
-			subscriber = message.subscriber
+			key, params = process_message(message)
 
-			# unknown subscriber
-			if subscriber.nil?
-				return Sms::MessageTemplate.get_by_name(:unknown).body
-			end
+			return nil if key.nil?
 
-			# inactive subscriber
-			if !subscriber.active?
-				return Sms::MessageTemplate.get_by_name(:inactive).body
-			end
-
-			# patient
-			patient = subscriber.patient
-
-			# alert
-			alerter.alert(patient, message)
-
-			command = message.body.downcase
-
-			if HELP_COMMANDS.include?(command)
-				return Sms::MessageTemplate.get_by_name(:help).body
-			elsif STOP_COMMANDS.include?(command)
-				return Sms::MessageTemplate.get_by_name(:stop).body
-			elsif START_COMMANDS.include?(command)
-				return Sms::MessageTemplate.get_by_name(:start).body
-			elsif NEGATIVE_COMMANDS.include?(command)
-				patient.state = :not_ok
-				patient.save
-				return nil
-			elsif POSITIVE_COMMANDS.include?(command)
-				patient.state = :ok
-				patient.save
-				return nil
-			else
-				patient.state = :unknown
-				patient.save
-				return nil
-			end
+			Sms::MessageTemplate.get_by_name(:key).body % params
 		end
 
 	private
@@ -67,5 +32,47 @@ module Weltel
 		START_COMMANDS = ["start"]
 		POSITIVE_COMMANDS = ["yes"]
 		NEGATIVE_COMMANDS = ["no"]
+
+		#
+		def process_message(message)
+			# subscriber
+			subscriber = message.subscriber
+
+			# unknown subscriber
+			if subscriber.nil?
+				return :unknown
+			end
+
+			# inactive subscriber
+			if !subscriber.active?
+				return :inactive
+			end
+
+			# patient
+			patient = subscriber.patient
+			last_checkup = patient.last_checkup
+
+			# alert
+			alerter.alert(patient, message)
+
+			command = message.body.downcase
+
+			if HELP_COMMANDS.include?(command)
+				return :help
+			elsif STOP_COMMANDS.include?(command)
+				return :stop
+			elsif START_COMMANDS.include?(command)
+				return :start
+			elsif NEGATIVE_COMMANDS.include?(command)
+				last_checkup.classification = :negative
+				return nil
+			elsif POSITIVE_COMMANDS.include?(command)
+				last_checkup.classification = :positive
+				return nil
+			else
+				last_checkup.classification = :unknown
+				return nil
+			end
+		end
 	end
 end

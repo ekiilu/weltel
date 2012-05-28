@@ -61,8 +61,8 @@ begin
 	)
 
 	Sms::MessageTemplate.create(
-		:name => :reminder.to_s,
-		:desc => "Weekly Reminder",
+		:name => :checkup.to_s,
+		:desc => "Weekly Checkup",
 		:body => "Are you ok?",
 		:type => :System
 	)
@@ -111,9 +111,7 @@ begin
 		Weltel::Patient.create(
 			:subscriber => subscriber,
 			:username => "patient%02d" % p,
-			:study_number => "number%02d" % p,
-			:state => :ok,
-			:week => 0,
+			:study_number => "number%02d" % p
 		)
 	end
 

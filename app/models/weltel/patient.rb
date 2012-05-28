@@ -6,8 +6,7 @@ module Weltel
 		property(:id, Serial)
 		property(:username, String, {:required => true, :unique => true, :length => 32})
 		property(:study_number, String, {:unique => true, :length => 32})
-		property(:state, Enum[:not_ok, :unknown, :ok], {:required => true, :default => :unknown})
-		property(:week, Integer, {:index => true, :required => true, :default => 0})
+
 		property(:created_at, DateTime)
 		property(:updated_at, DateTime)
 
@@ -20,9 +19,17 @@ module Weltel
 
 		# associations
 		belongs_to(:subscriber, "Sms::Subscriber")
+		has(n, :checkups, "Weltel::Checkup")
+		has(1, :active_checkup, "Weltel::Checkup", :active => true)
 
 		# nested
 		accepts_and_validates_nested_attributes_for(:subscriber)
+
+		# instance methods
+		#
+		def create_checkup
+			checkups.create
+		end
 
 		# class methods
 		#
@@ -31,8 +38,8 @@ module Weltel
 		end
 
 		#
-		def self.pending
-			active.all(:week.lt => Date.today.cweek)
+		def self.pending_checkup
+			active.all(:active_checkup => nil)
 		end
 
 		#
@@ -50,9 +57,7 @@ module Weltel
 
 		# create
 		def self.create_by(params)
-			patient = new(params)
-			patient.save
-			patient
+			create(params)
 		end
 
 		# update
@@ -71,14 +76,12 @@ module Weltel
 			patient
 		end
 
-		class << self
-			# status of patients
-			def status(page, search)
-				patients = filter(all, search)
-				patients = active(patients)
-				patients = page_and_order(patients, page)
-				patients
-			end
+		# status of patients
+		def self.status(page, search)
+			patients = filter(all, search)
+			patients = active(patients)
+			patients = page_and_order(patients, page)
+			patients
 		end
 
 	private

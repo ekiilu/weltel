@@ -1,27 +1,27 @@
 module Weltel
 	class Factory
 		#
-		def sender
+		def self.sender
 			TwilioAdapter::SenderSync.new(CONFIG[:twilio_phone_number])
 		end
 
 		#
-		def poller
+		def self.poller
 			TwilioAdapter::Poller.new(CONFIG[:twilio_phone_number])
 		end
 
 		#
-		def responder
+		def self.responder
 			Weltel::Responder.new(sender, poller, alerter)
 		end
 
 		#
-		def service
+		def self.service
 			Weltel::Service.new(sender)
 		end
 
 		#
-		def alerter
+		def self.alerter
 			Weltel::Alerter.new(sender)
 		end
 	end

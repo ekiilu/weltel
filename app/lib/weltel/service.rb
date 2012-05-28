@@ -2,21 +2,26 @@ module Weltel
 	class Service < Messaging::Service
 		# instance methods
 		#
-		def send_reminders
-			patients = Weltel::Patient.pending
+		def send_checkups
+			week = Date.today.cweek
 
-			body = Sms::MessageTemplate.get_by_name(:reminder).body
+			body = Sms::MessageTemplate.get_by_name(:checkup).body
+
+			patients = Weltel::Patient.pending_checkup
 
 			patients.each do |patient|
-				Weltel::Patient.transaction do
-					patient.state = :unknown
-					patient.week = Date.today.cweek
-					patient.save
+				send_checkup(patient, body)
+			end
+		end
 
-					message = Sms::Message.create_to_subscriber(patient.subscriber, body)
+		#
+		def send_checkup(patient, body)
+			Weltel::Patient.transaction do
+				checkup = patient.create_checkup
 
-					sender.send(message)
-				end
+				message = checkup.create_outgoing_message(body)
+
+				sender.send(message)
 			end
 		end
 	end

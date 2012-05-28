@@ -2,7 +2,7 @@ source "https://vertical:g3m4cc3ss@gems.verticallabs.ca"
 source "http://rubygems.org"
 
 # rails
-RAILS_VERSION = "~> 3.1"
+RAILS_VERSION = "~> 3.2"
 gem "rails", RAILS_VERSION
 
 # datamapper
@@ -35,8 +35,11 @@ group(:assets) do
 end
 
 # test
-group(:test) do
-	gem "factory_girl_rails"
+group :development, :test do
+	gem "rspec-rails"
+	gem "factory_girl_rails"	
+	gem "dm-sqlite-adapter", DM_VERSION
+	gem "database_cleaner"
 end
 
 # deploy
@@ -47,8 +50,12 @@ gem "unicorn"
 gem "thin"
 
 # application
-gem "vertical-feedbacker", "0.0.1"
+gem "vertical-feedbacker", :path => "/home/cdion/vertical/feedbacker"
+#gem "vertical-feedbacker", "0.0.1"
+
 gem "exception_notification"
+
+gem "whenever", :require => false
 
 #gem "mambo-authentication", :path => "/home/cdion/mambo/gems/authentication"
 #gem "mambo-authentication", :git => "http://dev.verticallabs.ca/git/mambo/gems/authentication.git"
@@ -58,10 +65,10 @@ gem "mambo-authentication", "0.0.5"
 #gem "mambo-twilio_adapter", :git => "http://dev.verticallabs.ca/git/mambo/gems/twilio_adapter.git"
 gem "mambo-twilio_adapter", "0.0.11"
 
-#gem "mambo-sms", :path => "/home/cdion/mambo/gems/sms"
+gem "mambo-sms", :path => "/home/cdion/mambo/gems/sms"
 #gem "mambo-sms", :git => "http://dev.verticallabs.ca/git/mambo/gems/sms.git"
-gem "mambo-sms", "0.0.8"
+#gem "mambo-sms", "0.0.8"
 
-#gem "mambo-messaging", :path => "/home/cdion/mambo/gems/messaging"
+gem "mambo-messaging", :path => "/home/cdion/mambo/gems/messaging"
 #gem "mambo-messaging", :git => "http://dev.verticallabs.ca/git/mambo/gems/messaging.git"
-gem "mambo-messaging", "0.0.5"
+#gem "mambo-messaging", "0.0.5"
