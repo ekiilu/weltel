@@ -16,6 +16,9 @@ set :rake, "bundle exec rake"
 set :deploy_via, :remote_cache
 ssh_options[:forward_agent] = true
 
+set :whenever_command, "bundle exec whenever"
+require "whenever/capistrano"
+
 task :local do
 	role :web, "localhost"
 	role :app, "localhost"
@@ -79,11 +82,6 @@ namespace :deploy do
 	desc "Deletes deploy file"
 	task :delete_deploy_file do
 		run("rm -f #{shared_path}/deploy")
-	end
-
-	desc "Symlinks deploy file"
-	task :symlink_deploy_file do
-		run("ln -nfs #{deploy_to}/shared/deploy #{release_path}/config/database.yml")
 	end
 
   desc "Uploads config"
