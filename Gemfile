@@ -57,7 +57,7 @@ gem "vertical-feedbacker", "0.0.2"
 
 #gem "mambo-authentication", :path => "/home/cdion/mambo/gems/authentication"
 #gem "mambo-authentication", :git => "http://dev.verticallabs.ca/git/mambo/gems/authentication.git"
-gem "mambo-authentication", "0.0.5"
+gem "mambo-authentication", "0.0.6"
 
 #gem "mambo-twilio_adapter", :path => "/home/cdion/mambo/gems/twilio_adapter"
 #gem "mambo-twilio_adapter", :git => "http://dev.verticallabs.ca/git/mambo/gems/twilio_adapter.git"

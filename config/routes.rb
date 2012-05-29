@@ -8,12 +8,14 @@ Weltel::Application.routes.draw do
 
 	# admin
 	namespace(:weltel) do
+		# tasks
 		resource(:task, :only => []) do
-			post(:reminders)
-			post(:responses)
+			post(:create_records)
+			post(:update_records)
+			post(:receive_responses)
 		end
 
-		# admin controller
+		# updates
 		resource(:update, :only => [:show]) do
 			post(:update)
 			get(:status)
@@ -26,5 +28,8 @@ Weltel::Application.routes.draw do
 		resources(:patients, :only => [:index, :new, :create, :edit, :update, :destroy]) do
 			resources(:messages, :controller => :patient_messages, :only => [:index, :new, :create])
 		end
+
+		# responses
+		resources(:responses, :only => [:index, :new, :create, :edit, :update, :destroy])
 	end
 end

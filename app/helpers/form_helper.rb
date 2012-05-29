@@ -1,6 +1,6 @@
 module FormHelper
-
-	def options_for_enum(enum, val)
-		options_for_select(enum.options[:flags], val)
+	#
+	def options_for_enum(enum, val = nil)
+		options_for_select(enum.options[:flags].map {|option| [option.capitalize, option]}, val)
 	end
 end

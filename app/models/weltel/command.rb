@@ -1,5 +1,5 @@
 module Weltel
-	class Response
+	class Command
 		include DataMapper::Resource
 
 		# properties
@@ -13,18 +13,9 @@ module Weltel
 
 		# associations
 
-		# instance methods
-		def name=(name)
-			super(name.downcase)
-		end
-
 		# class methods
 		def self.first_by_name(name)
 			first(:name => name)
-		end
-
-		def self.search(page, per_page, order)
-			page(:page => page, :per_page => per_page, :order => [order])
 		end
 	end
 end

@@ -30,8 +30,6 @@ module Weltel
 		HELP_COMMANDS = ["help"]
 		STOP_COMMANDS = ["stop", "cancel", "quit", "unsubscribe"]
 		START_COMMANDS = ["start"]
-		POSITIVE_COMMANDS = ["yes"]
-		NEGATIVE_COMMANDS = ["no"]
 
 		#
 		def process_message(message)
@@ -55,26 +53,31 @@ module Weltel
 			# alert
 			alerter.alert(patient, message)
 
-			command = message.body.downcase
+			body = message.body.strip.downcase
 
-			if HELP_COMMANDS.include?(command)
+			if HELP_COMMANDS.include?(body)
 				return :help
-			elsif STOP_COMMANDS.include?(command)
+			elsif STOP_COMMANDS.include?(body)
 				return :stop
-			elsif START_COMMANDS.include?(command)
+			elsif START_COMMANDS.include?(body)
 				return :start
 			elsif last_record.nil?
 				return nil
-			elsif NEGATIVE_COMMANDS.include?(command)
-				last_record.change_state(:negative)
-				return nil
-			elsif POSITIVE_COMMANDS.include?(command)
-				last_record.change_state(:positive)
-				return nil
-			else
-				last_record.change_state(:unknown)
-				return nil
 			end
+
+			last_record.state = :open
+
+			response = Weltel::Response.first_by_name(body)
+
+			if response.nil?
+				last_record.change_state(:unknown)
+			else
+				last_record.change_state(response.state)
+			end
+
+			last_record.save
+
+			return nil
 		end
 	end
 end

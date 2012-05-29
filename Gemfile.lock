@@ -154,7 +154,7 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    mambo-authentication (0.0.5)
+    mambo-authentication (0.0.6)
       dm-accepts_nested_attributes
       dm-constraints (~> 1.2)
       dm-pager
@@ -302,7 +302,7 @@ DEPENDENCIES
   factory_girl_rails
   haml-rails
   jquery-rails
-  mambo-authentication (= 0.0.5)
+  mambo-authentication (= 0.0.6)
   mambo-messaging (= 0.0.5)
   mambo-sms (= 0.0.8)
   mambo-twilio_adapter (= 0.0.12)
