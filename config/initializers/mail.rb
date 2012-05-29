@@ -10,7 +10,9 @@ ActionMailer::Base.smtp_settings = {
 }
 
 ActionMailer::Base.raise_delivery_errors = true
-
 ActionMailer::Base.default_url_options = { :host => '127.0.0.1', :port => 3000 }
 
+# intercept mail in dev
 Mail.register_interceptor(DevelopmentMailInterceptor) if Rails.env.development?
+
+

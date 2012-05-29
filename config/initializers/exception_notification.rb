@@ -4,3 +4,6 @@ if Rails.env.production?
 		:sender_address => %{"notifier" <site@verticallabs.ca>},
 		:exception_recipients => %w{support@verticallabs.ca}
 end
+
+
+

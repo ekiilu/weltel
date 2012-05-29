@@ -29,7 +29,7 @@ Weltel::Application.configure do
 
 	# action mailer
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.delivery_method = :test
+  #config.action_mailer.delivery_method = :test
 	config.action_mailer.default_url_options = config.default_url_options
 
   # Raise exceptions instead of rendering exception templates

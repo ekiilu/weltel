@@ -2,12 +2,12 @@ module Weltel
 	class Factory
 		#
 		def self.sender
-			TwilioAdapter::SenderSync.new(CONFIG[:twilio_phone_number])
+			TwilioAdapter::SenderSync.new(AppConfig.twilio_phone_number)
 		end
 
 		#
 		def self.poller
-			TwilioAdapter::Poller.new(CONFIG[:twilio_phone_number])
+			TwilioAdapter::Poller.new(AppConfig.twilio_phone_number)
 		end
 
 		#
