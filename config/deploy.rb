@@ -5,7 +5,7 @@ abort('Please set the cap environment: "cap demo deploy" or "cap local deploy"')
 set :application, "weltel"
 set :repository,  "ssh://git@dev.verticallabs.ca/git/mambo/apps/weltel.git"
 set :deploy_to, "/www/weltel"
-set :branch, "master"
+set :branch, "3.0"
 set :shared_children, %w(system log pids sockets config)
 set :sudo_user, ENV["USER"]
 
@@ -59,6 +59,20 @@ namespace :god do
       end
     end
   end
+
+  desc 'Start'
+  task :start do
+    sudo "RAILS_ENV=production god -P #{shared_path}/pids/god.pid" 
+  end
+  desc 'Stop'
+  task :stop do
+    sudo 'RAILS_ENV=production god quit'
+  end
+
+  desc 'Reload config'
+  task :reload do
+    sudo "RAILS_ENV=production god load #{current_path}/config/god.rb" 
+  end
 end
 
 namespace :deploy do
@@ -87,6 +101,8 @@ namespace :deploy do
   # standard tasks (must be implemented to work)
   desc 'Starts server'
   task :start, :roles => :app do
+    god.start
+    god.reload
     god.start_all
   end
 
@@ -97,6 +113,8 @@ namespace :deploy do
 
   desc 'Restarts server'
   task :restart, :roles => :app, :except => { :no_release => true } do
+    god.start
+    god.reload
     god.restart_all
   end
 end
