@@ -14,6 +14,7 @@ set :using_rvm, false
 set :scm, :git
 set :rake, "bundle exec rake"
 set :deploy_via, :remote_cache
+ssh_options[:forward_agent] = true
 
 task :local do
 	role :web, "localhost"
@@ -73,13 +74,13 @@ namespace :deploy do
 
   desc "Uploads config"
   task :upload_config, :roles => :app do
-  	top.upload("./config/config.yml", "#{shared_path}/config/config.yml")
+  	top.upload("./config/app_config.yml", "#{shared_path}/config/app_config.yml")
     top.upload("./config/database.yml", "#{shared_path}/config/database.yml")
   end
 
   desc "Symlinks config"
   task :symlink_config, :roles => :app do
-  	run("ln -nfs #{deploy_to}/shared/config/config.yml #{release_path}/config/config.yml")
+  	run("ln -nfs #{deploy_to}/shared/config/app_config.yml #{release_path}/config/app_config.yml")
     run("ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml")
   end
 
