@@ -10,7 +10,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 # datamapper
 DataMapper.finalize
-DataMapper.setup(:default, "mysql://cdion:password@127.0.0.1/weltel3_test")
+DataMapper.setup(:default, "mysql://dev:mysql@127.0.0.1/weltel_test")
 DataMapper.setup(:in_memory, :adapter => "in_memory")
 DataMapper.auto_migrate!
 

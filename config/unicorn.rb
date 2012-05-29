@@ -1,6 +1,8 @@
 #init config
+require 'yaml'
 config_filename = File.expand_path("#{File.dirname(__FILE__)}/unicorn.yml")
 config_file = YAML.load(File.read(config_filename))
+
 rails_env = ENV["RAILS_ENV"] || "development"
 config = config_file[rails_env]
 raise "No config for environment #{rails_env}" unless config

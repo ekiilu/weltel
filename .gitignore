@@ -1,5 +1,6 @@
 log/*.log
 tmp
 .sass-cache
+config/unicorn.yml
 config/config.yml
 config/database.yml

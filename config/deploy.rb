@@ -44,6 +44,22 @@ task :demo do
 	after "deploy:symlink_config", "deploy:migrate"
 end
 
+
+
+# helpers
+
+namespace :god do
+  [:start, :stop, :restart].each do |command|
+    [:unicorn, :dj, :all].each do |component|
+      desc "#{command.to_s.capitalize} #{component}"
+      task "#{command}_#{component}", :roles => :app , :except => { :no_release => true } do
+        god_watch = component != :all ? "mambo_#{component.to_s}" : "mambo"
+        sudo "RAILS_ENV=production god #{command.to_s} #{god_watch}"
+      end
+    end
+  end
+end
+
 namespace :deploy do
 	desc "Deletes deploy file"
 	task :delete_deploy_file do
@@ -66,4 +82,21 @@ namespace :deploy do
   	run("ln -nfs #{deploy_to}/shared/config/config.yml #{release_path}/config/config.yml")
     run("ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml")
   end
+
+  # standard tasks (must be implemented to work)
+  desc 'Starts server'
+  task :start, :roles => :app do
+    god.start_all
+  end
+
+  desc 'Stops server'
+  task :stop, :roles => :app do
+    god.stop_all
+  end
+
+  desc 'Restarts server'
+  task :restart, :roles => :app, :except => { :no_release => true } do
+    god.restart_all
+  end
 end
+
