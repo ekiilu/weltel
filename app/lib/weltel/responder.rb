@@ -23,7 +23,7 @@ module Weltel
 
 			return nil if key.nil?
 
-			Sms::MessageTemplate.get_by_name(:key).body % params
+			Sms::MessageTemplate.get_by_name(key).body % params
 		end
 
 	private

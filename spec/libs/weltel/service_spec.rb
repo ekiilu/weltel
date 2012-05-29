@@ -1,14 +1,6 @@
 require "spec_helper"
 
 describe Weltel::Service do
-
-	#
-	before(:each) do
-		sender = double
-		sender.stub(:send)
-		Weltel::Factory.stub(:sender => sender)
-	end
-
 	#
 	it "creates records" do
 		create(:patient)

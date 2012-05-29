@@ -28,5 +28,12 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
+	#
+	config.before(:each) do
+		sender = double
+		sender.stub(:send)
+		Weltel::Factory.stub(:sender => sender)
+	end
+
   config.include FactoryGirl::Syntax::Methods
 end

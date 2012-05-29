@@ -28,12 +28,6 @@ PATH
       mambo-authentication
       rails (~> 3.1)
 
-PATH
-  remote: /home/cdion/vertical/feedbacker
-  specs:
-    vertical-feedbacker (0.0.2)
-      rails (~> 3.2)
-
 GEM
   remote: https://vertical:g3m4cc3ss@gems.verticallabs.ca/
   remote: http://rubygems.org/
@@ -284,6 +278,8 @@ GEM
       rack
       raindrops (~> 0.7)
     uuidtools (2.1.2)
+    vertical-feedbacker (0.0.2)
+      rails (~> 3.2)
     whenever (0.7.3)
       activesupport (>= 2.3.4)
       chronic (~> 0.6.3)
@@ -325,5 +321,5 @@ DEPENDENCIES
   thin
   uglifier
   unicorn
-  vertical-feedbacker!
+  vertical-feedbacker (= 0.0.2)
   whenever
