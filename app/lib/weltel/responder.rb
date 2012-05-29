@@ -63,6 +63,8 @@ module Weltel
 				return :stop
 			elsif START_COMMANDS.include?(command)
 				return :start
+			elsif last_record.nil?
+				return nil
 			elsif NEGATIVE_COMMANDS.include?(command)
 				last_record.change_state(:negative)
 				return nil

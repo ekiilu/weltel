@@ -6,7 +6,9 @@ describe Weltel::Responder do
 		create(:message_template, :name => :unknown)
 		message = create(:unknown_message, :body => "test")
 
-		Weltel::Factory.responder.respond_to_message(message, true)
+		response = Weltel::Factory.responder.respond_to_message(message, true)
+
+		response.should_not be_nil
 	end
 
 	#
@@ -14,48 +16,65 @@ describe Weltel::Responder do
 		create(:message_template, :name => :inactive)
 		message = build(:inactive_message, :body => "test")
 
-		Weltel::Factory.responder.respond_to_message(message, true)
+		response = Weltel::Factory.responder.respond_to_message(message, true)
+
+		response.should_not be_nil
 	end
 
 	#
-	#it "responds to patient help" do
-	#	message = build(:message, :body => "help")
-#
-	#	Weltel::Factory.responder.respond_to_message(message, true)
-	#end
+	it "responds to patient help" do
+		create(:message_template, :name => :help)
+		message = build(:active_message, :body => "help")
+
+		response = Weltel::Factory.responder.respond_to_message(message, true)
+
+		response.should_not be_nil
+	end
 
 	#
-	#it "responds to stop" do
-	#	message = build(:message, :body => "stop")
+	it "responds to stop" do
+		create(:message_template, :name => :stop)
+		message = build(:active_message, :body => "stop")
 
-	#	Weltel::Factory.responder.respond_to_message(message, true)
-	#end
+		response = Weltel::Factory.responder.respond_to_message(message, true)
 
-	#
-	#it "responds to start" do
-	#	message = build(:message, :body => "start")
-
-#		Weltel::Factory.responder.respond_to_message(message, true)
-#	end
+		response.should_not be_nil
+	end
 
 	#
-#	it "responds to positive" do
-#		message = build(:message, :body => "yes")
+	it "responds to start" do
+		create(:message_template, :name => :start)
+		message = build(:active_message, :body => "start")
 
-#		Weltel::Factory.responder.respond_to_message(message, true)
-#	end
+		response = Weltel::Factory.responder.respond_to_message(message, true)
 
-	#
-#	it "responds to negative" do
-#		message = build(:message, :body => "no")
-
-#		Weltel::Factory.responder.respond_to_message(message, true)
-#	end
+		response.should_not be_nil
+	end
 
 	#
-#	it "responds to unknown" do
-#		message = build(:message, :body => "cat")
+	it "responds to positive" do
+		message = build(:active_message, :body => "yes")
 
-#		Weltel::Factory.responder.respond_to_message(message, true)
-#	end
+		response = Weltel::Factory.responder.respond_to_message(message, true)
+
+		response.should be_nil
+	end
+
+	#
+	it "responds to negative" do
+		message = build(:active_message, :body => "no")
+
+		response = Weltel::Factory.responder.respond_to_message(message, true)
+
+		response.should be_nil
+	end
+
+	#
+	it "responds to unknown" do
+		message = build(:active_message, :body => "cat")
+
+		response = Weltel::Factory.responder.respond_to_message(message, true)
+
+		response.should be_nil
+	end
 end

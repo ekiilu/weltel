@@ -7,13 +7,18 @@ FactoryGirl.define do
   	updated_at { DateTime.now }
 
 		#
-		factory(:message, :class => Sms::Message) do
-			subscriber
-		end
+  	factory(:subscriber_message) do
+  		phone_number "2222222222"
 
-		#
-		factory(:inactive_message, :class => Sms::Message) do
-			#phone_number { subscriber.phone_number }
-		end
+			#
+			factory(:active_message) do
+				subscriber
+			end
+
+			#
+			factory(:inactive_message) do
+				association :subscriber, :factory => :inactive_subscriber
+			end
+  	end
 	end
 end
