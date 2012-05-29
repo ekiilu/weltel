@@ -50,7 +50,7 @@ module Weltel
 
 			# patient
 			patient = subscriber.patient
-			last_checkup = patient.last_checkup
+			last_record = patient.last_record
 
 			# alert
 			alerter.alert(patient, message)
@@ -64,13 +64,13 @@ module Weltel
 			elsif START_COMMANDS.include?(command)
 				return :start
 			elsif NEGATIVE_COMMANDS.include?(command)
-				last_checkup.classification = :negative
+				last_record.change_state(:negative)
 				return nil
 			elsif POSITIVE_COMMANDS.include?(command)
-				last_checkup.classification = :positive
+				last_record.change_state(:positive)
 				return nil
 			else
-				last_checkup.classification = :unknown
+				last_record.change_state(:unknown)
 				return nil
 			end
 		end

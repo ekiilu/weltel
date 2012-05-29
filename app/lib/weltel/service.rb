@@ -2,26 +2,35 @@ module Weltel
 	class Service < Messaging::Service
 		# instance methods
 		#
-		def send_checkups
-			week = Date.today.cweek
-
+		def create_records(date)
 			body = Sms::MessageTemplate.get_by_name(:checkup).body
 
-			patients = Weltel::Patient.pending_checkup
+			patients = Weltel::Patient.last_record_created_before(date)
 
 			patients.each do |patient|
-				send_checkup(patient, body)
+				create_record(date, patient, body)
 			end
 		end
 
 		#
-		def send_checkup(patient, body)
+		def create_record(date, patient, body)
 			Weltel::Patient.transaction do
-				checkup = patient.create_checkup
+				record = patient.create_record(date)
 
-				message = checkup.create_outgoing_message(body)
+				message = record.create_outgoing_message(body)
 
 				sender.send(message)
+			end
+		end
+
+		#
+		def update_records(date)
+			records = Weltel::Record.created_on(date).with_state(:unknown)
+
+			Weltel::Record.transaction do
+				records.each do |record|
+					record.change_state(:late)
+				end
 			end
 		end
 	end

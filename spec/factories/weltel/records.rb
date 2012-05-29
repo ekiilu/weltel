@@ -1,8 +1,8 @@
 FactoryGirl.define do
 
-  factory(:checkup, :class => Weltel::Checkup) do
+  factory(:record, :class => Weltel::Record) do
   	patient
-  	week 0
+  	created_on { Date.today }
   	created_at { DateTime.now }
   	updated_at { DateTime.now }
   end

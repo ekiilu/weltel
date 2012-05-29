@@ -1,11 +1,17 @@
 describe Weltel::Patient do
 
-	it "creates a checkup" do
+	#
+	it "creates a record" do
 		patient = create(:patient)
 
-		c = patient.create_checkup(0)
+		r = patient.create_record
 
-		c.should be_valid
-		c.week.should == 0
+		r.should be_valid
+	end
+
+
+	#
+	it "returns patient if last record created before date" do
+
 	end
 end

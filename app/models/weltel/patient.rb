@@ -18,17 +18,17 @@ module Weltel
 		validates_format_of(:study_number, {:with => /^\w*$/, :allow_blank => true})
 
 		# associations
-		belongs_to(:subscriber, "Sms::Subscriber")
-		has(n, :checkups, "Weltel::Checkup")
-		has(1, :active_checkup, "Weltel::Checkup", :active => true)
+		belongs_to(:subscriber, Sms::Subscriber)
+		has(n, :records, Weltel::Record, :constraint => :destroy)
+		has(1, :last_record, Weltel::Record, :order => [:id.desc])
 
 		# nested
 		accepts_and_validates_nested_attributes_for(:subscriber)
 
 		# instance methods
 		#
-		def create_checkup
-			checkups.create
+		def create_record(date)
+			records.create(:created_on => date)
 		end
 
 		# class methods
@@ -38,8 +38,8 @@ module Weltel
 		end
 
 		#
-		def self.pending_checkup
-			active.all(:active_checkup => nil)
+		def self.last_record_created_before(date)
+			all(:last_record => nil) || all(:last_record => {:created_on.lt => date})
 		end
 
 		#
