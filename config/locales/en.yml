@@ -25,13 +25,18 @@ en:
       updated: "Patient Updated"
       destroyed: "Patient Deleted"
       index:
-        add_link: "Add Patient..."
+        new_link: "Add Patient..."
         search: "Find Patients"
         no_patients: "No Patients"
-      item:
+      table:
+        username: "Username"
+        study_number: "Study Number"
+        phone_number: "Phone Number"
+        actions: "Actions"
+      row:
         destroy_link: "Delete"
         destroy_disable: "Deleting..."
-        destroy_confirm: "Are you sure you want to delete this Patient?"
+        destroy_confirm: "Are you sure you want to delete this patient?"
       form:
         legend: "Patient"
         cancel: "Cancel"

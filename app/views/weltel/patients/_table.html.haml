@@ -1,0 +1,7 @@
+%table
+  %tr
+    %th= t(".username")
+    %th= t(".study_number")
+    %th= t(".phone_number")
+    %th= t(".actions")
+  = render({:collection => @patients, :partial => "row", :as => :patient})

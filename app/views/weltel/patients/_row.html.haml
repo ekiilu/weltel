@@ -1,8 +1,12 @@
-= content_tag_for(:li, patient, :class => "item") do
-  .sidebar
+= content_tag_for(:tr, patient, :class => "item") do
+  %td= link_to(patient.username, edit_weltel_patient_path(patient))
+
+  %td= patient.study_number
+
+  %td= patient.subscriber.phone_number
+
+  %td
     = link_to( |
         t(".destroy_link"), |
         weltel_patient_path(patient), |
         {:method => :delete, :confirm => t(".destroy_confirm"), :disable_with => t(".destroy_disable"), :class => "button"})
-  .body
-    %h3= link_to("#{patient.username} - #{patient.study_number} - #{patient.subscriber.phone_number}", edit_weltel_patient_path(patient))

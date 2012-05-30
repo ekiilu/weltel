@@ -1,5 +1,5 @@
 - content_for :actions do
-  = link_to(t(".add_link"), new_weltel_patient_path, :id => "add_patient", :class => "button")
+  = link_to(t(".new_link"), new_weltel_patient_path, :id => "add_patient", :class => "button")
 
   = form_tag(weltel_patients_path, {:id => "search_patients", :method => :get}) do
     = search_field_tag(:search, @search, {:size => 40, :tabindex => 1})
@@ -8,7 +8,7 @@
 - if @patients.empty?
   = t(".no_patients")
 -else
-  %ol#patient_list.list
-    = render({:collection => @patients, :partial => "item", :as => :patient})
+  = render("table")
+
   - content_for(:footer) do
     = raw(@patients.pager.to_html(""))
