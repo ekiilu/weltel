@@ -1,5 +1,5 @@
 module ApplicationHelper
-	#
+  #
   def home_path(user = nil)
     if user.nil?
       new_session_path

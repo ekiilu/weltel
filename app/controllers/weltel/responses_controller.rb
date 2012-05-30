@@ -1,13 +1,18 @@
 module Weltel
 	class ResponsesController < ApplicationController
 		include Authentication::AuthenticatedController
+    include ParamsHelper
 		respond_to(:html)
 		layout("private/application")
 
+    before_filter do
+      session_param(:sort_key, :responses)
+      session_param(:sort_order, :responses)
+      session_param(:page, :responses)
+    end
+
 		#
 		def index
-			@page = params[:page]
-
 			@responses = Weltel::Response.search(@page, 20, :response)
 
 			respond_with(@responses)
