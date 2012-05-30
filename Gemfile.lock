@@ -167,9 +167,10 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    mambo-authentication (0.0.6)
+    mambo-authentication (0.0.7)
       dm-accepts_nested_attributes
       dm-constraints (~> 1.2)
+      dm-core (~> 1.2)
       dm-pager
       dm-rails (~> 1.2)
       dm-timestamps (~> 1.2)
@@ -177,7 +178,7 @@ GEM
       dm-types (~> 1.2)
       dm-validations (~> 1.2)
       haml-rails
-      rails (~> 3.1)
+      rails
     mambo-messaging (0.0.5)
       mambo-sms
     mambo-sms (0.0.12)
@@ -319,7 +320,7 @@ DEPENDENCIES
   god
   haml-rails
   jquery-rails
-  mambo-authentication (= 0.0.6)
+  mambo-authentication (= 0.0.7)
   mambo-messaging (= 0.0.5)
   mambo-sms (= 0.0.12)
   mambo-twilio_adapter (= 0.0.12)
