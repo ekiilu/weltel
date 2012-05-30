@@ -1,12 +1,11 @@
 %table
   %tr
-    %th= link_to(t(".name"), weltel_responses_path(:sort => :name))
+    %th= t(".response")
     %th
-      = link_to(t(".state"), weltel_responses_path(:sort => :state))
+      = t(".state")
       = form_tag(weltel_responses_path, :method => :get) do
         = select_tag(:state, options_for_enum(Weltel::Response.state), :include_blank => true)
 
-    %th= link_to(t(".created"), weltel_responses_path(:sort => :created_at))
-    %th= link_to(t(".updated"), weltel_responses_path(:sort => :updated_at))
+    %th= t(".updated_at")
     %th= t(".actions")
   = render(:collection => @responses, :partial => "row", :as => :response)

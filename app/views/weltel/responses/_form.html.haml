@@ -4,12 +4,11 @@
     %legend= t(".legend")
     %ol
       %li
-        = r.label(:name)
-        = r.text_field(:name, :required => true)
+        = r.label(:response)
+        = r.text_field(:response, {:required => true, :size => 60, :maxlength => 160})
       %li
         = r.label(:state)
         = select_tag(:state, options_for_enum(Weltel::Response.state))
-
   %fieldset
     .center
       = link_to(t(".cancel"), weltel_responses_path, :class => "button")

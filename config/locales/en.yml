@@ -76,15 +76,16 @@ en:
         updating: "Updating"
     responses:
       created: "Response Created"
+      updated: "Response Updated"
       destroyed: "Response Destroyed"
       index:
         no_responses: "No Responses"
         new_link: "Add Response"
       table:
-        name: "Response"
+        response: "Response"
         state: "State"
-        created: "Created"
-        updated: "Updated"
+        created_at: "Created"
+        updated_at: "Updated"
         actions: "Actions"
       row:
         destroy_link: "Delete"
@@ -95,6 +96,10 @@ en:
         cancel: "Cancel"
         commit: "Save Response"
         commit_disable: "Saving Response..."
+      edit:
+        legend: "Audit"
+        created_at: "Created"
+        updated_at: "Updated"
 
 
   ##feedback

@@ -4,7 +4,7 @@ module Weltel
 
 		# properties
 		property(:id, Serial)
-		property(:name, String, {:unique => true, :required => true, :length => 160})
+		property(:response, String, {:unique => true, :required => true, :length => 160})
 		property(:state, Enum[:positive, :negative], {:index => true, :required => true, :default => :positive})
 		property(:created_at, DateTime)
 		property(:updated_at, DateTime)
@@ -14,13 +14,13 @@ module Weltel
 		# associations
 
 		# instance methods
-		def name=(name)
-			super(name.downcase)
+		def response=(response)
+			super(response.downcase)
 		end
 
 		# class methods
-		def self.first_by_name(name)
-			first(:name => name)
+		def self.first_by_response(response)
+			first(:response => response)
 		end
 
 		def self.search(page, per_page, order)

@@ -102,12 +102,12 @@ begin
 	end
 
 	Weltel::Response.create(
-		:name => "yes",
+		:response => "yes",
 		:state => :positive
 	)
 
 	Weltel::Response.create(
-		:name => "no",
+		:response => "no",
 		:state => :negative
 	)
 

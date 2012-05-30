@@ -53,7 +53,7 @@ describe Weltel::Responder do
 
 	#
 	it "responds to positive" do
-		create(:response, :name => "yes", :state => :positive)
+		create(:response, :response => "yes", :state => :positive)
 		message = build(:active_message, :body => "yes")
 
 		response = Weltel::Factory.responder.respond_to_message(message, true)
@@ -63,7 +63,7 @@ describe Weltel::Responder do
 
 	#
 	it "responds to negative" do
-		create(:response, :name => "no", :state => :negative)
+		create(:response, :response => "no", :state => :negative)
 		message = build(:active_message, :body => "no")
 
 		response = Weltel::Factory.responder.respond_to_message(message, true)

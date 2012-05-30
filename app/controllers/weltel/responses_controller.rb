@@ -8,7 +8,7 @@ module Weltel
 		def index
 			@page = params[:page]
 
-			@responses = Weltel::Response.search(@page, 20, :name)
+			@responses = Weltel::Response.search(@page, 20, :response)
 
 			respond_with(@responses)
 		end
@@ -34,6 +34,30 @@ module Weltel
 				end
 			end
 		end
+
+		#
+		def edit
+			@response = Weltel::Response.get!(params[:id])
+
+			respond_with(@response)
+		end
+
+		#
+		def update
+			begin
+				@response = Weltel::Response.get!(params[:id])
+				@response.update(params[:weltel_response])
+				flash[:notice] = t(:updated)
+				respond_with(@response, :location => weltel_responses_path)
+
+			rescue DataMapper::SaveFailureError => error
+				@response = error.resource
+				respond_with(@response) do |format|
+					format.html { render(:edit) }
+				end
+			end
+		end
+
 
 		#
 		def destroy

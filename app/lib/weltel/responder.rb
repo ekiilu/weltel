@@ -67,7 +67,7 @@ module Weltel
 
 			last_record.state = :open
 
-			response = Weltel::Response.first_by_name(body)
+			response = Weltel::Response.first_by_response(body)
 
 			if response.nil?
 				last_record.change_state(:unknown)
