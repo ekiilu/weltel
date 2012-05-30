@@ -59,11 +59,6 @@ module Weltel
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
-    # delay mail in test and prod
-    require 'delayed/mail_delivery'
-    Delayed::MailDelivery.setup(:smtp)
-    config.action_mailer.delivery_method = :delayed
-
     config.generators do |g|
       g.template_engine :haml
     end
