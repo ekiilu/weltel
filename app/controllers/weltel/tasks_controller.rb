@@ -16,7 +16,7 @@ module Weltel
 		end
 
 		#
-		def responses
+		def receive_responses
 			# receive responses
 			Weltel::Factory.responder.receive_responses
 			render(:text => "OK")

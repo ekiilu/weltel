@@ -1,18 +1,4 @@
 begin
-	Weltel::Project.create(
-		:name => "ltbi",
-		:state => {
-			:last_receive => DateTime.now
-		}
-	)
-
-	Weltel::Project.create(
-		:name => "hiv",
-		:state => {
-			:last_receive => DateTime.now
-		}
-	)
-
 	system = Authentication::User.create(
 		:name => "System",
 		:email_address => "system@verticallabs.ca",
@@ -114,6 +100,16 @@ begin
 			:study_number => "number%02d" % p
 		)
 	end
+
+	Weltel::Response.create(
+		:response => "yes",
+		:state => :positive
+	)
+
+	Weltel::Response.create(
+		:response => "no",
+		:state => :negative
+	)
 
 rescue DataMapper::SaveFailureError => error
 	Rails.logger.error(error.resource.errors.inspect)

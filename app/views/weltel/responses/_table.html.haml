@@ -1,0 +1,11 @@
+%table
+  %tr
+    %th= t(".response")
+    %th
+      = t(".state")
+      = form_tag(weltel_responses_path, :method => :get) do
+        = select_tag(:state, options_for_enum(Weltel::Response.state), :include_blank => true)
+
+    %th= t(".updated_at")
+    %th= t(".actions")
+  = render(:collection => @responses, :partial => "row", :as => :response)

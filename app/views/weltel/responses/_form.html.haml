@@ -1,0 +1,15 @@
+= render({:partial => "shared/errors", :object => @response})
+= form_for([@response]) do |r|
+  %fieldset
+    %legend= t(".legend")
+    %ol
+      %li
+        = r.label(:response)
+        = r.text_field(:response, {:required => true, :size => 60, :maxlength => 160})
+      %li
+        = r.label(:state)
+        = select_tag(:state, options_for_enum(Weltel::Response.state))
+  %fieldset
+    .center
+      = link_to(t(".cancel"), weltel_responses_path, :class => "button")
+      = r.submit(t(".commit"), :disable_with => t(".commit_disable"))
