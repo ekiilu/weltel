@@ -23,8 +23,8 @@ module Weltel
 			first(:response => response)
 		end
 
-		def self.search(page, per_page, order)
-			page(:page => page, :per_page => per_page, :order => [order])
+		def self.search(page, per_page, options = {})
+			page(options.merge(:page => page, :per_page => per_page))
 		end
 	end
 end

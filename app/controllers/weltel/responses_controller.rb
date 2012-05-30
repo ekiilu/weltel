@@ -6,14 +6,14 @@ module Weltel
 		layout("private/application")
 
     before_filter do
-      session_param(:sort_key, :responses)
-      session_param(:sort_order, :responses)
+      sort_param(:responses)
+      filter_param(:responses)
       session_param(:page, :responses)
     end
 
 		#
 		def index
-			@responses = Weltel::Response.search(@page, 20, :response)
+			@responses = Weltel::Response.search(@page, 20, valid_sort.merge(valid_filter))
 
 			respond_with(@responses)
 		end

@@ -2,10 +2,8 @@
   %tr
     = sorted_table_header_tag(:response) do
       = t(".response")
-    = sorted_table_header_tag(:state) do
+    = filter_table_header_tag(:state, Weltel::Response.state) do
       = t(".state")
-      = form_tag(weltel_responses_path, :method => :get) do
-        = select_tag(:state, options_for_enum(Weltel::Response.state), :include_blank => true)
     = sorted_table_header_tag(:updated_at) do
       = t(".updated_at")
     %th= t(".actions")
