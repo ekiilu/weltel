@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module ParamsHelper
   def session_param(name, context)
     handle_session_param(name, [name], [context, name])

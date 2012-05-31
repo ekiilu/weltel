@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 FactoryGirl.define do
 	#
 	factory(:unknown_message, :class => Sms::Message) do

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 #init config
 config_filename = File.expand_path("#{File.dirname(__FILE__)}/unicorn.yml")
 config_file = YAML.load(File.read(config_filename))

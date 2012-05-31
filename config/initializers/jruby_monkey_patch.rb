@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 if RUBY_PLATFORM =~ /java/
   # ignore the anchor to allow this to work with jruby:
   # http://jira.codehaus.org/browse/JRUBY-4649

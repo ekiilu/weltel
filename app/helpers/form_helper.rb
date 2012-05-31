@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module FormHelper
 	#
 	def options_for_enum(enum, val = nil)

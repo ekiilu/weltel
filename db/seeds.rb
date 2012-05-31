@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 begin
 	system = Authentication::User.create(
 		:name => "System",

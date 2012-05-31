@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Weltel
 	class Record
 		include DataMapper::Resource

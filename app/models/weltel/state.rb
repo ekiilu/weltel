@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Weltel
 	class State
 		include DataMapper::Resource

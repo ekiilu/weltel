@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 if Rails.env.production?
 	Weltel::Application.config.middleware.use ExceptionNotifier,
 		:email_prefix => "[Weltel] ",

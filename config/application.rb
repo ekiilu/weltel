@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require File.expand_path('../boot', __FILE__)
 
 # Comment out the frameworks you don't want (if you don't want ActionMailer,

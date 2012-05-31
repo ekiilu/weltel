@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Weltel
 	class DashboardsController < ApplicationController
 		include Authentication::AuthenticatedController
@@ -8,7 +9,7 @@ module Weltel
 		def show
 			@page = params[:page]
 			@search = params[:search]
-			@patients = Weltel::Patient.search(@page, 6, @search, [:state, :username])
+			@patients = Weltel::Patient.search(@page, 20, @search, [:state, :username])
 
 			respond_with(@patients)
 		end

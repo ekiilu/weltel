@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 set(:output, "/www/weltel/current/log/cron.log")
 
 every(5.minutes) do

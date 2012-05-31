@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'recursive_open_struct'
 
 class AppConfig

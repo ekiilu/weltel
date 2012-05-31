@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 Twilio::SMS.default_timeout(30)
 
 if Rails.env.production?

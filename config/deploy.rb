@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require "bundler/capistrano"
 
 abort('Please set the cap environment: "cap demo deploy" or "cap local deploy"') unless ARGV[0].match /(local|demo)/

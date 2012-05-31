@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Weltel
 	class Responder < Messaging::Responder
 		#
@@ -37,47 +38,40 @@ module Weltel
 			subscriber = message.subscriber
 
 			# unknown subscriber
-			if subscriber.nil?
-				return :unknown
-			end
+			return :unknown if subscriber.nil?
 
 			# inactive subscriber
-			if !subscriber.active?
-				return :inactive
-			end
+			return :inactive if !subscriber.active?
 
 			# patient
 			patient = subscriber.patient
-			last_record = patient.last_record
+
+			# record
+			record = patient.records.last
 
 			# alert
 			alerter.alert(patient, message)
 
 			body = message.body.strip.downcase
 
-			if HELP_COMMANDS.include?(body)
-				return :help
-			elsif STOP_COMMANDS.include?(body)
-				return :stop
-			elsif START_COMMANDS.include?(body)
-				return :start
-			elsif last_record.nil?
-				return nil
-			end
+			return :help if HELP_COMMANDS.include?(body)
+			return :stop if STOP_COMMANDS.include?(body)
+			return :start if START_COMMANDS.include?(body)
+			return nil if record.nil?
 
-			last_record.state = :open
+			record.state = :open
 
 			response = Weltel::Response.first_by_response(body)
 
 			if response.nil?
-				last_record.change_state(:unknown)
+				record.change_state(:unknown)
 			else
-				last_record.change_state(response.state)
+				record.change_state(response.state)
 			end
 
-			last_record.save
+			record.save
 
-			return nil
+			nil
 		end
 	end
 end

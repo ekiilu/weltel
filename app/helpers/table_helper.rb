@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module TableHelper
   def sorted_table_header_tag(sort_key, &block)
     content = capture { yield }.strip

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 config = YAML::load(File.open("#{Rails.root}/config/database.yml"))[Rails.env]
 DataMapper::Model.raise_on_save_failure = true
 DataMapper.setup(:default, "mysql://dev:mysql@127.0.0.1")

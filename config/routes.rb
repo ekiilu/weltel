@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 Weltel::Application.routes.draw do
 	# root
 	root(:to => "Weltel::Patients#index")

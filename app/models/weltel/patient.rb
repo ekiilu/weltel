@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Weltel
 	class Patient
 		include DataMapper::Resource
@@ -39,12 +40,7 @@ module Weltel
 
 		#
 		def self.last_record_created_before(date)
-			all(:last_record => nil) || all(:last_record => {:created_on.lt => date})
-		end
-
-		#
-		def self.first_by_subscriber(subscriber)
-			first(:subscriber => subscriber)
+			all(:last_record => {:created_on.lt => date})
 		end
 
 		# search patients
@@ -63,8 +59,7 @@ module Weltel
 		# update
 		def self.update_by_id(id, params)
 			patient = get!(id)
-			patient.attributes = params
-			patient.save
+			patient.update(params)
 			patient
 		end
 
@@ -74,14 +69,6 @@ module Weltel
 			patient.subscriber.destroy
 			patient.destroy
 			patient
-		end
-
-		# status of patients
-		def self.status(page, search)
-			patients = filter(all, search)
-			patients = active(patients)
-			patients = page_and_order(patients, page)
-			patients
 		end
 
 	private

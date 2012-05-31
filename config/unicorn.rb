@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 #init config
 require 'yaml'
 config_filename = File.expand_path("#{File.dirname(__FILE__)}/unicorn.yml")

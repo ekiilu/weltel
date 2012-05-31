@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # This file is copied to spec/ when you run "rails generate rspec:install"
 ENV["RAILS_ENV"] ||= "test"
 require File.expand_path("../../config/environment", __FILE__)
@@ -12,7 +13,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 DataMapper.finalize
 DataMapper.setup(:default, "mysql://dev:mysql@127.0.0.1/weltel_test")
 DataMapper.setup(:in_memory, :adapter => "in_memory")
-DataMapper.auto_migrate!
+#DataMapper.auto_migrate!
 
 # rspec
 RSpec.configure do |config|
