@@ -1,6 +1,7 @@
 # -*- encoding : utf-8 -*-
 begin
 	system = Authentication::User.create(
+		:system => true,
 		:name => "System",
 		:email_address => "system@verticallabs.ca",
 		:password => "weltel",
@@ -8,11 +9,13 @@ begin
 	)
 
 	admin = Authentication::Role.create(
+		:system => true,
 		:name => :administrator.to_s,
 		:desc => "Administrator"
 	)
 
 	Authentication::Role.create(
+		:system => true,
 		:name => :clinician.to_s,
 		:desc => "Clinician"
 	)
@@ -51,42 +54,42 @@ begin
 		:name => :checkup.to_s,
 		:desc => "Weekly Checkup",
 		:body => "Are you ok?",
-		:type => :System
+		:system => true
 	)
 
 	Sms::MessageTemplate.create(
 		:name => :help.to_s,
 		:desc => "Help Reply",
 		:body => "Please contact the administrator at 778-858-0004",
-		:type => :System
+		:system => true
 	)
 
 	Sms::MessageTemplate.create(
 		:name => :stop.to_s,
 		:desc => "Stop Reply",
 		:body => "You will not receive more messages from this number. Reply START to start",
-		:type => :System
+		:system => true
 	)
 
 	Sms::MessageTemplate.create(
 		:name => :start.to_s,
 		:desc => "Start Reply",
 		:body => "You will now receive messages again.  Reply STOP to stop",
-		:type => :System
+		:system => true
 	)
 
 	Sms::MessageTemplate.create(
 		:name => :unknown.to_s,
 		:desc => "Unknown Patient Reply",
 		:body => "Your number is not recognized. Please contact the administrator at 778-858-0004",
-		:type => :System
+		:system => true
 	)
 
 	Sms::MessageTemplate.create(
 		:name => :inactive.to_s,
 		:desc => "Inactive Patient Reply",
 		:body => "You are no longer registered. Please contact the administrator at 778-858-0004",
-		:type => :System
+		:system => true
 	)
 
 	50.times do |p|

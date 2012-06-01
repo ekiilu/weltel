@@ -1,14 +1,15 @@
 = content_tag_for(:tr, response) do
-  %td
-    = link_to( |
-      response.name, |
-      edit_weltel_response_path(response))
+  %td= response.name
 
   %td= response.value.capitalize
 
   %td= l(response.updated_at)
 
   %td
+    = link_to( |
+      t(".edit_link"), |
+      edit_weltel_response_path(response), |
+      :class => "button")
     = link_to( |
       t(".destroy_link"), |
       weltel_response_path(response), |

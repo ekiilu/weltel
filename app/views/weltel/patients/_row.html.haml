@@ -1,5 +1,5 @@
 = content_tag_for(:tr, patient, :class => "item") do
-  %td= link_to(patient.user_name, edit_weltel_patient_path(patient))
+  %td= patient.user_name
 
   %td= patient.study_number
 
@@ -8,6 +8,7 @@
   %td= patient.subscriber.active
 
   %td
+    = link_to(t(".edit_link"), edit_weltel_patient_path(patient), :class => "button")
     = link_to( |
         t(".destroy_link"), |
         weltel_patient_path(patient), |

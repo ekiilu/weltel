@@ -21,6 +21,7 @@
             = link_to(t(".message_templates_link"), sms.message_templates_path, :class => "button")
             = link_to(t(".responses_link"), main_app.weltel_responses_path, :class => "button")
             = link_to(t(".users_link"), authentication.users_path, :class => "button")
+            = link_to(t(".roles_link"), authentication.roles_path, :class => "button")
             = link_to(t(".update_link"), main_app.weltel_update_path, :class => "button")
           - unless authenticated_user.nil?
             = link_to(t(".logout_link"), authentication.session_path(request.session_options[:id]), :method => :delete, :class => "logout")

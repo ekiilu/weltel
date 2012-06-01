@@ -36,6 +36,7 @@ en:
         active: "Active"
         actions: "Actions"
       row:
+        edit_link: "Edit..."
         destroy_link: "Delete"
         destroy_disable: "Deleting..."
         destroy_confirm: "Are you sure you want to delete this patient?"
@@ -87,7 +88,7 @@ en:
       destroyed: "Response Destroyed"
       index:
         no_responses: "No Responses"
-        new_link: "Add Response"
+        new_link: "Add Response..."
       table:
         name: "Name"
         value: "Value"
@@ -95,6 +96,7 @@ en:
         updated_at: "Updated"
         actions: "Actions"
       row:
+        edit_link: "Edit..."
         destroy_link: "Delete"
         destroy_confirm: "Are you sure you want to delete this response?"
         destroy_disable: "Deleting..."

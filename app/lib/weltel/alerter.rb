@@ -8,10 +8,10 @@ module Weltel
 
 		#
 		def alert(patient, message)
-			body = "#{patient.user_name}: #{message.body}"
+			body = "#{patient.user_name}: #{message.body}"[0..159]
 
-			AppConfig.alert_phone_numbers.each do |phone_number|
-				message = Sms::Message.create_to_phone_number(phone_number, body[0..159])
+			Authentication::User.with_phone_number.each do |user|
+				message = Sms::Message.create_to_phone_number(user.phone_number, body)
 				sender.send(message)
 			end
 		end
