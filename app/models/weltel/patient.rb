@@ -39,18 +39,18 @@ module Weltel
 		end
 
 		# filter patients
-		def self.filter(filter)
-			if filter.nil?
+		def self.search(search)
+			if search.nil?
 				all
 			else
-				filter = "%#{filter}%"
-				all(:user_name.like => filter) + all(:study_number.like => filter)
+				search = "%#{search}%"
+				all(:user_name.like => search) + all(:study_number.like => search)
 			end
 		end
 
 		# page and order patients
-		def self.page_and_sort(page, per_page, sort)
-			page(:page => page, :per_page => per_page, :order => [sort])
+		def self.paginate(page, per_page, options = {})
+			page({:page => page, :per_page => per_page}.merge(options))
 		end
 
 		#

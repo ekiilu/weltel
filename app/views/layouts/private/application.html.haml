@@ -19,6 +19,7 @@
           = link_to(t(".patients_link"), main_app.weltel_patients_path, :class => "button")
           -if authenticated_user.has_role(:administrator)
             = link_to(t(".message_templates_link"), sms.message_templates_path, :class => "button")
+            = link_to(t(".responses_link"), main_app.weltel_responses_path, :class => "button")
             = link_to(t(".users_link"), authentication.users_path, :class => "button")
             = link_to(t(".update_link"), main_app.weltel_update_path, :class => "button")
           - unless authenticated_user.nil?
