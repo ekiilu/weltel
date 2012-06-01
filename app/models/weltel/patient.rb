@@ -38,11 +38,6 @@ module Weltel
 			all(:active => true)
 		end
 
-		def self.foo
-			Rails.logger.debug(all)
-			all
-		end
-
 		# filter patients
 		def self.filter(filter)
 			if filter.nil?
@@ -54,8 +49,8 @@ module Weltel
 		end
 
 		# page and order patients
-		def self.page_and_sort(page, per_page, order)
-			page(:page => page, :per_page => per_page, :order => [order])
+		def self.page_and_sort(page, per_page, sort)
+			page(:page => page, :per_page => per_page, :order => [sort])
 		end
 
 		#

@@ -15,7 +15,7 @@ module ParamsHelper
   end
 
   def valid_sort
-    (@sort_key && @sort_order) ? {:order => [@sort_key.to_sym.send(@sort_order.to_sym)]} : {}
+    (@sort_key && @sort_order) ? @sort_key.to_sym.send(@sort_order.to_sym) : nil
   end
 
   def valid_filter
@@ -31,7 +31,7 @@ module ParamsHelper
   end
 
   def traverse_hash(hash, keys, val=nil)
-    keys.inject(hash) do |s, k| 
+    keys.inject(hash) do |s, k|
       if k == keys.last
         s[k] = val if val
         return s[k]

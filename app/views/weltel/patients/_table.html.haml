@@ -1,7 +1,9 @@
 %table
   %tr
-    %th= t(".user_name")
-    %th= t(".study_number")
+    = sorted_table_header_tag(:user_name) do
+      = t(".user_name")
+    = sorted_table_header_tag(:study_number) do
+      = t(".study_number")
     %th= t(".phone_number")
     %th= t(".active")
     %th= t(".actions")

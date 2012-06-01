@@ -9,8 +9,7 @@ module Weltel
 		def show
 			@page = params[:page]
 			@search = params[:search]
-			@patients = Weltel::Patient.all
-
+			@patients = Weltel::Patient.active.filter(@search).page_and_sort(@page, 20, :user_name)
 			respond_with(@patients)
 		end
 	end
