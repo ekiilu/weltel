@@ -10,7 +10,7 @@ module Weltel
 		property(:created_at, DateTime)
 
 		# associations
-		belongs_to(:record, Weltel::PatientRecord)
+		belongs_to(:patient_record, Weltel::PatientRecord)
 
 		# class methods
 		#
