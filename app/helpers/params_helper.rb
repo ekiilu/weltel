@@ -22,7 +22,7 @@ module ParamsHelper
     (@filter_key && @filter_value) ? {@filter_key.to_sym => @filter_value.to_sym} : {}
   end
 
-  private
+private
   def handle_session_param(var_name, param_keys, session_keys)
     val = traverse_hash(params, param_keys) || traverse_hash(session, session_keys)
     val = nil if val.blank?
@@ -30,7 +30,7 @@ module ParamsHelper
     traverse_hash(session, session_keys, val)
   end
 
-  def traverse_hash(hash, keys, val=nil)
+  def traverse_hash(hash, keys, val = nil)
     keys.inject(hash) do |s, k|
       if k == keys.last
         s[k] = val if val

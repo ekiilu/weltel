@@ -9,6 +9,7 @@ module Weltel
     before_filter(:only => :index) do
       sort_param(:patients)
       session_param(:page, :patients)
+      session_param(:search, :patients)
     end
 
 		# patient list
