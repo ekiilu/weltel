@@ -25,8 +25,8 @@ module Weltel
 		end
 
 		# page and order
-		def self.page_and_sort(page, per_page, sort)
-			page(:page => page, :per_page => per_page, :order => sort)
+		def self.paginate(page, per_page, options = {})
+			page({:page => page, :per_page => per_page}.merge(options))
 		end
 	end
 end

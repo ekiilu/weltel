@@ -14,7 +14,8 @@ en:
       application:
         dashboard_link: "Dashboard"
         patients_link: "Patients"
-        message_templates_link: "Message Templates"
+        message_templates_link: "Templates"
+        responses_link: "Responses"
         users_link: "Users"
         roles_link: "Roles"
         update_link: "Update"
