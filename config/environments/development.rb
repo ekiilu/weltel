@@ -1,6 +1,9 @@
 # -*- encoding : utf-8 -*-
 Weltel::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
+  config.autoload_paths += 
+    Dir.glob(File.join(config.root, 'lib', '**', '*.rb')) +
+    Dir.glob(File.join(File.expand_path('~'), 'mambo', 'gems', '*', 'lib', '**', '*.rb'))
 
   # In the development environment your application's code is reloaded on
   # every request.  This slows down response time but is perfect for development

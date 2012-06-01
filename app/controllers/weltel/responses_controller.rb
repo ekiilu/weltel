@@ -2,7 +2,7 @@
 module Weltel
 	class ResponsesController < ApplicationController
 		include Authentication::AuthenticatedController
-    include ParamsHelper
+
 		respond_to(:html)
 		layout("private/application")
 

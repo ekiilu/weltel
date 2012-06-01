@@ -2,7 +2,6 @@
 module Weltel
 	class PatientsController < ApplicationController
 		include Authentication::AuthenticatedController
-    include ParamsHelper
 		respond_to(:html)
 		layout("private/application")
 
@@ -14,8 +13,7 @@ module Weltel
 
 		# patient list
 		def index
-			@search = params[:search]
-			@patients = Weltel::Patient.active.filter(@search).page_and_sort(@page, 20, valid_sort || :user_name)
+			@patients = Weltel::Patient.active.filter(@search).page_and_sort(@page, 20, valid_sort[:order] || :user_name)
 			@patients.subscribers.to_a
 			respond_with(@patients)
 		end
