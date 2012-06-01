@@ -1,9 +1,9 @@
 %table
   %tr
     = sorted_table_header_tag(:response) do
-      = t(".response")
-    = filter_table_header_tag(:state, Weltel::Response.state) do
-      = t(".state")
+      = t(".name")
+    = filter_table_header_tag(:state, Weltel::Response.value) do
+      = t(".value")
     = sorted_table_header_tag(:updated_at) do
       = t(".updated_at")
     %th= t(".actions")

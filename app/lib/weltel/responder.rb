@@ -46,8 +46,8 @@ module Weltel
 			# patient
 			patient = subscriber.patient
 
-			# record
-			record = patient.records.last
+			# inactive patient
+			return :inactive if !patient.active?
 
 			# alert
 			alerter.alert(patient, message)
@@ -55,22 +55,33 @@ module Weltel
 			body = message.body.strip.downcase
 
 			return :help if HELP_COMMANDS.include?(body)
-			return :stop if STOP_COMMANDS.include?(body)
-			return :start if START_COMMANDS.include?(body)
-			return nil if record.nil?
 
-			record.state = :open
-
-			response = Weltel::Response.first_by_response(body)
-
-			if response.nil?
-				record.change_state(:unknown)
-			else
-				record.change_state(response.state)
+			if STOP_COMMANDS.include?(body)
+				subscriber.deactivate
+				return :stop
 			end
 
-			record.save
+			if START_COMMANDS.include?(body)
+				subscriber.activate
+				return :start
+			end
 
+			# record
+			record = patient.records.last
+
+			# no record
+			return nil if record.nil?
+
+			# find response
+			response = Weltel::Response.first_by_name(body)
+
+			if response.nil? # unknown response
+				record.change_state(:unknown)
+			else # known response
+				record.change_state(response.value)
+			end
+
+			# no reply
 			nil
 		end
 	end

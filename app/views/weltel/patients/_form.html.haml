@@ -3,13 +3,16 @@
   %fieldset
     %legend= t(".legend")
     %ol
-      %li
-        = p.fields_for(:subscriber, @patient.subscriber) do |s|
+      = p.fields_for(:subscriber, @patient.subscriber) do |s|
+        %li
           = s.label(:phone_number)
           = s.telephone_field(:phone_number, {:required => true, :placeholder => "2223334444", :size => 10, :maxlength => 10})
+        %li
+          = s.label(:active)
+          = s.check_box(:active)
       %li
-        = p.label(:username)
-        = p.text_field(:username, :required => true)
+        = p.label(:user_name)
+        = p.text_field(:user_name, :required => true)
       %li
         = p.label(:study_number)
         = p.text_field(:study_number, {:size => 16})

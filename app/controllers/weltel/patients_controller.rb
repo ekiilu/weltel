@@ -7,11 +7,9 @@ module Weltel
 
 		# patient list
 		def index
-			session[:patients] ||= {}
-			@page = params[:page] || session[:patients][:page]
-			session[:patients][:page] = @page
+			@page = params[:page] || 0
 			@search = params[:search]
-			@patients = Weltel::Patient.search(@page, 20, @search, [:username])
+			@patients = Weltel::Patient.active.filter(@search).page_and_sort(@page, 20, :user_name)
 			@patients.subscribers.to_a
 			respond_with(@patients)
 		end

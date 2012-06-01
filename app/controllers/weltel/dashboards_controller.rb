@@ -9,7 +9,7 @@ module Weltel
 		def show
 			@page = params[:page]
 			@search = params[:search]
-			@patients = Weltel::Patient.search(@page, 20, @search, [:state, :username])
+			@patients = Weltel::Patient.all
 
 			respond_with(@patients)
 		end

@@ -29,9 +29,10 @@ en:
         search: "Find Patients"
         no_patients: "No Patients"
       table:
-        username: "Username"
+        user_name: "Username"
         study_number: "Study Number"
         phone_number: "Phone Number"
+        active: "Active"
         actions: "Actions"
       row:
         destroy_link: "Delete"
@@ -87,8 +88,8 @@ en:
         no_responses: "No Responses"
         new_link: "Add Response"
       table:
-        response: "Response"
-        state: "State"
+        name: "Name"
+        value: "Value"
         created_at: "Created"
         updated_at: "Updated"
         actions: "Actions"
@@ -114,10 +115,10 @@ en:
   ## validation messages
   name_format: "Name must contain only alphanumeric characters"
   phone_number_format: "Phone number must contain only numbers"
-  study_number_format: "Study Number must be valid"
+  study_number_format: "Study number must be valid"
 
   helpers:
     label:
       weltel_patient:
-        username: "User Name"
+        user_name: "User Name"
         study_number: "Study Number"

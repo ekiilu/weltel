@@ -66,18 +66,18 @@ gem "delayed_job_data_mapper", "1.0.0.rc", :git => "https://github.com/collectiv
 gem "delayed_mail"
 gem "vertical-feedbacker", "0.0.2"
 
-gem "mambo-authentication", :path => "/home/cdion/mambo/gems/authentication"
-#gem "mambo-authentication", :git => "http://dev.verticallabs.ca/git/mambo/gems/authentication.git"
+#gem "mambo-authentication", :path => "/home/cdion/mambo/gems/authentication"
+gem "mambo-authentication", :git => "http://dev.verticallabs.ca/git/mambo/gems/authentication.git"
 #gem "mambo-authentication", "0.0.7"
 
-gem "mambo-twilio_adapter", :path => "/home/cdion/mambo/gems/twilio_adapter"
-#gem "mambo-twilio_adapter", :git => "http://dev.verticallabs.ca/git/mambo/gems/twilio_adapter.git"
+#gem "mambo-twilio_adapter", :path => "/home/cdion/mambo/gems/twilio_adapter"
+gem "mambo-twilio_adapter", :git => "http://dev.verticallabs.ca/git/mambo/gems/twilio_adapter.git"
 #gem "mambo-twilio_adapter", "0.0.12"
 
-gem "mambo-sms", :path => "/home/cdion/mambo/gems/sms"
-#gem "mambo-sms", :git => "http://dev.verticallabs.ca/git/mambo/gems/sms.git"
+#gem "mambo-sms", :path => "/home/cdion/mambo/gems/sms"
+gem "mambo-sms", :git => "http://dev.verticallabs.ca/git/mambo/gems/sms.git"
 #gem "mambo-sms", "0.0.12"
 
-gem "mambo-messaging", :path => "/home/cdion/mambo/gems/messaging"
-#gem "mambo-messaging", :git => "http://dev.verticallabs.ca/git/mambo/gems/messaging.git"
+#gem "mambo-messaging", :path => "/home/cdion/mambo/gems/messaging"
+gem "mambo-messaging", :git => "http://dev.verticallabs.ca/git/mambo/gems/messaging.git"
 #gem "mambo-messaging", "0.0.5"

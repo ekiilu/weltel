@@ -1,10 +1,10 @@
 = content_tag_for(:tr, response) do
   %td
     = link_to( |
-      response.response, |
+      response.name, |
       edit_weltel_response_path(response))
 
-  %td= response.state.capitalize
+  %td= response.value.capitalize
 
   %td= l(response.updated_at)
 

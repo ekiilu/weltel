@@ -2,7 +2,7 @@
 FactoryGirl.define do
 	#
 	sequence(:user_name) do |n|
-		"username#{n}"
+		"user_name#{n}"
 	end
 
 	#
@@ -12,7 +12,7 @@ FactoryGirl.define do
 
 	#
   factory(:patient, :class => Weltel::Patient) do
-  	username FactoryGirl.generate(:user_name)
+  	user_name FactoryGirl.generate(:user_name)
   	study_number FactoryGirl.generate(:study_number)
   	created_at { DateTime.now }
   	updated_at { DateTime.now }

@@ -13,13 +13,13 @@ describe Weltel::Patient do
 
 	#
 	it "updates a patient by id" do
-		patient = create(:patient, :username => "before")
+		patient = create(:patient, :user_name => "before")
 		after = "test"
 
-		patient = Weltel::Patient.update_by_id(patient.id, {:username => after})
+		patient = Weltel::Patient.update_by_id(patient.id, {:user_name => after})
 
 		patient.should be_valid
-		patient.username.should == after
+		patient.user_name.should == after
 	end
 
 	#

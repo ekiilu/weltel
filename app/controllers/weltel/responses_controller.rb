@@ -14,7 +14,7 @@ module Weltel
 
 		#
 		def index
-			@responses = Weltel::Response.search(@page, 20, valid_sort.merge(valid_filter))
+			@responses = Weltel::Response.page_and_sort(@page, 20, valid_sort)
 
 			respond_with(@responses)
 		end

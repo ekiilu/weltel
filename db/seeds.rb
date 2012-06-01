@@ -92,24 +92,24 @@ begin
 	50.times do |p|
 		subscriber = Sms::Subscriber.create(
 			:phone_number => "60470000%02d" % p,
-			:active => true
+			:active => false
 		)
 
 		Weltel::Patient.create(
 			:subscriber => subscriber,
-			:username => "patient%02d" % p,
+			:user_name => "patient%02d" % p,
 			:study_number => "number%02d" % p
 		)
 	end
 
 	Weltel::Response.create(
-		:response => "yes",
-		:state => :positive
+		:name => "yes",
+		:value => :positive
 	)
 
 	Weltel::Response.create(
-		:response => "no",
-		:state => :negative
+		:name => "no",
+		:value => :negative
 	)
 
 rescue DataMapper::SaveFailureError => error
