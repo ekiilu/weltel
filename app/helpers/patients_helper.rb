@@ -14,13 +14,13 @@ module PatientsHelper
 
   def status_tag(patient)
     content_tag(:div, :class => "status #{patient.active_record.status.to_s}") do
-      content_tag(:h3, t('weltel.patients.status')) + t("weltel.patients.statuses.#{patient.active_record.status}")
+      t("weltel.patients.statuses.#{patient.active_record.status}")
     end
   end
 
   def contact_method_tag(patient)
     content_tag(:div, :class => "contact_method #{patient.active_record.contact_method.to_s}") do
-      content_tag(:h3, t('weltel.patients.contact')) + t("weltel.patients.contact_methods.#{patient.active_record.contact_method}")
+      t("weltel.patients.contact_methods.#{patient.active_record.contact_method}")
     end
   end
 

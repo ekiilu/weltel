@@ -17,8 +17,8 @@
 
 - if @patients.empty?
   = t(".no_patients")
--else
-  %ol#patient_list.list
-    = render(:collection => @patients, :partial => 'item', :as => :patient)
+- else
+  = render("table")
+
   - content_for(:footer) do
     = raw(@patients.pager.to_html(""))

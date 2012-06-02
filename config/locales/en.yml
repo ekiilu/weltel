@@ -83,11 +83,19 @@ en:
         study_view: 'Study view'
         no_patients: "No Patients"
         search: "Find Patients"
-      item:
+      table:
+        user_name: "Username"
+        study_number: "Study number"
+        phone_number: "Phone number"
+        initial_state: "Initial state"
+        current_state: "Current state"
+        status: "Status"
+        contact_method: "Contact method"
+      row:
         messages_link:
-          zero: "No New Messages..."
-          one: "1 New Message..."
-          other: "%{count} New Messages..."
+          zero: "No New Messages"
+          one: "1 New Message"
+          other: "%{count} New Messages"
     updates:
       show:
         no_update: "Application is up to date"

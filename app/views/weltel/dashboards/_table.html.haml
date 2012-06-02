@@ -1,0 +1,13 @@
+%table
+  %tr
+    = sorted_table_header_tag(:user_name) do
+      = t(".user_name")
+    = sorted_table_header_tag(:study_number) do
+      = t(".study_number")
+    %th= t(".phone_number")
+    %th= t(".initial_state")
+    %th= t(".current_state")
+    %th= t(".status")
+    %th= t(".contact_method")
+    %th
+  = render({:collection => @patients, :partial => "row", :as => :patient})

@@ -1,0 +1,33 @@
+%tr.item
+  %td
+    %h3= link_to(patient.user_name, edit_weltel_patient_path(patient))
+  %td
+    %h3= patient.study_number
+  %td
+    %h3= patient.subscriber.phone_number
+  %td
+    = initial_state_tag(patient)
+  %td
+    = active_state_tag(patient)
+  %td
+    = status_tag(patient)
+  %td
+    = contact_method_tag(patient)
+  %td.actions
+    = link_to(t(".messages_link", :count => patient.subscriber.messages.received.count), weltel_patient_messages_path(patient), :class => "button")
+
+%tr
+  - first_sent = patient.active_record.messages.sent.first
+  %td.first{:colspan => 4}
+    - if first_sent
+      - first_received = patient.active_record.messages.received.first
+      - if first_sent
+        %h3 Initial response
+        = exchange_tag(nil, first_received, [nil, 'messaging.no_initial_receive'])
+    - else
+      = exchange_tag(nil, nil, ['messaging.no_initial_send', nil])
+  %td.last{:colspan => 4}
+    - if first_received
+      %h3 Most recent messages
+      = exchange_tag(patient.active_record.messages.sent.last, patient.active_record.messages.received.last)
+
