@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 Weltel::Application.routes.draw do
 	# root
-	root(:to => "Weltel::Patients#index")
+	root(:to => "weltel/dashboards#show")
 
 	mount Authentication::Engine => "/authentication"
 	mount Sms::Engine => "/sms"
