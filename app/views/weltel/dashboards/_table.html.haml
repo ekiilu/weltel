@@ -4,10 +4,15 @@
       = t(".user_name")
     = sorted_table_header_tag(:study_number) do
       = t(".study_number")
-    %th= t(".phone_number")
-    %th= t(".initial_state")
-    %th= t(".current_state")
-    %th= t(".status")
-    %th= t(".contact_method")
-    %th
+    = sorted_table_header_tag(:phone_number) do
+      = t(".phone_number")
+    = filter_table_header_tag(:initial_state, Weltel::PatientRecordState.value) do
+      = t(".initial_state")
+    = filter_table_header_tag(:current_state, Weltel::PatientRecordState.value) do
+      = t(".current_state")
+    = filter_table_header_tag(:status, Weltel::PatientRecord.status) do
+      = t(".status")
+    = filter_table_header_tag(:contact_method, Weltel::PatientRecord.contact_method) do
+      = t(".contact_method")
+    %th= t(".actions")
   = render({:collection => @patients, :partial => "row", :as => :patient})

@@ -9,7 +9,7 @@ module PatientsHelper
   end
 
   def state_tag(name, value)
-    content_tag(:div, t("weltel.patients.states.#{value}"), :class => "state #{name.to_s}")
+    content_tag(:div, t("weltel.patients.states.#{value}"), :class => "state #{value.to_s}")
   end
 
   def status_tag(patient)

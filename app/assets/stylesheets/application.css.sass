@@ -224,18 +224,19 @@ table
     a
       color #222
       text-shadow: none
-    .positive
-      background: $positivecolor
-    .negative
-      background: $negativecolor
-    .unknown
-      background: $unknowncolor
-    .late
-      background: $latecolor
-    .open
-      background: $opencolor
-    .closed
-      background: $closedcolor
+
+.state.positive, .tabs .positive
+  background: $positivecolor
+.state.negative, .tabs .negative
+  background: $negativecolor
+.state.unknown, .tabs .unknown
+  background: $unknowncolor
+.state.late, .tabs .late
+  background: $latecolor
+.status.open, .tabs .open
+  background: $opencolor
+.status.closed, .tabs .closed
+  background: $closedcolor
 
 #content
   padding: 0px 20px 20px 20px
