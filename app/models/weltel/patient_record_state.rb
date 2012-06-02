@@ -2,11 +2,12 @@
 module Weltel
 	class PatientRecordState
 		include DataMapper::Resource
+    VALUES = [:unknown, :positive, :negative, :late]
 
 		# properties
 		property(:id, Serial)
 		property(:active, Boolean, {:index => true, :required => true, :default => true})
-		property(:value, Enum[:unknown, :positive, :negative, :late], {:index => true, :required => true, :default => :unknown})
+		property(:value, Enum[*VALUES], {:index => true, :required => true, :default => :unknown})
 		property(:created_at, DateTime)
 
 		# associations

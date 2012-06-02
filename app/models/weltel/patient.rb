@@ -63,6 +63,21 @@ module Weltel
 			all(:active_record => {:created_on.not => date})
 		end
 
+		# find by patient state
+		def self.by_state(state)
+			all(:active_record => {:active_state => {:value => state}})
+		end
+
+		# find by record status (open/closed)
+		def self.by_status(status)
+			all(:active_record => {:status => status})
+		end
+
+    #
+    def self.with_active_record
+      all(:active_record.not => nil)
+    end
+
 		# create
 		def self.create_by(params)
 			create(params)
@@ -82,5 +97,6 @@ module Weltel
 			patient.destroy
 			patient
 		end
+
 	end
 end

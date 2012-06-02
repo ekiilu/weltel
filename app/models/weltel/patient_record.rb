@@ -2,12 +2,13 @@
 module Weltel
 	class PatientRecord
 		include DataMapper::Resource
+    STATUSES = [:open, :closed] 
 
 		# properties
 		property(:id, Serial)
 		property(:active, Boolean, {:index => true, :required => true, :default => true})
 		property(:created_on, Date, {:index => true, :required => true})
-		property(:status, Enum[:open, :closed], {:index => true, :required => true, :default => :open})
+		property(:status, Enum[*STATUSES], {:index => true, :required => true, :default => :open})
 		property(:created_at, DateTime)
 		property(:updated_at, DateTime)
 
@@ -19,8 +20,12 @@ module Weltel
 		has(n, :states, Weltel::PatientRecordState, :constraint => :destroy)
 		has(1, :active_state, Weltel::PatientRecordState, :active => true)
 
+    after :create do
+      create_state(:unknown)
+    end
+
 		# instance methods
-		#
+    #
 		def create_outgoing_message(body)
 			messages.create(
 				:subscriber => patient.subscriber,
@@ -32,7 +37,7 @@ module Weltel
 
 		#
 		def create_state(value)
-			states.create(:value => value)
+			self.states.create(:value => value)
 		end
 
 		#

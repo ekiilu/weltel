@@ -8,12 +8,7 @@
   .body
     %h3= link_to("#{patient.user_name} - #{patient.study_number} - #{patient.subscriber.phone_number}", edit_weltel_patient_path(patient))
 
-    - if patient.active_record.active_state == :ok
-      %h3= t(".ok")
-    - elsif patient.active_record.active_state == :not_ok
-      %h3= t(".not_ok")
-    - else
-      %h3= t(".unknown")
+    %h3= state(patient)
 
   .last_exchange
     - last_sent = patient.subscriber.messages.sent.last

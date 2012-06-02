@@ -2,14 +2,28 @@
 module Weltel
 	class DashboardsController < ApplicationController
 		include Authentication::AuthenticatedController
+    include DashboardsHelper
+
 		respond_to(:html)
 		layout("private/application")
+    before_filter do
+      session_param(:page, :dashboard)
+      session_param(:search, :dashboard)
+      session_param(:view, :dashboard, :study)
+      if is_study_dashboard?(@view)
+        session_param(:state, :dashboard, :not_ok) 
+      else
+        session_param(:status, :dashboard, :open) 
+      end
+    end
 
 		#
 		def show
-			@page = params[:page]
-			@search = params[:search]
-			@patients = Weltel::Patient.active.filter(@search).page_and_sort(@page, 20, :user_name)
+      if is_study_dashboard?(@view) 
+        @patients = Weltel::Patient.active.with_active_record.search(@search).by_state(@state.to_sym).paginate(@page, 20, valid_sort)
+      else
+        @patients = Weltel::Patient.active.with_active_record.search(@search).by_status(@status.to_sym).paginate(@page, 20, valid_sort)
+      end
 			respond_with(@patients)
 		end
 	end

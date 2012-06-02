@@ -6,7 +6,7 @@ module Weltel
 		layout("private/application")
 
     before_filter(:only => :index) do
-      sort_param(:patients)
+      sort_param(:patients, :user_name => :asc)
       session_param(:page, :patients)
       session_param(:search, :patients)
     end

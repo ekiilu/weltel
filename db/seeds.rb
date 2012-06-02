@@ -105,6 +105,11 @@ begin
 		)
 	end
 
+  Weltel::Patient.all[0...25].each do |p|
+    p.create_record(Time.now)
+    p.save
+  end
+
 	Weltel::Response.create(
 		:name => "yes",
 		:value => :positive

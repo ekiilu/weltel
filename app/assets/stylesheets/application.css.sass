@@ -23,6 +23,12 @@ $gray: #dddddd
 $darkred: #660000
 $colorshift: 7%
 $fontcolor: #333333
+$positivecolor: #00cc00
+$negativecolor: #cc0000
+$unknowncolor: #ffff00
+$latecolor: #ff9900
+$opencolor: #fff
+$closedcolor: #bbbbbb
 
 =bg-gradient($top, $bottom)
   +background(linear-gradient(color-stops($top, $bottom)))
@@ -209,6 +215,27 @@ table
     margin-right: 10px
   form
     float: right
+
+  .tabs, .views
+    a
+      padding: 5px
+      display: inline-block
+  .tabs
+    a
+      color #222
+      text-shadow: none
+    .positive
+      background: $positivecolor
+    .negative
+      background: $negativecolor
+    .unknown
+      background: $unknowncolor
+    .late
+      background: $latecolor
+    .open
+      background: $opencolor
+    .closed
+      background: $closedcolor
 
 #content
   padding: 0px 20px 20px 20px

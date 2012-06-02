@@ -7,9 +7,9 @@ module Weltel
 		layout("private/application")
 
     before_filter(:only => :index) do
-      sort_param(:responses)
+      sort_param(:responses, :username => :asc)
       filter_param(:responses)
-      session_param(:page, :responses)
+      session_param(:page, :responses, nil)
     end
 
 		#

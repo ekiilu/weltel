@@ -1,7 +1,19 @@
-- content_for :actions do
+- content_for(:actions)do
   = form_tag(weltel_dashboard_path, :method => :get) do
     = search_field_tag(:search, @search, {:size => 40, :tabindex => 1})
     = submit_tag(t(".search"))
+
+  .views
+    = link_to(t('.study_view'), weltel_dashboard_path(:view => :study), :class => active_class(@view == 'study'))
+    = link_to(t('.clinic_view'), weltel_dashboard_path(:view => :clinic), :class => active_class(@view == 'clinic'))
+
+  .tabs
+    - if is_study_dashboard?(@view)
+      - Weltel::PatientRecordState::VALUES.each do |state|
+        = link_to(t("weltel.patients.states.#{state.to_s}"), params.merge(:state => state), :class => active_class(state.to_s == @state) + ' ' + state.to_s)
+    - else
+      - Weltel::PatientRecord::STATUSES.each do |status|
+        = link_to(t("weltel.patients.statuses.#{status.to_s}"), params.merge(:status => status), :class => active_class(status.to_s == @status) + ' ' + status.to_s)
 
 - if @patients.empty?
   = t(".no_patients")
