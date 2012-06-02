@@ -91,6 +91,7 @@ en:
         current_state: "Current state"
         status: "Status"
         contact_method: "Contact method"
+        actions: 'Actions'
       row:
         messages_link:
           zero: "No New Messages"
