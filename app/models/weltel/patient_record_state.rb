@@ -9,6 +9,7 @@ module Weltel
 		property(:active, Boolean, {:index => true, :required => true, :default => true})
 		property(:value, Enum[*VALUES], {:index => true, :required => true, :default => :unknown})
 		property(:created_at, DateTime)
+    property(:user_id, Integer)
 
 		# associations
 		belongs_to(:patient_record, Weltel::PatientRecord)

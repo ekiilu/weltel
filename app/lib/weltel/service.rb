@@ -41,7 +41,7 @@ module Weltel
 
 			Weltel::Record.transaction do
 				records.each do |record|
-					record.change_state(:late)
+					record.change_state(:late, SystemUser.get)
 				end
 			end
 		end

@@ -42,9 +42,9 @@ GIT
 
 GIT
   remote: http://dev.verticallabs.ca/git/mambo/gems/support.git
-  revision: c952338207347fc85cb4889c36b1c0440aec892b
+  revision: e0b1fe8e0e5c0e1aafdc2a1707d474149a4934de
   specs:
-    mambo-support (0.0.2)
+    mambo-support (0.0.3)
       rails
 
 GIT

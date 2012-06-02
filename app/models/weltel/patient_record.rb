@@ -21,7 +21,7 @@ module Weltel
 		has(1, :active_state, Weltel::PatientRecordState, :active => true)
 
     after :create do
-      create_state(:unknown)
+      create_state(:unknown, SystemUser.get)
     end
 
 		# instance methods
@@ -36,24 +36,22 @@ module Weltel
 		end
 
 		#
-		def create_state(value)
-			self.states.create(:value => value)
+		def create_state(value, user)
+			self.states.create(:value => value, :user_id => user.id)
 		end
 
 		#
-		def change_state(value)
+		def change_state(value, user)
 			Weltel::PatientRecord.transaction do
 				status = value == :positive ? :open : :closed
 				save
 
-				if active_state == nil
-					create_state(value)
-				elsif active_state.value == value
+				if active_state.value == value
 					active_state
 				else
 					active_state.active = false
 					active_state.save
-					create_state(value)
+					create_state(value, user)
 				end
 			end
 		end

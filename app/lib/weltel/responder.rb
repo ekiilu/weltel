@@ -76,9 +76,9 @@ module Weltel
 			response = Weltel::Response.first_by_name(body)
 
 			if response.nil? # unknown response
-				record.change_state(:unknown)
+				record.change_state(:unknown, SystemUser.get)
 			else # known response
-				record.change_state(response.value)
+				record.change_state(response.value, SystemUser.get)
 			end
 
 			# no reply
