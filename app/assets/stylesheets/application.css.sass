@@ -281,20 +281,19 @@ ul.pager
       margin-bottom: 10px
       width: 100%
 
-.last_exchange
-  .outgoing
+.exchange
+  .sent, .received, .null
     +border-radius($radius)
     +box-shadow(0px 1px 0px rgba(0, 0, 0, 0.15))
+    border: 1px solid
     padding: 8px
+  .sent
     background: #fff
-    border: 1px solid
     margin-bottom: 10px
-  .incoming
-    +border-radius($radius)
-    +box-shadow(0px 1px 0px rgba(0, 0, 0, 0.15))
-    padding: 8px
+  .received
     background: #bbb
-    border: 1px solid
+  .null
+    background: $closedcolor
   padding: 10px 0px
 
 .new_credentials

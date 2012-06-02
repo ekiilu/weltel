@@ -8,14 +8,21 @@
   .body
     %h3= link_to("#{patient.user_name} - #{patient.study_number} - #{patient.subscriber.phone_number}", edit_weltel_patient_path(patient))
 
-    %h3= state(patient)
+  = initial_state_tag(patient)
+  = active_state_tag(patient)
+  = status_tag(patient)
+  = contact_method_tag(patient)
 
-  .last_exchange
-    - last_sent = patient.subscriber.messages.sent.last
-    - if !last_sent.nil?
-      .outgoing
-        = last_sent.body
-      - last_received = last_sent.children.last
-      - if !last_received.nil?
-        .incoming
-          = last_received.body
+  - first_sent = patient.active_record.messages.sent.first
+  - if first_sent
+    .first
+    - first_received = patient.active_record.messages.received.first
+    %h3 Initial response
+    = exchange_tag(nil, first_received, [nil, 'messaging.no_initial_receive'])
+    - if first_received
+      %h3 Most recent messages
+      .last
+        = exchange_tag(patient.active_record.messages.sent.last, patient.active_record.messages.received.last)
+  - else
+    = exchange_tag(nil, nil, ['messaging.no_initial_send', nil])
+

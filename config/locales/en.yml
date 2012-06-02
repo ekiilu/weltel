@@ -25,6 +25,8 @@ en:
       created: "Patient Created"
       updated: "Patient Updated"
       destroyed: "Patient Deleted"
+      contact: 'Contact method'
+      status: 'Status'
       statuses:
         open: "Open"
         closed: "Closed"
@@ -33,6 +35,10 @@ en:
         negative: "Not Ok"
         unknown: "Unknown"
         late: "Late"
+      contact_methods:
+        none: 'None'
+        phone: "Phone"
+        text: "Text"
       index:
         new_link: "Add Patient..."
         search: "Find Patients"
@@ -116,6 +122,13 @@ en:
         legend: "Audit"
         created_at: "Created"
         updated_at: "Updated"
+
+  ## messaging
+  messaging:
+    no_initial_send: "No message sent yet this week"
+    no_initial_receive: "No response yet this week"
+    not_sent: "No message sent"
+    not_received: "No message received"
 
   ## feedback
   submit_title: "Submit feedback"

@@ -11,4 +11,8 @@ class AppConfig
     @data ||= ::RecursiveOpenStruct.new(self.load)
     @data.send(m, *args) 
   end  
+
+  def self.system_user
+    @system_user ||= Authentication::User.all(:email_address => 'system@verticallabs.ca').first
+  end
 end
