@@ -20,6 +20,7 @@ module Weltel
 
 		# associations
 		belongs_to(:subscriber, Sms::Subscriber)
+		belongs_to(:clinic, Weltel::Clinic, :required => false)
 		has(n, :records, Weltel::PatientRecord, :constraint => :destroy)
 		has(1, :active_record, Weltel::PatientRecord, :active => true)
 

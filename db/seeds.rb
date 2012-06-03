@@ -126,6 +126,10 @@ begin
 		:value => :negative
 	)
 
+	Weltel::Clinic.create(
+		:name => "BCCDC"
+	)
+
 rescue DataMapper::SaveFailureError => error
 	Rails.logger.error(error.resource.errors.inspect)
 	raise error

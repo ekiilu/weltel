@@ -18,6 +18,7 @@ en:
         responses_link: "Responses"
         users_link: "Users"
         roles_link: "Roles"
+        clinics_link: "Clinics"
         update_link: "Update"
         logout_link: "Logout"
   weltel:
@@ -47,9 +48,11 @@ en:
         user_name: "Username"
         study_number: "Study Number"
         phone_number: "Phone Number"
+        clinic: "Clinic"
         active: "Active"
         actions: "Actions"
       row:
+        no_clinic: ""
         edit_link: "Edit..."
         destroy_link: "Delete"
         destroy_disable: "Deleting..."
@@ -107,7 +110,7 @@ en:
     responses:
       created: "Response Created"
       updated: "Response Updated"
-      destroyed: "Response Destroyed"
+      destroyed: "Response Deleted"
       index:
         no_responses: "No Responses"
         new_link: "Add Response..."
@@ -131,6 +134,31 @@ en:
         legend: "Audit"
         created_at: "Created"
         updated_at: "Updated"
+    clinics:
+      created: "Clinic Created"
+      updated: "Clinic Updated"
+      destroyed: "Clinic Deleted"
+      index:
+        no_clinics: "No Clinics"
+        new_link: "Add Clinic..."
+      table:
+        name: "Clinic"
+        updated_at: "Updated"
+        actions: "Actions"
+      row:
+        edit_link: "Edit..."
+        destroy_link: "Delete"
+        destroy_confirm: "Are you sure you want to delete this clinic?"
+        destroy_disable: "Deleting..."
+      edit:
+        legend: "Audit"
+        created_at: "Created"
+        updated_at: "Updated"
+      form:
+        legend: "Clinic"
+        cancel: "Cancel"
+        commit: "Save Clinic"
+        commit_disable: "Saving Clinic..."
 
   ## messaging
   messaging:

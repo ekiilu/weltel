@@ -1,0 +1,11 @@
+- content_for(:actions) do
+  = link_to(t(".new_link"), new_weltel_clinic_path, :class => "button")
+
+- if @clinics.empty?
+  = t(".no_clinics")
+- else
+  = render("table")
+
+  - content_for(:footer) do
+    //= raw(@clinics.pager.to_html(""))
+

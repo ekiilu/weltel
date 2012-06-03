@@ -32,5 +32,8 @@ Weltel::Application.routes.draw do
 
 		# responses
 		resources(:responses, :only => [:index, :new, :create, :edit, :update, :destroy])
+
+		# clinics
+		resources(:clinics, :only => [:index, :new, :create, :edit, :update, :destroy])
 	end
 end

@@ -5,6 +5,12 @@
 
   %td= patient.subscriber.phone_number
 
+  %td
+    - if patient.clinic.nil?
+      = t(".no_clinic")
+    - else
+      = patient.clinic.name
+
   %td= patient.subscriber.active
 
   %td

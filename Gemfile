@@ -85,6 +85,6 @@ gem "mambo-sms", :git => "#{DEV_GIT}/sms.git"
 gem "mambo-messaging", :git => "#{DEV_GIT}/messaging.git"
 #gem "mambo-messaging", "0.0.5"
 
-#gem "mambo-support", :path => "#{HOME_PATH}/support"
-gem "mambo-support", :git => "#{DEV_GIT}/support.git"
+gem "mambo-support", :path => "#{HOME_PATH}/support"
+#gem "mambo-support", :git => "#{DEV_GIT}/support.git"
 #gem "mambo-support", "0.0.1"
