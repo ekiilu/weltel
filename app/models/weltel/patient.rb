@@ -30,7 +30,11 @@ module Weltel
 		# instance methods
 		#
 		def create_record(date)
-			records.create(:created_on => date)
+			record = records.create(:created_on => date)
+      active_record.update(:active => false) if active_record
+      records.all(:order => [:created_on.desc]).last.update(:active => true)
+      
+      record
 		end
 
 		# class methods

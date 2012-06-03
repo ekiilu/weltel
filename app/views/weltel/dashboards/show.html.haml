@@ -4,16 +4,16 @@
     = submit_tag(t(".search"))
 
   .views
-    = link_to(t('.study_view'), weltel_dashboard_path(:view => :study), :class => active_class(@view == 'study'))
-    = link_to(t('.clinic_view'), weltel_dashboard_path(:view => :clinic), :class => active_class(@view == 'clinic'))
+    = link_to(t('.study_view'), weltel_dashboard_path(:view => :study, :page => 1), :class => active_class(@view.to_sym == :study))
+    = link_to(t('.clinic_view'), weltel_dashboard_path(:view => :clinic, :page => 1), :class => active_class(@view.to_sym == :clinic))
 
   .tabs
     - if is_study_dashboard?(@view)
       - Weltel::PatientRecordState::VALUES.each do |state|
-        = link_to(t("weltel.patients.states.#{state.to_s}"), params.merge(:state => state), :class => active_class(state.to_s == @state) + ' ' + state.to_s)
+        = link_to(t("weltel.patients.states.#{state.to_s}"), params.merge(:state => state, :page => 1), :class => "#{active_class(state == @state.to_sym)} #{state.to_s} state")
     - else
       - Weltel::PatientRecord::STATUSES.each do |status|
-        = link_to(t("weltel.patients.statuses.#{status.to_s}"), params.merge(:status => status), :class => active_class(status.to_s == @status) + ' ' + status.to_s)
+        = link_to(t("weltel.patients.statuses.#{status.to_s}"), params.merge(:status => status, :page => 1), :class => "#{active_class(status == @status.to_sym)} #{status.to_s} status")
 
 - if @patients.empty?
   = t(".no_patients")

@@ -110,6 +110,11 @@ begin
     p.save
   end
 
+  Weltel::Patient.all[0...40].each do |p|
+    p.active_record.messages.create(:status => :Sent, :phone_number => '7783175526', :body => 'Are you ok?')
+    p.active_record.messages.create(:status => :Received, :phone_number => '7783175526', :body => 'hi')
+  end
+
   {(0..9) => :unknown, (10..19) => :positive, (20..29) => :negative, (30..39) => :late }.each_pair do |range, state|
     Weltel::Patient.all[range].each do |p|
       p.active_record.change_state(state, AppConfig.system_user)

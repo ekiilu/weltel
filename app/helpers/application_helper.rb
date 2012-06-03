@@ -12,4 +12,5 @@ module ApplicationHelper
       new_session_path
     end
   end
+
 end

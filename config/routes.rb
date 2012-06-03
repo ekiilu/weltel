@@ -28,6 +28,7 @@ Weltel::Application.routes.draw do
 		# patients
 		resources(:patients, :only => [:index, :new, :create, :edit, :update, :destroy]) do
 			resources(:messages, :controller => :patient_messages, :only => [:index, :new, :create])
+			resources(:records, :controller => :patient_records, :only => [:update])
 		end
 
 		# responses

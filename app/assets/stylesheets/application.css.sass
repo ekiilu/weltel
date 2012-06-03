@@ -116,6 +116,11 @@ table
     color: white
   th, td
     padding: 5px
+    vertical-align: top
+  tr.patient_first
+    border-bottom: 1px solid $gray
+  tr.patient_last
+    border-bottom: 4px solid $themecolor
 
 .sent
   background: #fff
@@ -178,7 +183,7 @@ table
     display: block
     min-height: 32px
     a
-      font-size: 1.3em
+      font-size: 1.2em
       +box-shadow(1px 2px 2px rgba(0, 0, 0, 0.3))
       background: #fff
       +bg-gradient(white, darken(white, $colorshift * 2))
@@ -222,11 +227,21 @@ table
     a
       padding: 5px
       display: inline-block
+      min-width: 100px
+      text-align: center
+      margin: 0px 5px
+    a.active
+      border: 1px solid $themecolor
   .tabs
     a
       color #222
       text-shadow: none
+  .views
+    margin-bottom: 10px
 
+.state
+  padding: 5px
+  text-align: center
 .state.positive, .tabs .positive
   background: $positivecolor
 .state.negative, .tabs .negative

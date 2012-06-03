@@ -34,7 +34,11 @@ module PatientsHelper
         ''
       end.html_safe + 
       if received
-        content_tag(:div, sent.body, :class => 'received message')
+        content_tag(:div, :class => 'received message') do
+          link_to('+', weltel_responses_path(:weltel_response => {:value => :positive, :name => u(received.body), :url_encoded => true}), :method => :post) + 
+          link_to('-', weltel_responses_path(:weltel_response => {:value => :negative, :name => u(received.body), :url_encoded => true}), :method => :post) + 
+          received.body
+        end
       elsif alternates[1]
         content_tag(:div, t(alternates[1]), :class => 'null')
       else
