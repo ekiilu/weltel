@@ -118,9 +118,10 @@ table
     padding: 5px
     vertical-align: top
   tr.patient_first
-    border-bottom: 1px solid $gray
+    border-top: 2px solid $themecolor
   tr.patient_last
-    border-bottom: 4px solid $themecolor
+    display: none
+    border-top: 1px solid $gray
 
 .sent
   background: #fff
@@ -258,11 +259,11 @@ table
 #content
   padding: 0px 20px 20px 20px
 
-ul.pager
+.pagination
   text-align: center
   display: inline-block
   padding: 5px
-  li
+  a, span, em
     +border-radius($pager-radius)
     background: #fff
     color: #fff
@@ -271,12 +272,11 @@ ul.pager
     margin: 0px
     padding: 4px
     color: darken($themecolor, $colorshift)
-  li.active
+  em.current 
     background: darken($themecolor, $colorshift)
     border: solid 1px darken($themecolor, $colorshift)
-    a
-      color: #fff
-      font-weight: bold
+    color: #fff
+    font-weight: bold
 
 .flash_messages
   padding: 5px

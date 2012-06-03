@@ -17,6 +17,7 @@
       = select_tag(:contact_method, options_for_enum(Weltel::PatientRecord.contact_method, patient.active_record.contact_method), :onchange => submit_form)
   %td.actions
     = link_to(t(".messages_link", :count => patient.subscriber.messages.received.count), weltel_patient_messages_path(patient), :class => "button")
+    = link_to('+', '#', :class => 'toggle_details')
 
 %tr.patient_last
   - first_sent = patient.active_record.messages.sent.first

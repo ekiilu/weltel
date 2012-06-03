@@ -20,9 +20,9 @@ module Weltel
 		#
 		def show
       if is_study_dashboard?(@view)
-        @patients = Weltel::Patient.active.with_active_record.search(@search).by_state(@state.to_sym).paginate(:page => @page, :per_page => 10)
+        @patients = Weltel::Patient.active.with_active_record.search(@search).by_state(@state.to_sym).paginate(:page => @page, :per_page => 20)
       else
-        @patients = Weltel::Patient.active.with_active_record.search(@search).by_status(@status.to_sym).paginate(:page => @page, :per_page => 10)
+        @patients = Weltel::Patient.active.with_active_record.search(@search).by_status(@status.to_sym).paginate(:page => @page, :per_page => 20)
       end
 			respond_with(@patients)
 		end
