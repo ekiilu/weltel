@@ -7,8 +7,8 @@
 
 - if @patients.empty?
   = t(".no_patients")
--else
+- else
   = render("table")
 
   - content_for(:footer) do
-    = raw(@patients.pager.to_html(""))
+    = will_paginate(@patients)

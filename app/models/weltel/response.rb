@@ -23,10 +23,5 @@ module Weltel
 		def self.first_by_name(name)
 			first(:name => name)
 		end
-
-		# page and order
-		def self.paginate(page, per_page, options = {})
-			page({:page => page, :per_page => per_page}.merge(options))
-		end
 	end
 end

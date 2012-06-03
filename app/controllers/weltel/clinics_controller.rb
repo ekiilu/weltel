@@ -10,7 +10,7 @@ module Weltel
 
 		#
 		def index
-			@clinics = Weltel::Clinic.sorted_by(:name)
+			@clinics = Weltel::Clinic.sorted_by(:name).paginate(:page => 1, :per_page => 2)
 			respond_with(@clinics)
 		end
 

@@ -14,7 +14,7 @@ module Weltel
 
 		#
 		def index
-			@responses = Weltel::Response.all(valid_filter).paginate(@page, 20, valid_sort)
+			@responses = Weltel::Response.all(valid_filter).paginate(:page => @page, :per_page => 20)
 			respond_with(@responses)
 		end
 

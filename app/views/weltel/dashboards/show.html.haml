@@ -21,4 +21,4 @@
   = render("table")
 
   - content_for(:footer) do
-    = raw(@patients.pager.to_html(""))
+    = will_paginate(@patients)

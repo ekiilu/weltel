@@ -14,7 +14,7 @@ module Weltel
 		# patient list
 		def index
 			@clinics = Weltel::Clinic.sorted_by(:name)
-			@patients = Weltel::Patient.active.search(@search).paginate(@page, 20, valid_sort)
+			@patients = Weltel::Patient.active.search(@search).paginate(:page => @page, :per_page => 20)
 			@patients.clinics.to_a
 			@patients.subscribers.to_a
 			respond_with(@patients)

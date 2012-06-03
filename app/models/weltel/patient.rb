@@ -49,11 +49,6 @@ module Weltel
 			end
 		end
 
-		# page and order patients
-		def self.paginate(page, per_page, options = {})
-			page({:page => page, :per_page => per_page}.merge(options))
-		end
-
 		#
 		def self.with_active_subscriber
 			all(:subscriber => {:active => true})

@@ -18,7 +18,6 @@ gem "dm-aggregates", DM_VERSION
 gem "dm-timestamps", DM_VERSION
 gem "dm-observer", DM_VERSION
 gem "dm-serializer", DM_VERSION
-gem "dm-pager"
 # some fork that updates gemspec to work with dm-core 1.2.0
 gem "dm-accepts_nested_attributes", :git => "https://github.com/waelchatila/dm-accepts_nested_attributes.git"
 
@@ -62,9 +61,9 @@ gem "exception_notification"
 gem "whenever", :require => false
 gem "delayed_job"
 gem "delayed_job_data_mapper", "1.0.0.rc", :git => "https://github.com/collectiveidea/delayed_job_data_mapper.git"
-
 gem "delayed_mail"
 gem "vertical-feedbacker", "0.0.2"
+gem "will_paginate"
 
 HOME_PATH = File.expand_path('~/mambo/gems')
 DEV_GIT = "http://dev.verticallabs.ca/git/mambo/gems"
@@ -85,6 +84,6 @@ gem "mambo-sms", :git => "#{DEV_GIT}/sms.git"
 gem "mambo-messaging", :git => "#{DEV_GIT}/messaging.git"
 #gem "mambo-messaging", "0.0.5"
 
-gem "mambo-support", :path => "#{HOME_PATH}/support"
-#gem "mambo-support", :git => "#{DEV_GIT}/support.git"
+#gem "mambo-support", :path => "#{HOME_PATH}/support"
+gem "mambo-support", :git => "#{DEV_GIT}/support.git"
 #gem "mambo-support", "0.0.1"
