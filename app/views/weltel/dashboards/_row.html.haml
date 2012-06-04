@@ -1,4 +1,4 @@
-%tr.item
+%tr.patient_first.item
   %td
     %h3= link_to(patient.user_name, edit_weltel_patient_path(patient))
   %td
@@ -10,13 +10,16 @@
   %td
     = active_state_tag(patient)
   %td
-    = status_tag(patient)
+    = form_for(patient.active_record, :url => weltel_patient_record_path(patient, patient.active_record)) do |f|
+      = select_tag(:status, options_for_enum(Weltel::PatientRecord.status, patient.active_record.status), :onchange => submit_form)
   %td
-    = contact_method_tag(patient)
+    = form_for(patient.active_record, :url => weltel_patient_record_path(patient, patient.active_record)) do |f|
+      = select_tag(:contact_method, options_for_enum(Weltel::PatientRecord.contact_method, patient.active_record.contact_method), :onchange => submit_form)
   %td.actions
     = link_to(t(".messages_link", :count => patient.subscriber.messages.received.count), weltel_patient_messages_path(patient), :class => "button")
+    = link_to('+', '#', :class => 'toggle_details')
 
-%tr
+%tr.patient_last
   - first_sent = patient.active_record.messages.sent.first
   %td.first{:colspan => 4}
     - if first_sent

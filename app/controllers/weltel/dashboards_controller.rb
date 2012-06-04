@@ -12,7 +12,7 @@ module Weltel
       session_param(:dashboard, :search, "")
       session_param(:dashboard, :view, :study)
       if is_study_dashboard?(@view)
-        session_param(:dashboard, :state, :not_ok)
+        session_param(:dashboard, :state, :negative)
       else
         session_param(:dashboard, :status, :open)
       end

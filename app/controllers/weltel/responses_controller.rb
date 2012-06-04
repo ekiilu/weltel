@@ -26,6 +26,7 @@ module Weltel
 		#
 		def create
 			begin
+        params[:weltel_response][:name] = CGI::unescape(params[:weltel_response][:name]) if params[:url_encoded]
 				@response = Weltel::Response.create(params[:weltel_response])
 				flash[:notice] = t(:created)
 				respond_with(@response, :location => weltel_responses_path)
