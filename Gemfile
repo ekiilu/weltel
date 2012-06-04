@@ -69,21 +69,21 @@ HOME_PATH = File.expand_path('~/mambo/gems')
 DEV_GIT = "http://dev.verticallabs.ca/git/mambo/gems"
 
 #gem "mambo-authentication", :path => "#{HOME_PATH}/authentication"
-gem "mambo-authentication", :git => "#{DEV_GIT}/authentication.git"
-#gem "mambo-authentication", "0.0.7"
+#gem "mambo-authentication", :git => "#{DEV_GIT}/authentication.git"
+gem "mambo-authentication", "0.0.8"
 
 #gem "mambo-twilio_adapter", :path => "#{HOME_PATH}/twilio_adapter"
-gem "mambo-twilio_adapter", :git => "#{DEV_GIT}/twilio_adapter.git"
-#gem "mambo-twilio_adapter", "0.0.12"
+#gem "mambo-twilio_adapter", :git => "#{DEV_GIT}/twilio_adapter.git"
+gem "mambo-twilio_adapter", "0.0.12"
 
 #gem "mambo-sms", :path => "#{HOME_PATH}/sms"
-gem "mambo-sms", :git => "#{DEV_GIT}/sms.git"
-#gem "mambo-sms", "0.0.12"
+#gem "mambo-sms", :git => "#{DEV_GIT}/sms.git"
+gem "mambo-sms", "0.0.13"
 
 #gem "mambo-messaging", :path => "#{HOME_PATH}/messaging"
-gem "mambo-messaging", :git => "#{DEV_GIT}/messaging.git"
-#gem "mambo-messaging", "0.0.5"
+#gem "mambo-messaging", :git => "#{DEV_GIT}/messaging.git"
+gem "mambo-messaging", "0.0.6"
 
 #gem "mambo-support", :path => "#{HOME_PATH}/support"
-gem "mambo-support", :git => "#{DEV_GIT}/support.git"
-#gem "mambo-support", "0.0.1"
+#gem "mambo-support", :git => "#{DEV_GIT}/support.git"
+gem "mambo-support", "0.0.7"
