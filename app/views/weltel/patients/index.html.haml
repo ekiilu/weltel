@@ -2,6 +2,7 @@
   = link_to(t(".new_link"), new_weltel_patient_path, :id => "add_patient", :class => "button")
 
   = form_tag(weltel_patients_path, {:id => "search_patients", :method => :get}) do
+    = hidden_field_tag(:page, 1)
     = search_field_tag(:search, @search, {:size => 40, :tabindex => 1})
     = submit_tag(t(".search"))
 
