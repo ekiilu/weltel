@@ -51,7 +51,6 @@ gem "therubyracer"
 gem "capistrano"
 gem "unicorn"
 gem "thin"
-gem "tlsmail"
 
 # monitoring
 gem "god"
