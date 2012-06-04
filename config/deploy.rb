@@ -49,10 +49,7 @@ task :demo do
 	after "deploy:symlink_config", "deploy:migrate"
 end
 
-
-
 # helpers
-
 namespace :god do
   [:start, :stop, :restart].each do |command|
     [:unicorn, :dj, :all].each do |component|
@@ -66,7 +63,7 @@ namespace :god do
 
   desc 'Start'
   task :start do
-    sudo "RAILS_ENV=production god -P #{shared_path}/pids/god.pid" 
+    sudo "RAILS_ENV=production god -P #{shared_path}/pids/god.pid"
   end
   desc 'Stop'
   task :stop do
@@ -75,7 +72,7 @@ namespace :god do
 
   desc 'Reload config'
   task :reload do
-    sudo "RAILS_ENV=production god load #{current_path}/config/god.rb" 
+    sudo "RAILS_ENV=production god load #{current_path}/config/god.rb"
   end
 end
 
@@ -117,4 +114,3 @@ namespace :deploy do
     god.restart_all
   end
 end
-
