@@ -7,14 +7,13 @@ module Weltel
 		layout("private/application")
 
     before_filter(:only => :index) do
-      sort_param(:responses, :name => :asc)
-      filter_param(:responses)
-      session_param(:page, :responses, nil)
+    	page_param(:responses)
+      sort_param(:responses, :name, :asc)
     end
 
 		#
 		def index
-			@responses = Weltel::Response.all(valid_filter).paginate(:page => @page, :per_page => 20)
+			@responses = Weltel::Response.sorted_by(@sort_key, @sort_order).paginate(:page => @page, :per_page => 20)
 			respond_with(@responses)
 		end
 

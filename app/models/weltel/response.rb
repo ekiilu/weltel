@@ -20,6 +20,10 @@ module Weltel
 		end
 
 		# class methods
+		def self.sorted_by(key, order)
+			all(:order => [key.send(order)])
+		end
+
 		def self.first_by_name(name)
 			first(:name => name)
 		end

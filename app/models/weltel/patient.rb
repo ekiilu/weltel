@@ -39,13 +39,33 @@ module Weltel
 			all(:active => true)
 		end
 
-		# filter patients
+		# search patients
 		def self.search(search)
 			if search.nil?
 				all
 			else
 				search = "%#{search}%"
 				all(:user_name.like => search) + all(:study_number.like => search)
+			end
+		end
+
+		# filter patients
+		def self.filtered_by(key, value)
+			case key
+			when :clinic
+				all(:clinic => {:name.like => "%#{value}%"})
+			end
+		end
+
+		# sort patients
+		def self.sorted_by(key, order)
+			case key
+			when :phone_number
+				all(:order => subscriber.phone_number.send(order), :links => [relationships[:subscriber].inverse])
+			when :clinic
+				all(:order => clinic.name.send(order), :links => [relationships[:clinic].inverse])
+			else
+				all(:order => [key.send(order)])
 			end
 		end
 
@@ -93,6 +113,5 @@ module Weltel
 			patient.destroy
 			patient
 		end
-
 	end
 end

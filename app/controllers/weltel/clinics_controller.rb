@@ -6,11 +6,15 @@ module Weltel
 		layout("private/application")
 
     before_filter(:only => :index) do
+    	session_param(:clinics, :page, 1)
+    	sort_param(:clinics, :name, :asc)
     end
 
 		#
 		def index
-			@clinics = Weltel::Clinic.sorted_by(:name).paginate(:page => 1, :per_page => 2)
+			logger.debug(@sort_key)
+			logger.debug(@sort_order)
+			@clinics = Weltel::Clinic.sorted_by(@sort_key, @sort_order).paginate(:page => 1, :per_page => 2)
 			respond_with(@clinics)
 		end
 

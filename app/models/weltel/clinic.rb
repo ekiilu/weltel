@@ -14,8 +14,10 @@ module Weltel
 
 		# class methods
 		#
-		def self.sorted_by(field)
-			all(:order => [field])
+		def self.sorted_by(key, order)
+			Rails.logger.debug( key)
+			return all if key.nil?
+			all(:order => [key.send(order)])
 		end
 	end
 end
