@@ -4,17 +4,15 @@
   %td
     %h3= patient.study_number
   %td
-    %h3= patient.subscriber.phone_number
-  %td
     = initial_state_tag(patient)
   %td
     = active_state_tag(patient)
   %td
     = form_for(patient.active_record, :url => weltel_patient_record_path(patient, patient.active_record)) do |f|
-      = select_tag(:status, options_for_enum(Weltel::PatientRecord.status, patient.active_record.status), :onchange => submit_form)
+      = select_tag(:status, options_for_select(patient_record_status_options, patient.active_record.status), :onchange => submit_form)
   %td
     = form_for(patient.active_record, :url => weltel_patient_record_path(patient, patient.active_record)) do |f|
-      = select_tag(:contact_method, options_for_enum(Weltel::PatientRecord.contact_method, patient.active_record.contact_method), :onchange => submit_form)
+      = select_tag(:contact_method, options_for_select(patient_record_contact_method_options, patient.active_record.contact_method), :onchange => submit_form)
   %td.actions
     = link_to(t(".messages_link", :count => patient.subscriber.messages.received.count), weltel_patient_messages_path(patient), :class => "button")
     = link_to('+', '#', :class => 'toggle_details')

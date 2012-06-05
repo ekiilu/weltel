@@ -1,5 +1,5 @@
 = content_tag_for(:tr, message, :class => message.status.to_s.downcase) do
   %td= message.phone_number
   %td= message.body
-  %td= message.status
+  %td= message.status.to_s.capitalize
   %td= l(message.created_at)

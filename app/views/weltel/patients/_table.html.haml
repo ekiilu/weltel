@@ -2,11 +2,18 @@
   %tr
     = sorted_table_header_tag(:user_name) do
       = t(".user_name")
+
     = sorted_table_header_tag(:study_number) do
       = t(".study_number")
+
     = sorted_table_header_tag(:phone_number) do
       = t(".phone_number")
-    %th=  t(".clinic")
+
+    = filter_table_header_tag(:clinic, clinic_options) do
+      = t(".clinic")
+
     %th= t(".active")
+
     %th= t(".actions")
+
   = render({:collection => @patients, :partial => "row", :as => :patient})

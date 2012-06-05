@@ -3,7 +3,7 @@ FactoryGirl.define do
 	#
 	factory(:unknown_message, :class => Sms::Message) do
 		phone_number "3333333333"
-		status :Received
+		status :received
   	created_at { DateTime.now }
   	updated_at { DateTime.now }
 

@@ -30,11 +30,9 @@ module Weltel
 		# instance methods
 		#
 		def create_record(date)
-			record = records.create(:created_on => date)
-      active_record.update(:active => false) if active_record
-      records.all(:order => [:created_on.desc]).last.update(:active => true)
-      
-      record
+			active_record.update(:active => false) if active_record
+			active_record = records.create(:created_on => date)
+			active_record
 		end
 
 		# class methods
@@ -45,7 +43,7 @@ module Weltel
 
 		# search patients
 		def self.search(search)
-			if search.nil?
+			if search.nil?  || search.blank?
 				all
 			else
 				search = "%#{search}%"
@@ -55,9 +53,10 @@ module Weltel
 
 		# filter patients
 		def self.filtered_by(key, value)
+			return all if value.empty?
 			case key
 			when :clinic
-				all(:clinic => {:name.like => "%#{value}%"})
+				all(:clinic_id => value)
 			end
 		end
 
@@ -73,14 +72,9 @@ module Weltel
 			end
 		end
 
-		#
+		# patients with active subscriber
 		def self.with_active_subscriber
 			all(:subscriber => {:active => true})
-		end
-
-		#
-		def self.without_active_record_created_on(date)
-			all(:active_record => {:created_on.not => date})
 		end
 
 		# find by patient state
@@ -98,23 +92,38 @@ module Weltel
       all(:active_record.not => nil)
     end
 
+		#
+    def self.without_active_record
+    	all(:active_record => nil)
+    end
+
+		#
+		def self.without_active_record_created_on(date)
+			all(:active_record => nil) || all(:active_record => {:created_on.not => date})
+		end
+
 		# create
 		def self.create_by(params)
-			create(params)
+			transaction do
+				create(params)
+			end
 		end
 
 		# update
 		def self.update_by_id(id, params)
 			patient = get!(id)
-			patient.update(params)
+			transaction do
+				patient.update(params)
+			end
 			patient
 		end
 
 		# destroy
 		def self.destroy_by_id(id)
 			patient = get!(id)
-			patient.subscriber.destroy
-			patient.destroy
+			transaction do
+				patient.subscriber.destroy
+			end
 			patient
 		end
 	end

@@ -2,8 +2,8 @@
 module Weltel
 	class PatientRecord
 		include DataMapper::Resource
-    STATUSES = [:open, :closed] 
-    CONTACT_METHODS = [:none, :text, :phone] 
+    STATUSES = [:open, :closed]
+    CONTACT_METHODS = [:none, :text, :phone, :email, :outreach_visit, :clinic_visit]
 
 		# properties
 		property(:id, Serial)
@@ -17,34 +17,37 @@ module Weltel
 		# validations
 
 		# associations
-		has(n, :messages, Sms::Message)
+		has(n, :messages, Sms::Message, :constraint => :set_nil)
 		belongs_to(:patient, Weltel::Patient)
 		has(n, :states, Weltel::PatientRecordState, :constraint => :destroy)
 		has(1, :active_state, Weltel::PatientRecordState, :active => true)
 
-    after :create do
-      create_state(:unknown, AppConfig.system_user)
+		# hooks
+    after(:create) do
+      create_state(:pending, AppConfig.system_user)
     end
 
 		# instance methods
     #
     def initial_state
-      states.all(:value.not => :unknown, :order => [:created_at.asc]).first || states.first
+      states.all(:value.not => :pending).first || states.first
     end
 
-    # 
+    #
 		def create_outgoing_message(body)
 			messages.create(
 				:subscriber => patient.subscriber,
 				:phone_number => patient.subscriber.phone_number,
 				:body => body,
-				:status => :Sending
+				:status => :sending
 			)
 		end
 
 		#
 		def create_state(value, user)
-			self.states.create(:value => value, :user_id => user.id)
+			active_state.update(:active => false) if active_state
+			states.create(:value => value, :user => user)
+			active_state.reload
 		end
 
 		#
@@ -56,18 +59,14 @@ module Weltel
 				if active_state.value == value
 					active_state
 				else
-					active_state.active = false
-					active_state.save
 					create_state(value, user)
 				end
 			end
 		end
 
 		#
-		def close
-			record.active = false
-			record.status = :closed
-			record.save
+		def archive
+			update(:active => false, :status => :closed)
 		end
 
 		# class methods

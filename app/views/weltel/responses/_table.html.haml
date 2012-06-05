@@ -2,7 +2,7 @@
   %tr
     = sorted_table_header_tag(:name) do
       = t(".name")
-    = filter_table_header_tag(:value, Weltel::Response.value) do
+    = sorted_table_header_tag(:value) do
       = t(".value")
     = sorted_table_header_tag(:updated_at) do
       = t(".updated_at")

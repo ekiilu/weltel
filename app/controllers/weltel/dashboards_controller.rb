@@ -27,5 +27,11 @@ module Weltel
       end
 			respond_with(@patients)
 		end
+
+	private
+		#
+		def t(key)
+			I18n.t(key, :scope => [:weltel, :dashboards])
+		end
 	end
 end

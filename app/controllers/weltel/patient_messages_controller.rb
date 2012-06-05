@@ -5,15 +5,18 @@ module Weltel
 		respond_to(:html)
 		layout("private/application")
 
+    before_filter(:only => :index) do
+    	page_param(:patient_messages)
+      sort_param(:patient_messages, :updated_at, :desc)
+    end
+
 		# list messages for patient
 		def index
-			@page = params[:page]
 			@patient = Weltel::Patient.get!(params[:patient_id])
-			@messages = @patient.subscriber.messages.search(@page, 6)
+			@messages = @patient.subscriber.messages.sorted_by(@sort_key, @sort_order).paginate(:page => @page, :per_page => 20)
 
-			@messages.select {|message| message.status == :Received}.each do |message|
-				message.status = :Read
-				message.save
+			@messages.select {|message| message.status == :received}.each do |message|
+				message.update(:status => :read)
 			end
 
 			respond_with(@patient, @messages)

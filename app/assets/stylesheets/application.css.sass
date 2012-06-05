@@ -25,8 +25,9 @@ $colorshift: 7%
 $fontcolor: #333333
 $positivecolor: #00cc00
 $negativecolor: #cc0000
-$unknowncolor: #ffff00
-$latecolor: #ff9900
+$unknowncolor: #ff9900
+$latecolor: #ffff00
+$pendingcolor: #cccccc
 $opencolor: #fff
 $closedcolor: #bbbbbb
 
@@ -159,7 +160,7 @@ table
   +box-shadow(0px 0px 8px rgba(0, 0, 0, 0.3))
 
 #header
-  padding-bottom: 30px
+  padding-bottom: 10px
   .page_header
     padding: 5px 0px 2px 0px
     margin: 0px 20px 10px 20px
@@ -251,13 +252,15 @@ table
   background: $unknowncolor
 .state.late, .tabs .late
   background: $latecolor
+.state.pending, .tabs .pending
+  background: $pendingcolor
 .status.open, .tabs .open
   background: $opencolor
 .status.closed, .tabs .closed
   background: $closedcolor
 
 #content
-  padding: 0px 20px 20px 20px
+  padding: 0px 15px 15px 15px
 
 .pagination
   text-align: center
@@ -272,7 +275,7 @@ table
     margin: 0px
     padding: 4px
     color: darken($themecolor, $colorshift)
-  em.current 
+  em.current
     background: darken($themecolor, $colorshift)
     border: solid 1px darken($themecolor, $colorshift)
     color: #fff

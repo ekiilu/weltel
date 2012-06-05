@@ -54,6 +54,8 @@ module Weltel
 
 			body = message.body.strip.downcase
 
+			Rails.logger.debug(body)
+
 			return :help if HELP_COMMANDS.include?(body)
 
 			if STOP_COMMANDS.include?(body)
@@ -69,15 +71,21 @@ module Weltel
 			# record
 			record = patient.records.last
 
+			Rails.logger.debug("*************Record: " + record.inspect)
+
 			# no record
 			return nil if record.nil?
 
 			# find response
 			response = Weltel::Response.first_by_name(body)
 
+			Rails.logger.debug(response.inspect)
+
 			if response.nil? # unknown response
+				Rails.logger.debug(:unknown)
 				record.change_state(:unknown, AppConfig.system_user)
 			else # known response
+				Rails.logger.debug(response.value)
 				record.change_state(response.value, AppConfig.system_user)
 			end
 

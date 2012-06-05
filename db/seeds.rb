@@ -92,6 +92,11 @@ begin
 		:system => true
 	)
 
+	clinic = Weltel::Clinic.create(
+		:name => "",
+		:system => true
+	)
+
 	50.times do |p|
 		subscriber = Sms::Subscriber.create(
 			:phone_number => "60470000%02d" % p,
@@ -101,18 +106,19 @@ begin
 		Weltel::Patient.create(
 			:subscriber => subscriber,
 			:user_name => "patient%02d" % p,
-			:study_number => "number%02d" % p
+			:study_number => "number%02d" % p,
+			:clinic => clinic
 		)
 	end
 
-  Weltel::Patient.all[0...40].each do |p|
+  Weltel::Patient.all[0...45].each do |p|
     p.create_record(Time.now)
     p.save
   end
 
   Weltel::Patient.all[0...40].each do |p|
-    p.active_record.messages.create(:status => :Sent, :phone_number => '7783175526', :body => 'Are you ok?')
-    p.active_record.messages.create(:status => :Received, :phone_number => '7783175526', :body => 'hi')
+    p.active_record.messages.create(:status => :sent, :phone_number => '7783175526', :body => 'Are you ok?')
+    p.active_record.messages.create(:status => :received, :phone_number => '7783175526', :body => 'hi')
   end
 
   {(0..9) => :unknown, (10..19) => :positive, (20..29) => :negative, (30..39) => :late }.each_pair do |range, state|

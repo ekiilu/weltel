@@ -9,19 +9,7 @@ module PatientsHelper
   end
 
   def state_tag(name, value)
-    content_tag(:div, t("weltel.patients.states.#{value}"), :class => "state #{value.to_s}")
-  end
-
-  def status_tag(patient)
-    content_tag(:div, :class => "status #{patient.active_record.status.to_s}") do
-      t("weltel.patients.statuses.#{patient.active_record.status}")
-    end
-  end
-
-  def contact_method_tag(patient)
-    content_tag(:div, :class => "contact_method #{patient.active_record.contact_method.to_s}") do
-      t("weltel.patients.contact_methods.#{patient.active_record.contact_method}")
-    end
+		content_tag(:div, t("weltel.patient_record_states.values.#{value}"), :class => "state #{value.to_s}")
   end
 
   def exchange_tag(sent, received, alternates = ['messaging.not_sent', 'messaging.not_received'])
@@ -32,11 +20,11 @@ module PatientsHelper
         content_tag(:div, t(alternates[0]), :class => 'null')
       else
         ''
-      end.html_safe + 
+      end.html_safe +
       if received
         content_tag(:div, :class => 'received message') do
-          link_to('+', weltel_responses_path(:weltel_response => {:value => :positive, :name => u(received.body), :url_encoded => true}), :method => :post) + 
-          link_to('-', weltel_responses_path(:weltel_response => {:value => :negative, :name => u(received.body), :url_encoded => true}), :method => :post) + 
+          link_to('+', weltel_responses_path(:weltel_response => {:value => :positive, :name => u(received.body), :url_encoded => true}), :method => :post) +
+          link_to('-', weltel_responses_path(:weltel_response => {:value => :negative, :name => u(received.body), :url_encoded => true}), :method => :post) +
           received.body
         end
       elsif alternates[1]
