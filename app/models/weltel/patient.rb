@@ -6,8 +6,9 @@ module Weltel
 		# properties
 		property(:id, Serial)
 		property(:active, Boolean, {:index => true, :required => true, :default => true})
-		property(:user_name, String, {:required => true, :unique => true, :length => 32})
+		property(:user_name, String, {:unique => true, :required => true, :length => 32})
 		property(:study_number, String, {:unique => true, :length => 32})
+		property(:contact_phone_number, String, :length => 10)
 		property(:created_at, DateTime)
 		property(:updated_at, DateTime)
 
@@ -18,11 +19,15 @@ module Weltel
 		validates_length_of(:study_number, {:within => 1..32, :allow_blank => true})
 		validates_format_of(:study_number, {:with => /^\w*$/, :allow_blank => true})
 
+		validates_length_of(:contact_phone_number, {:is => 10, :allow_blank => true})
+		validates_format_of(:contact_phone_number, {:with => /^\d*$/, :allow_blank => true})
+
 		# associations
 		belongs_to(:subscriber, Sms::Subscriber)
 		belongs_to(:clinic, Weltel::Clinic, :required => false)
 		has(n, :records, Weltel::PatientRecord, :constraint => :destroy)
 		has(1, :active_record, Weltel::PatientRecord, :active => true)
+		has(1, :active_state, Weltel::PatientRecordState, :through => :active_record)
 
 		# nested
 		accepts_and_validates_nested_attributes_for(:subscriber)
@@ -67,6 +72,10 @@ module Weltel
 				all(:order => subscriber.phone_number.send(order), :links => [relationships[:subscriber].inverse])
 			when :clinic
 				all(:order => clinic.name.send(order), :links => [relationships[:clinic].inverse])
+			when :current_state
+				all(:order => active_state.value, :links => [relationships[:active_state].inverse])
+			when :status
+				all(:order => active_record.status, :links => [relationships[:active_record].inverse])
 			else
 				all(:order => [key.send(order)])
 			end
@@ -78,12 +87,12 @@ module Weltel
 		end
 
 		# find by patient state
-		def self.by_state(state)
+		def self.with_state(state)
 			all(:active_record => {:active_state => {:value => state}})
 		end
 
 		# find by record status (open/closed)
-		def self.by_status(status)
+		def self.with_status(status)
 			all(:active_record => {:status => status})
 		end
 

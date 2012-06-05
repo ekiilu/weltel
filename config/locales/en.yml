@@ -15,7 +15,7 @@ en:
         dashboard_link: "Dashboard"
         patients_link: "Patients"
         message_templates_link: "Templates"
-        responses_link: "Responses"
+        responses_link: "Dictionary"
         users_link: "Users"
         roles_link: "Roles"
         clinics_link: "Clinics"
@@ -31,8 +31,8 @@ en:
       index:
         new_link: "Add Patient..."
         search: "Find Patients"
-        no_patients: "No Patients"
       table:
+        no_patients: "No Patients"
         user_name: "Username"
         study_number: "Study Number"
         phone_number: "Phone Number"
@@ -95,18 +95,18 @@ en:
       open: "Open"
       closed: "Closed"
       show:
-        clinic_view: 'Clinic view'
-        study_view: 'Study view'
+        clinic_view: 'To Do'
+        study_view: 'Overview'
         no_patients: "No Patients"
         search: "Find Patients"
       table:
         user_name: "Username"
-        study_number: "Study number"
-        phone_number: "Phone number"
-        initial_state: "Initial state"
-        current_state: "Current state"
-        status: "Status"
-        contact_method: "Contact method"
+        study_number: "Study Number"
+        phone_number: "Phone Number"
+        initial_state: "Initial Response"
+        current_state: "Current Status"
+        status: "Work Status"
+        contact_method: "Contact Method"
         actions: 'Actions'
       row:
         messages_link:
@@ -198,3 +198,4 @@ en:
       weltel_patient:
         user_name: "User Name"
         study_number: "Study Number"
+        contact_phone_number: "Alternate Contact Number"

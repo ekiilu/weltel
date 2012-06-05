@@ -17,6 +17,9 @@
         = p.label(:study_number)
         = p.text_field(:study_number, {:size => 16})
       %li
+        = p.label(:contact_phone_number)
+        = p.telephone_field(:contact_phone_number, {:placeholder => "2223334444", :size => 10, :maxlength => 10})
+      %li
         = p.label(:clinic_id)
         = p.select(:clinic_id, options_from_collection_for_select(Weltel::Clinic.all, :id, :name, @patient.clinic_id))
   %fieldset

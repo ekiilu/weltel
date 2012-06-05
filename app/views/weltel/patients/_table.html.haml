@@ -16,4 +16,8 @@
 
     %th= t(".actions")
 
-  = render({:collection => @patients, :partial => "row", :as => :patient})
+  - if @patients.empty?
+    %tr{:colspan => 6}
+      %td= t(".no_patients")
+  - else
+    = render({:collection => @patients, :partial => "row", :as => :patient})

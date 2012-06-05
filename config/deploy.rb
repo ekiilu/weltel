@@ -97,20 +97,20 @@ namespace :deploy do
   # standard tasks (must be implemented to work)
   desc 'Starts server'
   task :start, :roles => :app do
-    god.start
-    god.reload
-    god.start_all
+    #god.start
+    #god.reload
+    #god.start_all
   end
 
   desc 'Stops server'
   task :stop, :roles => :app do
-    god.stop_all
+    #god.stop_all
   end
 
   desc 'Restarts server'
   task :restart, :roles => :app, :except => { :no_release => true } do
-    god.start
-    god.reload
-    god.restart_all
+    #god.start
+    #god.reload
+    #god.restart_all
   end
 end
