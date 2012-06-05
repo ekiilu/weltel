@@ -124,12 +124,13 @@ en:
       created: "Response Created"
       updated: "Response Updated"
       destroyed: "Response Deleted"
-      positive: "OK"
-      negative: "Not OK"
+      values:
+        positive: "OK"
+        negative: "Not OK"
       index:
-        no_responses: "No Responses"
         new_link: "Add Response..."
       table:
+        no_responses: "No Responses"
         name: "Name"
         value: "Value"
         created_at: "Created"

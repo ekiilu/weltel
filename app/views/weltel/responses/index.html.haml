@@ -1,11 +1,7 @@
 - content_for(:actions) do
   = link_to(t(".new_link"), new_weltel_response_path, :class => "button")
 
-- if @responses.empty?
-  = t(".no_responses")
-- else
-  = render("table")
+= render("table")
 
-  - content_for(:footer) do
-    = will_paginate(@responses)
-
+- content_for(:footer) do
+  = will_paginate(@responses)
