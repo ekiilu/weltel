@@ -11,7 +11,7 @@ listen("#{AppConfig.deployment.working_directory}/sockets/unicorn.sock", :backlo
 listen(config.port, :tcp_nopush => true)
 timeout(30)
 pid("#{AppConfig.deployment.working_directory}/pids/#{config.process_name}.pid")
-working_directory(AppConfig.deployment.working_directory)
+working_directory(AppConfig.deployment.app_root)
 
 #logging
 stderr_path("#{AppConfig.deployment.log_directory}/#{config.process_name}.stderr.log")
