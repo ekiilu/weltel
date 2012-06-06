@@ -60,10 +60,10 @@ end
 # helpers
 namespace :god do
   [:start, :stop, :restart].each do |command|
-    AppConfig.processes.each do |process_config|
-      desc "#{command.to_s.capitalize} #{process_config.process_name}"
-      task "#{command}_#{process_config.process_name}", :roles => :app , :except => { :no_release => true } do
-        run "cd #{current_path} && bundle exec god #{command.to_s} #{process_config.process_name}"
+    AppConfig.processes.to_h.each_value do |process_config|
+      desc "#{command.to_s.capitalize} #{process_config['process_name']}"
+      task "#{command}_#{process_config['process_name']}", :roles => :app , :except => { :no_release => true } do
+        run "cd #{current_path} && bundle exec god #{command.to_s} #{process_config['process_name']}"
       end
     end
     desc "#{command.to_s.capitalize} all"

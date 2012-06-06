@@ -32,6 +32,7 @@ AppConfig.processes.to_h.each_value do |process_config|
   env = {
     :rails_env => AppConfig.deployment.rails_env, 
     :pwd => AppConfig.deployment.app_root,
+    :pid => "#{pid_directory}/#{process_config.full_name}.pid",
     :logfile => "#{AppConfig.deployment.log_directory}/#{AppConfig.deployment.monitoring.group_name}_#{process_config.process_name}.log"
   }
 
