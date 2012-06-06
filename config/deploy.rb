@@ -13,6 +13,7 @@ set :repository,  "ssh://git@dev.verticallabs.ca/git/mambo/apps/weltel.git"
 set :deploy_to, "/www/weltel"
 set :branch, "3.0"
 set :shared_children, %w(system log pids sockets config)
+set :config_files, %w(app_config.yml database.yml)
 set :sudo_user, ENV["USER"]
 
 set :use_sudo, false
@@ -27,12 +28,12 @@ set :whenever_command, "bundle exec whenever"
 require "whenever/capistrano"
 
 task :local do
+  set :deployment, :local
+  set :user, ENV["USER"]
+
   role :web, "localhost"
   role :app, "localhost"
   role :db, "localhost", :primary => true
-
-  set :normal_user, ENV["USER"]
-  set :user, normal_user
 
   after "deploy:setup", "deploy:upload_config"
   before "deploy:assets:precompile", "deploy:symlink_config"
@@ -42,19 +43,18 @@ task :local do
 end
 
 task :demo do
+  set :deployment, :demo
+  set :user, 'web'
+
   role :web, "dev.verticallabs.ca"
   role :app, "dev.verticallabs.ca"
   role :db, "dev.verticallabs.ca", :primary => true
-
-  set :normal_user, "web"
-  set :user, normal_user
 
   set :ssh_options, {:forward_agent => true}
 
   after "deploy:setup", "deploy:upload_config"
   before "deploy:assets:precompile", "deploy:symlink_config"
   after "deploy:symlink_config", "deploy:migrate"
-
 end
 
 # helpers
@@ -106,8 +106,10 @@ namespace :deploy do
 
   desc "Uploads config"
   task :upload_config, :roles => :app do
-    top.upload("./config/app_config.yml", "#{shared_path}/config/app_config.yml")
-    top.upload("./config/database.yml", "#{shared_path}/config/database.yml")
+    config_files.each do |filename|
+      full_path = "#{File.dirname(__FILE__)}/deployments/#{deployment}/#{filename}"
+      top.upload(full_path, "#{shared_path}/config/#{filename}")
+    end 
   end
 
   desc "Symlinks config"
@@ -132,33 +134,6 @@ namespace :deploy do
     god.stop
     god.start
     god.restart_all
-  end
-end
-
-def with_user(new_user, &block)
-  old_user = user
-  set :user, new_user
-  close_sessions
-  yield
-  set :user, old_user
-  close_sessions
-end
-
-def close_sessions
-  sessions.values.each { |session| session.close }
-  sessions.clear
-end
-
-def run_as_sudoer(string, options = {})
-  abort("No sudo user.  Please set :sudo_user") if !sudo_user
-  puts "  * Sudoing as user #{sudo_user}"
-  
-  ignore = options[:ignore_failure] ? ' || true' : ''
-  command = "sudo sh -c 'RAILS_ENV=#{rails_env}; #{string}#{ignore}'"
-
-  with_user(sudo_user) do
-    run "sudo echo \$USER"
-    run command 
   end
 end
 

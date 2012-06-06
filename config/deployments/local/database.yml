@@ -1,0 +1,18 @@
+defaults: &defaults
+  adapter: mysql
+  username: root
+  password: mysql
+  pool: 5
+  timeout: 5000
+
+development:
+  database: weltel_dev
+  <<: *defaults
+
+test:
+  database: weltel_test
+  <<: *defaults
+
+production:
+  database: weltel_prod
+  <<: *defaults
