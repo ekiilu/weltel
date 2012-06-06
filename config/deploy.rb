@@ -11,7 +11,7 @@ abort('Please set the cap environment: "cap demo deploy" or "cap local deploy"')
 set :application, "weltel"
 set :repository,  "ssh://git@dev.verticallabs.ca/git/mambo/apps/weltel.git"
 set :deploy_to, "/www/weltel"
-set :branch, "deployment"
+set :branch, "3.0"
 set :shared_children, %w(system log pids sockets config)
 set :sudo_user, ENV["USER"]
 
