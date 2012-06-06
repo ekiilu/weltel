@@ -25,7 +25,7 @@ GIT
 
 GIT
   remote: http://dev.verticallabs.ca/git/mambo/gems/sms.git
-  revision: a1358f6fe8caba33785ef913568ea81a8556af42
+  revision: 86cf13bcf42a7dfa7ce61d5c902a13c8a7e7775a
   specs:
     mambo-sms (0.0.13)
       dm-constraints (~> 1.2)
