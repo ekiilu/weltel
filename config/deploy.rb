@@ -68,8 +68,8 @@ namespace :god do
     end
     desc "#{command.to_s.capitalize} all"
     task "#{command}_all", :roles => :app , :except => { :no_release => true } do
-      AppConfig.processes.each do |process_config|
-        run "cd #{current_path} && bundle exec god #{command.to_s} #{process_config.process_name}"
+      AppConfig.processes.to_h.each_pair do |name, process_config|
+        run "cd #{current_path} && bundle exec god #{command.to_s} #{process_config['process_name']}"
       end
     end
   end
