@@ -3,7 +3,7 @@ twilio:
   account_sid: 'AC5e98a9a0d24a4dcbbc3126473d142d35'
   auth_token: 'da2c9e85efafa8848b3e705ae3a2afe9'
 deployment:
-  internal_host: "http://localhost:80"
+  internal_host: "http://localhost:3000"
   rails_env: 'production'
   app_root: '/www/weltel/current'
   working_directory: "/www/weltel/shared"
@@ -14,7 +14,7 @@ deployment:
       stop: "kill -QUIT #{PID}"
       restart: "kill -USR2 #{PID}"
       workers: 2
-      port: 80
+      port: 3000
     dj:
       start: "bundle exec rake jobs:work"
       daemonize: true
