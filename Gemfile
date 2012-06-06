@@ -49,6 +49,7 @@ end
 gem "execjs"
 gem "therubyracer"
 gem "capistrano"
+gem 'capistrano_colors'
 gem "unicorn"
 gem "thin"
 

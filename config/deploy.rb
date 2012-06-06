@@ -1,5 +1,10 @@
 # -*- encoding : utf-8 -*-
 require "bundler/capistrano"
+require 'capistrano_colors'
+
+app_root = File.expand_path("#{File.dirname(__FILE__)}/..")
+require "#{app_root}/lib/app_config.rb"
+AppConfig.load("#{app_root}/config/app_config.yml")
 
 abort('Please set the cap environment: "cap demo deploy" or "cap local deploy"') unless ARGV[0].match /(local|demo)/
 
@@ -20,7 +25,6 @@ ssh_options[:forward_agent] = true
 
 set :whenever_command, "bundle exec whenever"
 require "whenever/capistrano"
-
 
 task :local do
   role :web, "localhost"
@@ -56,11 +60,16 @@ end
 # helpers
 namespace :god do
   [:start, :stop, :restart].each do |command|
-    [:unicorn, :dj, :all].each do |component|
-      desc "#{command.to_s.capitalize} #{component}"
-      task "#{command}_#{component}", :roles => :app , :except => { :no_release => true } do
-        god_watch = component != :all ? "mambo_#{component.to_s}" : "mambo"
-        run "cd #{current_path} && bundle exec god #{command.to_s} #{god_watch}"
+    AppConfig.deployment_processes.each do |process_config|
+      desc "#{command.to_s.capitalize} #{process_config.full_name}"
+      task "#{command}_#{process_config.full_name}", :roles => :app , :except => { :no_release => true } do
+        run "cd #{current_path} && bundle exec god #{command.to_s} #{process_config.full_name}"
+      end
+    end
+    desc "#{command.to_s.capitalize} all"
+    task "#{command}_all", :roles => :app , :except => { :no_release => true } do
+      AppConfig.deployment_processes.each do |process_config|
+        run "cd #{current_path} && bundle exec god #{command.to_s} #{process_config.full_name}"
       end
     end
   end
@@ -68,13 +77,24 @@ namespace :god do
   desc 'Start'
   task :start do
     puts '  * Starting god.'
-    run "cd #{current_path} && bundle exec god -P #{shared_path}/pids/god.pid -c #{current_path}/config/god.rb -D"
+    command = "cd #{current_path} &&"
+    command += " bundle exec god"
+    command += " -P #{shared_path}/pids/god.pid"
+    command += " -c #{current_path}/config/god.rb"
+    command += " -l #{File.join(AppConfig.deployment.log_directory, AppConfig.deployment.monitoring.log_file)}"
+    run command
+  end
+
+  desc 'Restart'
+  task :restart do
+    stop
+    start
   end
 
   desc 'Stop'
   task :stop do
     puts '  * Stopping god.'
-    run "cd #{current_path} && bundle exec god quit", :ignore_failure => true
+    run "cd #{current_path} && bundle exec god quit || true" #ignore failures
   end
 end
 

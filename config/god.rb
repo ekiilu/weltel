@@ -27,25 +27,22 @@ God.contact(:email) do |c|
   c.to_email = 'support@verticallabs.ca'
 end
 
-AppConfig.deployment.monitoring.processes.each do |process_config|
-  process_config = ::RecursiveOpenStruct.new(process_config)
-  full_name = "#{AppConfig.deployment.monitoring.group_name}_#{process_config.name}"
+AppConfig.deployment_processes.each do |process_config|
   env = {
     :rails_env => AppConfig.deployment.rails_env, 
-    :pid => "#{pid_directory}/#{full_name}.pid", 
     :pwd => AppConfig.deployment.app_root,
     :logfile => "#{AppConfig.deployment.log_directory}/#{AppConfig.deployment.monitoring.group_name}_#{process_config.name}.log"
   }
 
   God.watch do |w|
-    w.name        = full_name
+    w.name        = process_config.full_name
     w.interval    = 30.seconds
     w.dir         = env[:pwd]
-    w.pid_file    = env[:pid] 
-    w.env         = Hash[ env.collect {|k,v| [k.to_s.upcase, v] } ] 
 
-    w.uid         = AppConfig.deployment.monitoring.uid 
-    w.gid         = AppConfig.deployment.monitoring.gid 
+    w.pid_file    = "#{pid_directory}/#{process_config.full_name}.pid" if !process_config.daemonize
+    w.env         = Hash[ env.collect {|k,v| [k.to_s.upcase, v] } ] 
+    w.log         = env[:logfile]
+
     w.group       = AppConfig.deployment.monitoring.group_name, 
 
     w.start = AppConfig.substitute(process_config.start, env)
