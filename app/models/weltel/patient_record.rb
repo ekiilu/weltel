@@ -52,8 +52,9 @@ module Weltel
 
 		#
 		def change_state(value, user)
+			Rails.logger.debug(value)
 			Weltel::PatientRecord.transaction do
-				status = value == :positive ? :open : :closed
+				self.status = value == :positive ? :closed : :open
 				save
 
 				if active_state.value == value

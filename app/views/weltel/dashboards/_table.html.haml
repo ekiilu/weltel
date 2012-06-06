@@ -4,13 +4,15 @@
       = t(".user_name")
     = sorted_table_header_tag(:study_number) do
       = t(".study_number")
-    = sorted_table_header_tag(:initial_state) do
-      = t(".initial_state")
-    = sorted_table_header_tag(:current_state) do
-      = t(".current_state")
-    = sorted_table_header_tag(:status) do
-      = t(".status")
-    = sorted_table_header_tag(:contact_method) do
-      = t(".contact_method")
+
+    %th= t(".initial_state")
+
+    %th= t(".current_state")
+
+    %th= t(".status")
+
+    %th= t(".contact_method")
+
     %th= t(".actions")
+
   = render({:collection => @patients, :partial => "row", :as => :patient})

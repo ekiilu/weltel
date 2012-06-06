@@ -22,7 +22,6 @@ module Weltel
 
 		#
 		def new
-			@value_options = value_options
 			@response = Weltel::Response.new
 			respond_with(@response)
 		end
@@ -37,7 +36,6 @@ module Weltel
 				respond_with(@response, :location => weltel_responses_path)
 
 			rescue DataMapper::SaveFailureError => error
-				@value_options = value_options
 				@response = error.resource
 				respond_with(@response) do |format|
 					format.html { render(:new) }
@@ -47,7 +45,6 @@ module Weltel
 
 		#
 		def edit
-			@value_options = value_options
 			@response = Weltel::Response.get!(params[:id])
 			respond_with(@response)
 		end
@@ -62,7 +59,6 @@ module Weltel
 				respond_with(@response, :location => weltel_responses_path)
 
 			rescue DataMapper::SaveFailureError => error
-				@value_options = value_options
 				@response = error.resource
 				respond_with(@response) do |format|
 					format.html { render(:edit) }
@@ -79,11 +75,6 @@ module Weltel
 		end
 
 	private
-		#
-		def value_options
-			Weltel::Response.value.options[:flags].map { |value| [t(".#{value}"), value] }
-		end
-
 		#
 		def t(key)
 			I18n.t(key, :scope => [:weltel, :responses])

@@ -71,22 +71,19 @@ module Weltel
 			# record
 			record = patient.records.last
 
-			Rails.logger.debug("*************Record: " + record.inspect)
-
 			# no record
 			return nil if record.nil?
+
+			# message add to record
+			message.patient_record = record
 
 			# find response
 			response = Weltel::Response.first_by_name(body)
 
-			Rails.logger.debug(response.inspect)
-
 			if response.nil? # unknown response
-				Rails.logger.debug(:unknown)
 				record.change_state(:unknown, AppConfig.system_user)
 			else # known response
-				Rails.logger.debug(response.value)
-				record.change_state(response.value, AppConfig.system_user)
+				record.change_state(response.value.to_sym, AppConfig.system_user)
 			end
 
 			# no reply

@@ -8,7 +8,7 @@
         = r.text_field(:name, {:required => true, :size => 60, :maxlength => 160})
       %li
         = r.label(:value)
-        = r.select(:value, options_for_select(@value_options, @response.value))
+        = r.select(:value, options_for_select(response_value_options, @response.value))
   %fieldset
     .center
       = link_to(t(".cancel"), weltel_responses_path, :class => "button")

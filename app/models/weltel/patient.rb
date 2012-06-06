@@ -72,10 +72,6 @@ module Weltel
 				all(:order => subscriber.phone_number.send(order), :links => [relationships[:subscriber].inverse])
 			when :clinic
 				all(:order => clinic.name.send(order), :links => [relationships[:clinic].inverse])
-			when :current_state
-				all(:order => active_state.value, :links => [relationships[:active_state].inverse])
-			when :status
-				all(:order => active_record.status, :links => [relationships[:active_record].inverse])
 			else
 				all(:order => [key.send(order)])
 			end
