@@ -18,8 +18,10 @@ class AppConfig
   end
 
   def self.substitute(string, options)
-    options.keys.each do |key|
-      string.gsub!("\#\{#{key.to_s.upcase}\}", options[key])
+    if string
+      options.keys.each do |key|
+        string.gsub!("\#\{#{key.to_s.upcase}\}", options[key])
+      end
     end
     string
   end

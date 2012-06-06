@@ -33,7 +33,7 @@ AppConfig.deployment.monitoring.processes.each do |process_config|
   env = {
     :rails_env => AppConfig.deployment.rails_env, 
     :pid => "#{pid_directory}/#{full_name}.pid", 
-    :pwd => AppConfig.deployment.app_root
+    :pwd => AppConfig.deployment.app_root,
     :logfile => "#{AppConfig.deployment.log_directory}/#{AppConfig.deployment.monitoring.group_name}_#{process_config.name}.log"
   }
 
@@ -48,9 +48,9 @@ AppConfig.deployment.monitoring.processes.each do |process_config|
     w.gid         = AppConfig.deployment.monitoring.gid 
     w.group       = AppConfig.deployment.monitoring.group_name, 
 
-    w.start = substitute(process_config.start, env)
-    w.stop = substitute(process_config.stop, env)
-    w.restart = substitute(process_config.restart, env)
+    w.start = AppConfig.substitute(process_config.start, env)
+    w.stop = AppConfig.substitute(process_config.stop, env)
+    w.restart = AppConfig.substitute(process_config.restart, env)
 
     # restart if memory gets too high
     w.transition(:up, :restart) do |on|
@@ -86,7 +86,7 @@ AppConfig.deployment.monitoring.processes.each do |process_config|
     w.transition(:up, :start) do |on|
       on.condition(:process_running) do |c|
         c.running = false
-        c.notify = 'Support' if rails_env == 'production'
+        c.notify = 'Support' if env[:rails_env] == 'production'
       end
     end
   end
