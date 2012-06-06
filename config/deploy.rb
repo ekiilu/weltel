@@ -6,7 +6,7 @@ abort('Please set the cap environment: "cap demo deploy" or "cap local deploy"')
 set :application, "weltel"
 set :repository,  "ssh://git@dev.verticallabs.ca/git/mambo/apps/weltel.git"
 set :deploy_to, "/www/weltel"
-set :branch, "3.0"
+set :branch, "deployment"
 set :shared_children, %w(system log pids sockets config)
 set :sudo_user, ENV["USER"]
 
@@ -60,7 +60,7 @@ namespace :god do
       desc "#{command.to_s.capitalize} #{component}"
       task "#{command}_#{component}", :roles => :app , :except => { :no_release => true } do
         god_watch = component != :all ? "mambo_#{component.to_s}" : "mambo"
-        run "bundle exec god #{command.to_s} #{god_watch}"
+        run "cd #{current_path} && bundle exec god #{command.to_s} #{god_watch}"
       end
     end
   end
@@ -68,13 +68,13 @@ namespace :god do
   desc 'Start'
   task :start do
     puts '  * Starting god.'
-    run "bundle exec god -P #{shared_path}/pids/god.pid -c #{current_path}/config/god.rb -D"
+    run "cd #{current_path} && bundle exec god -P #{shared_path}/pids/god.pid -c #{current_path}/config/god.rb -D"
   end
 
   desc 'Stop'
   task :stop do
     puts '  * Stopping god.'
-    run 'bundle exec god quit', :ignore_failure => true
+    run "cd #{current_path} && bundle exec god quit", :ignore_failure => true
   end
 end
 
