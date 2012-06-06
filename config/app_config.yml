@@ -5,11 +5,21 @@ deployment:
   app_root: '/www/weltel/current'
   working_directory: "/www/weltel/shared"
   log_directory: "/www/weltel/current/log"
+  processes:
+    unicorn:
+      start: "bundle exec unicorn_rails -E #{RAILS_ENV} -c #{PWD}/config/unicorn.rb -D" 
+      stop: "kill -QUIT #{PID}"
+      restart: "kill -USR2 #{PID}"
+      workers: 2
+      port: 80
+    dj:
+      start: "bundle exec rake jobs:work"
+      daemonize: true
   monitoring:
     log_file: "monitoring.log"
     group_name: mambo
-    uid: paul
-    gid: paul
+    uid: web
+    gid: web
     processes:
       - name: dj
         start: "bundle exec rake jobs:work"
