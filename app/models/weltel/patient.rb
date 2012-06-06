@@ -48,7 +48,7 @@ module Weltel
 
 		# search patients
 		def self.search(search)
-			if search.nil?  || search.blank?
+			if search.blank?
 				all
 			else
 				search = "%#{search}%"
@@ -58,7 +58,7 @@ module Weltel
 
 		# filter patients
 		def self.filtered_by(key, value)
-			return all if value.empty?
+			return all if value.blank?
 			case key
 			when :clinic
 				all(:clinic_id => value)
