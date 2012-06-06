@@ -1,10 +1,10 @@
 twilio_phone_number: '7788002767'
 alert_phone_numbers: ['7783175526']
 deployment:
-  rails_env: 'development'
-  app_root: '/home/paul/mambo/apps/weltel'
-  working_directory: "/home/paul/mambo/apps/weltel/tmp"
-  log_directory: "/home/paul/mambo/apps/weltel/log"
+  rails_env: 'production'
+  app_root: '/www/weltel/current'
+  working_directory: "/www/weltel/shared"
+  log_directory: "/www/weltel/current/log"
   monitoring:
     log_file: "monitoring.log"
     group_name: mambo
@@ -12,7 +12,8 @@ deployment:
     gid: paul
     processes:
       - name: dj
-        start: "rake jobs:work"
+        start: "bundle exec rake jobs:work"
+        daemonize: true
       - name: unicorn
         start: "bundle exec unicorn_rails -E #{RAILS_ENV} -c #{PWD}/config/unicorn.rb -D" 
         stop: "kill -QUIT #{PID}"

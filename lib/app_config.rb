@@ -18,9 +18,17 @@ class AppConfig
   end
 
   def self.substitute(string, options)
-    options.keys.each do |key|
-      string.gsub!("\#\{#{key.to_s.upcase}\}", options[key])
+    if string
+      options.keys.each do |key|
+        string.gsub!("\#\{#{key.to_s.upcase}\}", options[key])
+      end
     end
     string
+  end
+
+  def self.deployment_processes
+    AppConfig.deployment.monitoring.processes.collect do |process_config|
+      ::RecursiveOpenStruct.new(process_config.merge(:full_name => "#{self.deployment.monitoring.group_name}_#{process_config['name']}"))
+    end
   end
 end
