@@ -44,4 +44,4 @@ end
 before_exec do |server|
   ENV["BUNDLE_GEMFILE"] = "#{AppConfig.deployment.app_root}/Gemfile"
 end
-Unicorn::HttpServer::START_CTX[0] = config["unicorn"]
+#Unicorn::HttpServer::START_CTX[0] = config["unicorn"]
