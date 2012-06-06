@@ -24,23 +24,6 @@ GIT
       mambo-sms
 
 GIT
-  remote: http://dev.verticallabs.ca/git/mambo/gems/sms.git
-  revision: 86cf13bcf42a7dfa7ce61d5c902a13c8a7e7775a
-  specs:
-    mambo-sms (0.0.13)
-      dm-constraints (~> 1.2)
-      dm-migrations (~> 1.2)
-      dm-rails (~> 1.2)
-      dm-timestamps (~> 1.2)
-      dm-transactions (~> 1.2)
-      dm-types (~> 1.2)
-      dm-validations (~> 1.2)
-      haml-rails
-      mambo-authentication
-      rails
-      will_paginate
-
-GIT
   remote: http://dev.verticallabs.ca/git/mambo/gems/support.git
   revision: 9ab7043390e793e71a553d0fcf61fbe95e8b7435
   specs:
@@ -72,6 +55,22 @@ GIT
   specs:
     dm-accepts_nested_attributes (1.2.0)
       dm-core (~> 1.2.0, < 1.3)
+
+PATH
+  remote: /home/cdion/mambo/gems/sms
+  specs:
+    mambo-sms (0.0.13)
+      dm-constraints (~> 1.2)
+      dm-migrations (~> 1.2)
+      dm-rails (~> 1.2)
+      dm-timestamps (~> 1.2)
+      dm-transactions (~> 1.2)
+      dm-types (~> 1.2)
+      dm-validations (~> 1.2)
+      haml-rails
+      mambo-authentication
+      rails
+      will_paginate
 
 GEM
   remote: https://vertical:g3m4cc3ss@gems.verticallabs.ca/
