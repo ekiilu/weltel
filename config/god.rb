@@ -27,15 +27,15 @@ God.contact(:email) do |c|
   c.to_email = 'support@verticallabs.ca'
 end
 
-AppConfig.deployment_processes.each do |process_config|
+AppConfig.processes.each do |process_config|
   env = {
     :rails_env => AppConfig.deployment.rails_env, 
     :pwd => AppConfig.deployment.app_root,
-    :logfile => "#{AppConfig.deployment.log_directory}/#{AppConfig.deployment.monitoring.group_name}_#{process_config.name}.log"
+    :logfile => "#{AppConfig.deployment.log_directory}/#{AppConfig.deployment.monitoring.group_name}_#{process_config.process_name}.log"
   }
 
   God.watch do |w|
-    w.name        = process_config.full_name
+    w.name        = process_config.process_name
     w.interval    = 30.seconds
     w.dir         = env[:pwd]
 

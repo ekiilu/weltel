@@ -60,16 +60,16 @@ end
 # helpers
 namespace :god do
   [:start, :stop, :restart].each do |command|
-    AppConfig.deployment_processes.each do |process_config|
-      desc "#{command.to_s.capitalize} #{process_config.full_name}"
-      task "#{command}_#{process_config.full_name}", :roles => :app , :except => { :no_release => true } do
-        run "cd #{current_path} && bundle exec god #{command.to_s} #{process_config.full_name}"
+    AppConfig.processes.each do |process_config|
+      desc "#{command.to_s.capitalize} #{process_config.process_name}"
+      task "#{command}_#{process_config.process_name}", :roles => :app , :except => { :no_release => true } do
+        run "cd #{current_path} && bundle exec god #{command.to_s} #{process_config.process_name}"
       end
     end
     desc "#{command.to_s.capitalize} all"
     task "#{command}_all", :roles => :app , :except => { :no_release => true } do
-      AppConfig.deployment_processes.each do |process_config|
-        run "cd #{current_path} && bundle exec god #{command.to_s} #{process_config.full_name}"
+      AppConfig.processes.each do |process_config|
+        run "cd #{current_path} && bundle exec god #{command.to_s} #{process_config.process_name}"
       end
     end
   end

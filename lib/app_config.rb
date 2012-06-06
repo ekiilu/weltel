@@ -2,6 +2,10 @@
 require 'recursive_open_struct'
 require 'yaml'
 
+class OpenStruct
+  alias_method :to_h, :marshal_dump
+end
+
 class AppConfig
   def self.load(config_file)
     raise "Can't find config_file #{config_file}" unless File.exist?(config_file)
@@ -26,9 +30,11 @@ class AppConfig
     string
   end
 
-  def self.deployment_processes
-    AppConfig.deployment.monitoring.processes.collect do |process_config|
-      ::RecursiveOpenStruct.new(process_config.merge(:full_name => "#{self.deployment.monitoring.group_name}_#{process_config['name']}"))
+  def self.processes
+    hash = self.deployment.processes.to_h.each_pair do |k, v| 
+      v['name'] = k.to_s
+      v['process_name'] = "#{self.deployment.monitoring.group_name}_#{k.to_s}" 
     end
+    ::RecursiveOpenStruct.new(hash)
   end
 end
