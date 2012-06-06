@@ -96,6 +96,12 @@ namespace :god do
     puts '  * Stopping god.'
     run "cd #{current_path} && bundle exec god quit || true" #ignore failures
   end
+
+  desc 'Status'
+  task :status do
+    puts '  * Checking god status'
+    run "cd #{current_path} && bundle exec god status || true" #ignore failures
+  end
 end
 
 namespace :deploy do
