@@ -37,9 +37,9 @@ module Weltel
 
 		#
 		def update_records(date)
-			records = Weltel::Record.active.created_on(date).with_state(:pending)
+			records = Weltel::PatientRecord.active.created_on(date).with_state(:pending)
 
-			Weltel::Record.transaction do
+			Weltel::PatientRecord.transaction do
 				records.each do |record|
 					record.change_state(:late, AppConfig.system_user)
 				end

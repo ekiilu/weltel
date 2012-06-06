@@ -21,7 +21,7 @@
   - first_sent = patient.active_record.messages.sent.first
   %td.first{:colspan => 4}
     - if first_sent
-      - first_received = patient.active_record.messages.received.first
+      - first_received = patient.active_record.messages.received_or_read.first
       - if first_sent
         %h3 Initial response
         = exchange_tag(nil, first_received, [nil, 'messaging.no_initial_receive'])
@@ -30,5 +30,5 @@
   %td.last{:colspan => 4}
     - if first_received
       %h3 Most recent messages
-      = exchange_tag(patient.active_record.messages.sent.last, patient.active_record.messages.received.last)
+      = exchange_tag(patient.active_record.messages.sent.last, patient.active_record.messages.received_or_read.last)
 

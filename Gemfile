@@ -79,8 +79,8 @@ gem "mambo-authentication", :git => "#{DEV_GIT}/authentication.git"
 gem "mambo-twilio_adapter", :git => "#{DEV_GIT}/twilio_adapter.git"
 #gem "mambo-twilio_adapter", "0.0.12"
 
-#gem "mambo-sms", :path => "#{HOME_PATH}/sms"
-gem "mambo-sms", :git => "#{DEV_GIT}/sms.git"
+gem "mambo-sms", :path => "#{HOME_PATH}/sms"
+#gem "mambo-sms", :git => "#{DEV_GIT}/sms.git"
 #gem "mambo-sms", "0.0.13"
 
 #gem "mambo-messaging", :path => "#{HOME_PATH}/messaging"

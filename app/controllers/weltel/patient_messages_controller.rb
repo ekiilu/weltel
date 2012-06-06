@@ -42,8 +42,13 @@ module Weltel
 				end
 
 				Weltel::Patient.transaction do
-					@message = Sms::Message.create_to_subscriber(@patient.subscriber, body)
-					Weltel::Factory.new.sender.send(@message)
+					if @patient.active_record
+						@message = @patient.active_record.create_outgoing_message(body)
+					else
+						@message = @patient.subscriber.create_outgoing_message(body)
+					end
+
+					Weltel::Factory.sender.send(@message)
 				end
 
 				flash[:notice] = t(:created)
