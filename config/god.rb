@@ -27,7 +27,8 @@ God.contact(:email) do |c|
   c.to_email = 'support@verticallabs.ca'
 end
 
-AppConfig.processes.each do |process_config|
+AppConfig.processes.to_h.each_value do |process_config|
+  process_config = ::RecursiveOpenStruct.new(process_config)
   env = {
     :rails_env => AppConfig.deployment.rails_env, 
     :pwd => AppConfig.deployment.app_root,
