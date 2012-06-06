@@ -53,7 +53,8 @@ gem "unicorn"
 gem "thin"
 
 # monitoring
-gem "god"
+#gem "bluepill", :git => 'https://github.com/pschuegr/bluepill.git'
+gem 'god'
 
 # application
 gem "recursive-open-struct"

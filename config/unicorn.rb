@@ -21,7 +21,7 @@ worker_processes(config["workers"])
 listen("#{socket_dir}/unicorn.sock", :backlog => 64)
 listen(config["port"], :tcp_nopush => true)
 timeout(30)
-pid("#{pid_dir}/unicorn.pid")
+pid("#{pid_dir}/mambo_unicorn.pid")
 working_directory(deploy_dir)
 
 #logging
