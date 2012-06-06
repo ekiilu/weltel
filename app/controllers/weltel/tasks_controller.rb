@@ -1,6 +1,8 @@
 # -*- encoding : utf-8 -*-
 module Weltel
 	class TasksController < ApplicationController
+		respond_to(:html, :js)
+
 		#
 		def create_records
 			# send reminders
