@@ -20,6 +20,13 @@ module Weltel
 		end
 
 		# class methods
+		#
+		def self.filtered_by(key, value)
+			return all if value.empty?
+			all(key => value)
+		end
+
+		#
 		def self.sorted_by(key, order)
 			all(:order => [key.send(order)])
 		end

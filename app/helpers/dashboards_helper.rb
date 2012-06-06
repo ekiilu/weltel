@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 module DashboardsHelper
   def is_study_dashboard?(view)
-    view == 'study'
+    view == :study
   end
 end

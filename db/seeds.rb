@@ -92,30 +92,36 @@ begin
 		:system => true
 	)
 
-	50.times do |p|
+	clinic = Weltel::Clinic.create(
+		:name => "",
+		:system => true
+	)
+
+	500.times do |p|
 		subscriber = Sms::Subscriber.create(
-			:phone_number => "60470000%02d" % p,
+			:phone_number => "6047000%03d" % p,
 			:active => false
 		)
 
 		Weltel::Patient.create(
 			:subscriber => subscriber,
-			:user_name => "patient%02d" % p,
-			:study_number => "number%02d" % p
+			:user_name => "patient%03d" % p,
+			:study_number => "number%03d" % p,
+			:clinic => clinic
 		)
 	end
 
-  Weltel::Patient.all[0...40].each do |p|
+  Weltel::Patient.all[0...400].each do |p|
     p.create_record(Time.now)
     p.save
   end
 
-  Weltel::Patient.all[0...40].each do |p|
-    p.active_record.messages.create(:status => :Sent, :phone_number => '7783175526', :body => 'Are you ok?')
-    p.active_record.messages.create(:status => :Received, :phone_number => '7783175526', :body => 'hi')
+  Weltel::Patient.all[0...350].each do |p|
+    p.active_record.messages.create(:status => :sent, :phone_number => '7783175526', :body => 'Are you ok?')
+    p.active_record.messages.create(:status => :received, :phone_number => '7783175526', :body => 'hi')
   end
 
-  {(0..9) => :unknown, (10..19) => :positive, (20..29) => :negative, (30..39) => :late }.each_pair do |range, state|
+  {(0..99) => :unknown, (100..190) => :positive, (200..290) => :negative, (300..350) => :late }.each_pair do |range, state|
     Weltel::Patient.all[range].each do |p|
       p.active_record.change_state(state, AppConfig.system_user)
     end

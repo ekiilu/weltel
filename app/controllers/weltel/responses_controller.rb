@@ -2,18 +2,21 @@
 module Weltel
 	class ResponsesController < ApplicationController
 		include Authentication::AuthenticatedController
-
 		respond_to(:html)
 		layout("private/application")
 
     before_filter(:only => :index) do
     	page_param(:responses)
       sort_param(:responses, :name, :asc)
+      filter_param(:responses)
     end
 
 		#
 		def index
-			@responses = Weltel::Response.sorted_by(@sort_key, @sort_order).paginate(:page => @page, :per_page => 20)
+			@responses = Weltel::Response
+				.filtered_by(@filter_key, @filter_value)
+				.sorted_by(@sort_key, @sort_order)
+				.paginate(:page => @page, :per_page => 20)
 			respond_with(@responses)
 		end
 
@@ -26,8 +29,9 @@ module Weltel
 		#
 		def create
 			begin
-        params[:weltel_response][:name] = CGI::unescape(params[:weltel_response][:name]) if params[:url_encoded]
-				@response = Weltel::Response.create(params[:weltel_response])
+				weltel_response = params[:weltel_response]
+				weltel_response[:name] = CGI::unescape(weltel_response[:name]) if params[:url_encoded]
+				@response = Weltel::Response.create(weltel_response)
 				flash[:notice] = t(:created)
 				respond_with(@response, :location => weltel_responses_path)
 
@@ -48,8 +52,9 @@ module Weltel
 		#
 		def update
 			begin
+				weltel_response = params[:weltel_response]
 				@response = Weltel::Response.get!(params[:id])
-				@response.update(params[:weltel_response])
+				@response.update(weltel_response)
 				flash[:notice] = t(:updated)
 				respond_with(@response, :location => weltel_responses_path)
 
@@ -60,7 +65,6 @@ module Weltel
 				end
 			end
 		end
-
 
 		#
 		def destroy

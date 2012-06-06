@@ -21,11 +21,27 @@ module Weltel
 		#
 		def show
       if is_study_dashboard?(@view)
-        @patients = Weltel::Patient.active.with_active_record.search(@search).by_state(@state.to_sym).sorted_by(@sort_key, @sort_order).paginate(:page => @page, :per_page => 20)
+        @patients = Weltel::Patient
+        	.active
+        	.search(@search)
+        	.with_state(@state.to_sym)
+        	.sorted_by(@sort_key, @sort_order)
+        	.paginate(:page => @page, :per_page => 20)
       else
-        @patients = Weltel::Patient.active.with_active_record.search(@search).by_status(@status.to_sym).sorted_by(@sort_key, @sort_order).paginate(:page => @page, :per_page => 20)
+        @patients = Weltel::Patient
+        	.active
+        	.search(@search)
+        	.with_status(@status.to_sym)
+        	.sorted_by(@sort_key, @sort_order)
+        	.paginate(:page => @page, :per_page => 20)
       end
 			respond_with(@patients)
+		end
+
+	private
+		#
+		def t(key)
+			I18n.t(key, :scope => [:weltel, :dashboards])
 		end
 	end
 end

@@ -12,8 +12,8 @@ Weltel::Application.routes.draw do
 		# tasks
 		resource(:task, :only => []) do
 			get(:create_records)
-			post(:update_records)
-			post(:receive_responses)
+			get(:update_records)
+			get(:receive_responses)
 		end
 
 		# updates

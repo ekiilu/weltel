@@ -3,21 +3,21 @@ module Weltel
 	class Service < Messaging::Service
 		# instance methods
 		#
-		def close_records(date)
+		def archive_records(date)
 			Weltel::PatientRecord.transaction do
 				Weltel::PatientRecord.active.created_before(date).each do |record|
-					record.close
+					record.archive
 				end
 			end
 		end
 
 		#
 		def create_records(date)
-			close_records(date)
+			archive_records(date)
 
 			body = Sms::MessageTemplate.get_by_name(:checkup).body
 
-			patients = Weltel::Patient.active.without_active_record_created_on(date)
+			patients = Weltel::Patient.active.with_active_subscriber.without_active_record_created_on(date)
 
 			patients.each do |patient|
 				create_record(date, patient, body)
@@ -37,7 +37,7 @@ module Weltel
 
 		#
 		def update_records(date)
-			records = Weltel::Record.active.created_on(date).with_state(:unknown)
+			records = Weltel::Record.active.created_on(date).with_state(:pending)
 
 			Weltel::Record.transaction do
 				records.each do |record|

@@ -9,14 +9,13 @@ module Weltel
     	page_param(:patients)
     	session_param(:patients, :search, "")
       sort_param(:patients, :user_name, :asc)
+      filter_param(:patients)
     end
 
 		# patient list
 		def index
 			@clinics = Weltel::Clinic.sorted_by(:name, :asc)
-			@patients = Weltel::Patient.active.search(@search).sorted_by(@sort_key, @sort_order).paginate(:page => @page, :per_page => 20)
-			@patients.clinics.to_a
-			@patients.subscribers.to_a
+			@patients = Weltel::Patient.active.search(@search).filtered_by(@filter_key, @filter_value).sorted_by(@sort_key, @sort_order).paginate(:page => @page, :per_page => 20)
 			respond_with(@patients)
 		end
 

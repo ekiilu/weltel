@@ -6,10 +6,7 @@
     = search_field_tag(:search, @search, {:size => 40, :tabindex => 1})
     = submit_tag(t(".search"))
 
-- if @patients.empty?
-  = t(".no_patients")
-- else
-  = render("table")
+= render("table")
 
-  - content_for(:footer) do
-    = will_paginate(@patients)
+- content_for(:footer) do
+  = will_paginate(@patients)

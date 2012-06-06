@@ -12,9 +12,7 @@ module Weltel
 
 		#
 		def index
-			logger.debug(@sort_key)
-			logger.debug(@sort_order)
-			@clinics = Weltel::Clinic.sorted_by(@sort_key, @sort_order).paginate(:page => 1, :per_page => 2)
+			@clinics = Weltel::Clinic.user.sorted_by(@sort_key, @sort_order).paginate(:page => 1, :per_page => 2)
 			respond_with(@clinics)
 		end
 

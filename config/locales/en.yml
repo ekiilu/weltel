@@ -15,7 +15,7 @@ en:
         dashboard_link: "Dashboard"
         patients_link: "Patients"
         message_templates_link: "Templates"
-        responses_link: "Responses"
+        responses_link: "Dictionary"
         users_link: "Users"
         roles_link: "Roles"
         clinics_link: "Clinics"
@@ -28,23 +28,11 @@ en:
       destroyed: "Patient Deleted"
       contact: 'Contact method'
       status: 'Status'
-      statuses:
-        open: "Open"
-        closed: "Closed"
-      states:
-        positive: "Ok"
-        negative: "Not Ok"
-        unknown: "Unknown"
-        late: "Late"
-      contact_methods:
-        none: 'None'
-        phone: "Phone"
-        text: "Text"
       index:
         new_link: "Add Patient..."
         search: "Find Patients"
-        no_patients: "No Patients"
       table:
+        no_patients: "No Patients"
         user_name: "Username"
         study_number: "Study Number"
         phone_number: "Phone Number"
@@ -67,11 +55,34 @@ en:
         legend: "Audit"
         created_at: "Created"
         updated_at: "Updated"
+    patient_records:
+      statuses:
+        open: "Open"
+        closed: "Closed"
+      contact_methods:
+        none: "None"
+        phone: "Phone"
+        text: "Text"
+        email: "Email"
+        outreach_visit: "Outreach Visit"
+        clinic_visit: "Clinic Visit"
+    patient_record_states:
+      values:
+        pending: "Pending"
+        positive: "OK"
+        negative: "Not OK"
+        unknown: "Unknown"
+        late: "Late"
     patient_messages:
       created: "Message Created"
       index:
         add_link: "Send Message..."
         no_messages: "No Messages"
+      table:
+        phone_number: "Phone Number"
+        body: "Body"
+        status: "Status"
+        updated_at: "Updated"
       form:
         legend: "Send Message"
         template: "Select Template"
@@ -81,19 +92,21 @@ en:
         commit: "Send Message"
         commit_disable: "Sending Message..."
     dashboards:
+      open: "Open"
+      closed: "Closed"
       show:
-        clinic_view: 'Clinic view'
-        study_view: 'Study view'
+        clinic_view: 'To Do'
+        study_view: 'Overview'
         no_patients: "No Patients"
         search: "Find Patients"
       table:
         user_name: "Username"
-        study_number: "Study number"
-        phone_number: "Phone number"
-        initial_state: "Initial state"
-        current_state: "Current state"
-        status: "Status"
-        contact_method: "Contact method"
+        study_number: "Study Number"
+        phone_number: "Phone Number"
+        initial_state: "Initial Response"
+        current_state: "Current Status"
+        status: "Work Status"
+        contact_method: "Contact Method"
         actions: 'Actions'
       row:
         messages_link:
@@ -111,16 +124,21 @@ en:
       created: "Response Created"
       updated: "Response Updated"
       destroyed: "Response Deleted"
+      values:
+        positive: "OK"
+        negative: "Not OK"
       index:
-        no_responses: "No Responses"
         new_link: "Add Response..."
       table:
+        no_responses: "No Responses"
         name: "Name"
         value: "Value"
         created_at: "Created"
         updated_at: "Updated"
         actions: "Actions"
       row:
+        positive: "OK"
+        negative: "Not OK"
         edit_link: "Edit..."
         destroy_link: "Delete"
         destroy_confirm: "Are you sure you want to delete this response?"
@@ -181,3 +199,4 @@ en:
       weltel_patient:
         user_name: "User Name"
         study_number: "Study Number"
+        contact_phone_number: "Alternate Contact Number"

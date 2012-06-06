@@ -1,4 +1,62 @@
 GIT
+  remote: http://dev.verticallabs.ca/git/mambo/gems/authentication.git
+  revision: c7ac72bafc386946ab33edab3d8d9d29bb504e75
+  specs:
+    mambo-authentication (0.0.8)
+      dm-accepts_nested_attributes
+      dm-constraints (~> 1.2)
+      dm-core (~> 1.2)
+      dm-rails (~> 1.2)
+      dm-timestamps (~> 1.2)
+      dm-transactions (~> 1.2)
+      dm-types (~> 1.2)
+      dm-validations (~> 1.2)
+      haml-rails
+      mambo-support
+      rails
+      will_paginate
+
+GIT
+  remote: http://dev.verticallabs.ca/git/mambo/gems/messaging.git
+  revision: d182659b1bf5c9dad6fe147a9aeb403697de6f63
+  specs:
+    mambo-messaging (0.0.6)
+      mambo-sms
+
+GIT
+  remote: http://dev.verticallabs.ca/git/mambo/gems/sms.git
+  revision: a1358f6fe8caba33785ef913568ea81a8556af42
+  specs:
+    mambo-sms (0.0.13)
+      dm-constraints (~> 1.2)
+      dm-migrations (~> 1.2)
+      dm-rails (~> 1.2)
+      dm-timestamps (~> 1.2)
+      dm-transactions (~> 1.2)
+      dm-types (~> 1.2)
+      dm-validations (~> 1.2)
+      haml-rails
+      mambo-authentication
+      rails
+      will_paginate
+
+GIT
+  remote: http://dev.verticallabs.ca/git/mambo/gems/support.git
+  revision: 9ab7043390e793e71a553d0fcf61fbe95e8b7435
+  specs:
+    mambo-support (0.0.7)
+      rails
+
+GIT
+  remote: http://dev.verticallabs.ca/git/mambo/gems/twilio_adapter.git
+  revision: c73bb23130330db5ea2a5d6f175f56228c1eb8c1
+  specs:
+    mambo-twilio_adapter (0.0.12)
+      mambo-sms
+      rails
+      twilio-rb
+
+GIT
   remote: https://github.com/collectiveidea/delayed_job_data_mapper.git
   revision: 47c9ca5e59eb951cd5052e9764daa89956216905
   specs:
@@ -167,39 +225,6 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    mambo-authentication (0.0.8)
-      dm-accepts_nested_attributes
-      dm-constraints (~> 1.2)
-      dm-core (~> 1.2)
-      dm-rails (~> 1.2)
-      dm-timestamps (~> 1.2)
-      dm-transactions (~> 1.2)
-      dm-types (~> 1.2)
-      dm-validations (~> 1.2)
-      haml-rails
-      mambo-support
-      rails
-      will_paginate
-    mambo-messaging (0.0.6)
-      mambo-sms
-    mambo-sms (0.0.13)
-      dm-constraints (~> 1.2)
-      dm-migrations (~> 1.2)
-      dm-rails (~> 1.2)
-      dm-timestamps (~> 1.2)
-      dm-transactions (~> 1.2)
-      dm-types (~> 1.2)
-      dm-validations (~> 1.2)
-      haml-rails
-      mambo-authentication
-      rails
-      will_paginate
-    mambo-support (0.0.7)
-      rails
-    mambo-twilio_adapter (0.0.12)
-      mambo-sms
-      rails (~> 3.1)
-      twilio-rb
     mime-types (1.18)
     multi_json (1.0.4)
     multi_xml (0.5.1)
@@ -325,11 +350,11 @@ DEPENDENCIES
   haml-rails
   jquery-rails
   magic_encoding
-  mambo-authentication (= 0.0.8)
-  mambo-messaging (= 0.0.6)
-  mambo-sms (= 0.0.13)
-  mambo-support (= 0.0.7)
-  mambo-twilio_adapter (= 0.0.12)
+  mambo-authentication!
+  mambo-messaging!
+  mambo-sms!
+  mambo-support!
+  mambo-twilio_adapter!
   rails (= 3.2.5)
   recursive-open-struct
   rspec-rails
