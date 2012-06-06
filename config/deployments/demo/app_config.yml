@@ -10,7 +10,7 @@ deployment:
   log_directory: "/www/weltel/current/log"
   processes:
     unicorn:
-      start: "bundle exec unicorn_rails -E #{RAILS_ENV} -c #{PWD}/config/unicorn.rb -D"
+      start: "cd #{PWD} && bundle exec unicorn_rails -E #{RAILS_ENV} -c #{PWD}/config/unicorn.rb -D"
       stop: "kill -QUIT #{PID}"
       restart: "kill -USR2 #{PID}"
       workers: 2
