@@ -87,8 +87,8 @@ module Weltel
 		end
 
 		#
-		def self.with_state(state)
-			all(:active_state => {:state => state})
+		def self.with_state(value)
+			all(:active_state => {:value => value})
 		end
 	end
 end

@@ -4,14 +4,14 @@ module Weltel
 		#
 		def create_records
 			# send reminders
-			date = Date.today.monday
+			date = Date.today
 			Weltel::Factory.service.create_records(date)
 			render(:text => "OK")
 		end
 
 		#
 		def update_records
-			date = Date.today.monday
+			date = Date.today
 			Weltel::Factory.service.update_records(date)
 			render(:text => "OK")
 		end
