@@ -49,11 +49,14 @@ end
 gem "execjs"
 gem "therubyracer"
 gem "capistrano"
+gem 'capistrano_colors'
 gem "unicorn"
 gem "thin"
 
 # monitoring
-gem "god"
+#gem "bluepill", :git => 'https://github.com/pschuegr/bluepill.git'
+gem 'god'
+gem 'tlsmail', :require => false
 
 # application
 gem "recursive-open-struct"

@@ -1,19 +1,12 @@
 # -*- encoding : utf-8 -*-
-#init config
-config_filename = File.expand_path("#{File.dirname(__FILE__)}/unicorn.yml")
-config_file = YAML.load(File.read(config_filename))
-rails_env = ENV["RAILS_ENV"] || "development"
-config = config_file[rails_env]
-raise "No config for environment #{rails_env}" unless config
+require 'tlsmail' || abort("Can't find tlsmail")
 
-#directories
-deploy_dir = config["app_root"]
-runtime_dir = config["app_runtime"]
-pid_dir = "#{runtime_dir}/pids"
+app_root = File.expand_path("#{File.dirname(__FILE__)}/..")
+require "#{app_root}/lib/app_config.rb"
+AppConfig.load("#{app_root}/config/app_config.yml")
 
-God.pid_file_directory = pid_dir
-
-require 'tlsmail'
+pid_directory = "#{AppConfig.deployment.working_directory}/pids" 
+God.pid_file_directory = pid_directory 
 
 God::Contacts::Email.defaults do |d|
   Net::SMTP.enable_tls(OpenSSL::SSL::VERIFY_NONE)
@@ -34,101 +27,64 @@ God.contact(:email) do |c|
   c.to_email = 'support@verticallabs.ca'
 end
 
-God.watch do |w|
-  w.name        = "mambo_dj"
-  w.interval    = 30.seconds
-  w.dir         = deploy_dir 
-  w.env         = { "RAILS_ENV" => rails_env }
+AppConfig.deployment_processes.each do |process_config|
+  env = {
+    :rails_env => AppConfig.deployment.rails_env, 
+    :pwd => AppConfig.deployment.app_root,
+    :logfile => "#{AppConfig.deployment.log_directory}/#{AppConfig.deployment.monitoring.group_name}_#{process_config.name}.log"
+  }
 
-  w.start       = "rake jobs:work"
+  God.watch do |w|
+    w.name        = process_config.full_name
+    w.interval    = 30.seconds
+    w.dir         = env[:pwd]
 
-  w.uid         = config['user']
-  w.gid         = config['group']
-  w.group       = 'mambo'
+    w.pid_file    = "#{pid_directory}/#{process_config.full_name}.pid" if !process_config.daemonize
+    w.env         = Hash[ env.collect {|k,v| [k.to_s.upcase, v] } ] 
+    w.log         = env[:logfile]
 
-  # retart if memory gets too high
-  w.transition(:up, :restart) do |on|
-    on.condition(:memory_usage) do |c|
-      c.above = 300.megabytes
-      c.times = 2
-    end
-  end
+    w.group       = AppConfig.deployment.monitoring.group_name, 
 
-  # determine the state on startup
-  w.transition(:init, { true => :up, false => :start }) do |on|
-    on.condition(:process_running) do |c|
-      c.running = true
-    end
-  end
+    w.start = AppConfig.substitute(process_config.start, env)
+    w.stop = AppConfig.substitute(process_config.stop, env)
+    w.restart = AppConfig.substitute(process_config.restart, env)
 
-  # determine when process has finished starting
-  w.transition([:start, :restart], :up) do |on|
-    on.condition(:process_running) do |c|
-      c.running = true
-      c.interval = 5.seconds
+    # restart if memory gets too high
+    w.transition(:up, :restart) do |on|
+      on.condition(:memory_usage) do |c|
+        c.above = 300.megabytes
+        c.times = 2
+      end
     end
 
-    # failsafe
-    on.condition(:tries) do |c|
-      c.times = 5
-      c.transition = :start
-      c.interval = 5.seconds
-    end
-  end
-
-  # start if process is not running
-  w.transition(:up, :start) do |on|
-    on.condition(:process_running) do |c|
-      c.running = false
-      c.notify = 'Support' if rails_env == 'production'
-    end
-  end
-end
-
-God.watch do |w|
-  w.name          = "mambo_unicorn"
-  w.interval      = 30.seconds
-  w.dir           = deploy_dir 
-  w.env           = { "RAILS_ENV" => rails_env }
-  w.pid_file      = "#{pid_dir}/unicorn.pid"
-
-  w.start         = "#{config['unicorn']} -E #{rails_env} -c #{deploy_dir}/config/unicorn.rb -D"
-  w.stop          = "kill -QUIT #{w.pid_file}"
-  w.restart       = "kill -s USR2 #{w.pid_file}"
-
-  w.uid         = config['user']
-  w.gid         = config['group']
-  w.group       = 'mambo'
-
-  w.behavior(:clean_pid_file)
-
-  # determine the state on startup
-  w.transition(:init, { true => :up, false => :start }) do |on|
-    on.condition(:process_running) do |c|
-      c.running = true
-    end
-  end
-
-  # determine when process has finished starting
-  w.transition([:start, :restart], :up) do |on|
-    on.condition(:process_running) do |c|
-      c.running = true
-      c.interval = 5.seconds
+    # determine the state on startup
+    w.transition(:init, { true => :up, false => :start }) do |on|
+      on.condition(:process_running) do |c|
+        c.running = true
+      end
     end
 
-    # failsafe
-    on.condition(:tries) do |c|
-      c.times = 5
-      c.transition = :start
-      c.interval = 5.seconds
-    end
-  end
+    # determine when process has finished starting
+    w.transition([:start, :restart], :up) do |on|
+      on.condition(:process_running) do |c|
+        c.running = true
+        c.interval = 5.seconds
+      end
 
-  # start if process is not running
-  w.transition(:up, :start) do |on|
-    on.condition(:process_running) do |c|
-      c.running = false
-      c.notify = 'Support' if rails_env == 'production'
+      # failsafe
+      on.condition(:tries) do |c|
+        c.times = 5
+        c.transition = :start
+        c.interval = 5.seconds
+      end
+    end
+
+    # start if process is not running
+    w.transition(:up, :start) do |on|
+      on.condition(:process_running) do |c|
+        c.running = false
+        c.notify = 'Support' if env[:rails_env] == 'production'
+      end
     end
   end
 end
