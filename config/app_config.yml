@@ -1,5 +1,7 @@
-twilio_phone_number: '7788002767'
-alert_phone_numbers: ['7783175526']
+twilio:
+  phone_number: '7788002767'
+  account_sid: 'AC5e98a9a0d24a4dcbbc3126473d142d35'
+  auth_token: 'da2c9e85efafa8848b3e705ae3a2afe9'
 deployment:
   rails_env: 'production'
   app_root: '/www/weltel/current'
@@ -15,6 +17,6 @@ deployment:
         start: "bundle exec rake jobs:work"
         daemonize: true
       - name: unicorn
-        start: "bundle exec unicorn_rails -E #{RAILS_ENV} -c #{PWD}/config/unicorn.rb -D" 
+        start: "bundle exec unicorn_rails -E #{RAILS_ENV} -c #{PWD}/config/unicorn.rb -D"
         stop: "kill -QUIT #{PID}"
         restart: "kill -USR2 #{PID}"
