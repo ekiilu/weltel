@@ -6,13 +6,13 @@ AppConfig.load("#{app_root}/config/app_config.yml")
 set(:output, "/www/weltel/current/log/cron.log")
 
 every(5.minutes) do
-	command("curl #{AppConfig.internal_host}/weltel/task/receive_responses")
+	command("curl #{AppConfig.deployment.internal_host}/weltel/task/receive_responses")
 end
 
 every(:sunday, :at => "8pm") do
-  command("curl #{AppConfig.internal_host}/weltel/task/create_records")
+  command("curl #{AppConfig.deployment.internal_host}/weltel/task/create_records")
 end
 
 every(:tuesday, :at => "8pm") do
-  command("curl #{AppConfig.internal_host}/weltel/task/update_records")
+  command("curl #{AppConfig.deployment.internal_host}/weltel/task/update_records")
 end
