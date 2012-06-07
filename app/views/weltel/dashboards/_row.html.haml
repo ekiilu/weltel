@@ -10,7 +10,7 @@
       = select_tag(:current_state, options_for_select(patient_record_state_options, patient.active_record.active_state), :onchange => submit_form, :class => "current_state #{patient.active_record.active_state.value}")
   %td
     = form_for(patient.active_record, :url => weltel_patient_record_path(patient, patient.active_record)) do |f|
-      = select_tag(:status, options_for_select(patient_record_status_options, patient.active_record.status), :onchange => submit_form)
+      = select_tag(:status, options_for_select(patient_record_status_options, patient.active_record.status), :onchange => submit_form, :class => "status #{patient.active_record.status}")
   %td
     = form_for(patient.active_record, :url => weltel_patient_record_path(patient, patient.active_record)) do |f|
       = select_tag(:contact_method, options_for_select(patient_record_contact_method_options, patient.active_record.contact_method), :onchange => submit_form)

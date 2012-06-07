@@ -20,21 +20,16 @@ module Weltel
 
 		#
 		def show
-      if is_study_dashboard?(@view)
-        @patients = Weltel::Patient
-        	.active
-        	.search(@search)
-        	.with_state(@state.to_sym)
-        	.sorted_by(@sort_key, @sort_order)
-        	.paginate(:page => @page, :per_page => 20)
+      @patients = Weltel::Patient.active
+      if !@search.blank?
+        @patients = @patients.search(@search)
+      elsif is_study_dashboard?(@view)
+        @patients = @patients.with_state(@state.to_sym)
       else
-        @patients = Weltel::Patient
-        	.active
-        	.search(@search)
-        	.with_status(@status.to_sym)
-        	.sorted_by(@sort_key, @sort_order)
-        	.paginate(:page => @page, :per_page => 20)
+        @patients = @patients.with_status(@status.to_sym)
       end
+
+      @patients = @patients.sorted_by(@sort_key, @sort_order).paginate(:page => @page, :per_page => 20)
 			respond_with(@patients)
 		end
 

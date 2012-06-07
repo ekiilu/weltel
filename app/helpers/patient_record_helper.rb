@@ -3,7 +3,7 @@ module PatientRecordHelper
 	#
 	def patient_record_status_options
 		Weltel::PatientRecord.status.options[:flags].map do |status|
-			[I18n.t(status, :scope => [:weltel, :patient_records, :statuses]), status]
+			[I18n.t(status, :scope => [:weltel, :patient_records, :statuses]), status, :class => "status #{status}"]
 		end
 	end
 

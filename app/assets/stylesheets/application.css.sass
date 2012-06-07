@@ -29,7 +29,7 @@ $unknowncolor: #ff6600
 $latecolor: #ffcc00
 $pendingcolor: #999999
 $opencolor: #fff
-$closedcolor: #bbbbbb
+$closedcolor: #999999
 
 =bg-gradient($top, $bottom)
   background: $top
@@ -277,8 +277,19 @@ table
     +box-shadow(1px 2px 3px rgba(0, 0, 0, 0.15))
     text-shadow: 0px 2px 2px darken($pendingcolor, $colorshift * 2)
     color: #fff
+  &.closed
+    +bg-gradient($closedcolor, darken($closedcolor, $colorshift))
+    +border-radius($radius)
+    +box-shadow(1px 2px 3px rgba(0, 0, 0, 0.15))
+    text-shadow: 0px 2px 2px darken($closedcolor, $colorshift * 2)
+    color: #fff
+  &.open
+    +bg-gradient($opencolor, darken($opencolor, $colorshift))
+    +border-radius($radius)
+    +box-shadow(1px 2px 3px rgba(0, 0, 0, 0.15))
+    text-shadow: 0px 2px 2px darken($opencolor, $colorshift * 2)
 
-select, option, .item .state
+select, option, .item .state, .item .status
   padding: 5px
   margin: 2px
   &.positive
@@ -297,7 +308,12 @@ select, option, .item .state
   &.pending
     background: $pendingcolor
     color: #fff
-.item div.state
+  &.open
+    background: $opencolor
+  &.closed
+    background: $closedcolor
+    color: #fff
+.item div.state, .item div.status
   padding: 8px
 option
   display: inline-block
