@@ -4,12 +4,12 @@
 
   = form_tag(weltel_dashboard_path, :method => :get) do
     = hidden_field_tag(:page, 1)
-    = search_field_tag(:search, @search, {:size => 40, :tabindex => 1})
+    = search_field_tag(:search, @search, {:size => 40, :tabindex => 1, :onchange => submit_form})
     = submit_tag(t(".search"))
 
   .views
-    = link_to(t('.study_view'), weltel_dashboard_path(:view => :study, :page => 1), :class => active_class(@view.to_sym == :study))
-    = link_to(t('.clinic_view'), weltel_dashboard_path(:view => :clinic, :page => 1), :class => active_class(@view.to_sym == :clinic))
+    = link_to(t('.study_view'), weltel_dashboard_path(:view => :study, :page => 1), :class => active_class(@view.to_sym == :study) + ' button')
+    = link_to(t('.clinic_view'), weltel_dashboard_path(:view => :clinic, :page => 1), :class => active_class(@view.to_sym == :clinic) + ' button')
 
   .tabs
     - if is_study_dashboard?(@view)
@@ -33,5 +33,10 @@
       $('a.toggle_details').live('click', function(e) {
         $(e.target).parents('tr').next().toggle();
         return false;
+      });
+
+      $('select.current_state').live('change', function(e) {
+        var klass = $(e.target).find(':selected').attr('class');
+        $(e.target).attr('class', 'current_state state ' + klass);
       });
     });

@@ -25,13 +25,14 @@ $colorshift: 7%
 $fontcolor: #333333
 $positivecolor: #00cc00
 $negativecolor: #cc0000
-$unknowncolor: #ff9900
-$latecolor: #ffff00
-$pendingcolor: #cccccc
+$unknowncolor: #ff6600
+$latecolor: #ffcc00
+$pendingcolor: #999999
 $opencolor: #fff
 $closedcolor: #bbbbbb
 
 =bg-gradient($top, $bottom)
+  background: $top
   +background(linear-gradient(color-stops($top, $bottom)))
   +filter-gradient($top, $bottom)
 
@@ -227,13 +228,15 @@ table
 
   .tabs, .views
     a
-      padding: 5px
       display: inline-block
       min-width: 100px
       text-align: center
-      margin: 0px 5px
+      margin: 0px 10px 0px 0px
     a.active
-      border: 1px solid $themecolor
+  .tabs
+    a
+      padding: 5px
+      margin: 0px 10px 0px 0px
   .tabs
     a
       color #222
@@ -241,23 +244,64 @@ table
   .views
     margin-bottom: 10px
 
-.state
+.tabs a
   padding: 5px
   text-align: center
-.state.positive, .tabs .positive
-  background: $positivecolor
-.state.negative, .tabs .negative
-  background: $negativecolor
-.state.unknown, .tabs .unknown
-  background: $unknowncolor
-.state.late, .tabs .late
-  background: $latecolor
-.state.pending, .tabs .pending
-  background: $pendingcolor
-.status.open, .tabs .open
-  background: $opencolor
-.status.closed, .tabs .closed
-  background: $closedcolor
+  &.positive
+    +bg-gradient($positivecolor, darken($positivecolor, $colorshift))
+    +border-radius($radius)
+    +box-shadow(1px 2px 3px rgba(0, 0, 0, 0.15))
+    text-shadow: 0px 2px 2px darken($positivecolor, $colorshift * 2)
+    color: #fff
+  &.negative
+    +bg-gradient($negativecolor, darken($negativecolor, $colorshift))
+    +border-radius($radius)
+    +box-shadow(1px 2px 3px rgba(0, 0, 0, 0.15))
+    text-shadow: 0px 2px 2px darken($negativecolor, $colorshift * 2)
+    color: #fff
+  &.unknown
+    +bg-gradient($unknowncolor, darken($unknowncolor, $colorshift))
+    +border-radius($radius)
+    +box-shadow(1px 2px 3px rgba(0, 0, 0, 0.15))
+    text-shadow: 0px 2px 2px darken($unknowncolor, $colorshift * 2)
+    color: #fff
+  &.late
+    +bg-gradient($latecolor, darken($latecolor, $colorshift))
+    +border-radius($radius)
+    +box-shadow(1px 2px 3px rgba(0, 0, 0, 0.15))
+    text-shadow: 0px 2px 2px darken($latecolor, $colorshift * 3)
+    color: #fff
+  &.pending
+    +bg-gradient($pendingcolor, darken($pendingcolor, $colorshift))
+    +border-radius($radius)
+    +box-shadow(1px 2px 3px rgba(0, 0, 0, 0.15))
+    text-shadow: 0px 2px 2px darken($pendingcolor, $colorshift * 2)
+    color: #fff
+
+select, option, .item .state
+  padding: 5px
+  margin: 2px
+  &.positive
+    +background(none)
+    background: $positivecolor
+    color: #fff
+  &.negative
+    background: $negativecolor
+    color: #fff
+  &.unknown
+    background: $unknowncolor
+    color: #fff
+  &.late
+    background: $latecolor
+    color: #fff
+  &.pending
+    background: $pendingcolor
+    color: #fff
+.item div.state
+  padding: 8px
+option
+  display: inline-block
+
 
 #content
   padding: 0px 15px 15px 15px

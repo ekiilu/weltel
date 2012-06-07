@@ -45,7 +45,7 @@ module Weltel
 
 		#
 		def create_state(value, user)
-			active_state.update(:active => false) if active_state
+			states.update(:active => false)
 			states.create(:value => value, :user => user)
 			active_state.reload
 		end

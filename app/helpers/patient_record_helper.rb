@@ -13,4 +13,10 @@ module PatientRecordHelper
 			[I18n.t(contact_method, :scope => [:weltel, :patient_records, :contact_methods]), contact_method]
 		end
 	end
+
+	def patient_record_state_options
+		Weltel::PatientRecordState.value.options[:flags].map do |value|
+			[I18n.t(value, :scope => [:weltel, :patient_record_states, :values]), value, :class => "state #{value}"]
+		end
+	end
 end
