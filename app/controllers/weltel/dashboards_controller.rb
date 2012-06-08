@@ -20,7 +20,7 @@ module Weltel
 
 		#
 		def show
-      @patients = Weltel::Patient.active
+      @patients = Weltel::Patient.with_active_record
       if !@search.blank?
         @patients = @patients.search(@search)
       elsif is_study_dashboard?(@view)

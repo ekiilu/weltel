@@ -6,12 +6,12 @@
 
   - if is_study_dashboard?(@view)
     - Weltel::PatientRecordState::VALUES.each do |state|
-      .tab{:class => active_class(state == @state)}
+      .tab{:class => active_class(state == @state && @search.blank?)}
         .content
           = link_to(t("weltel.patient_record_states.values.#{state}"), params.merge(:state => state, :page => 1), :class => "#{active_class(state == @state.to_sym)} #{state.to_s} state")
   - else
     - Weltel::PatientRecord::STATUSES.each do |status|
-      .tab{:class => active_class(status == @status)}
+      .tab{:class => active_class(status == @status && @search.blank?)}
         .content
           = link_to(t("weltel.patient_records.statuses.#{status}"), params.merge(:status => status, :page => 1), :class => "#{active_class(status == @status.to_sym)} #{status.to_s} status")
 
