@@ -8,7 +8,7 @@ module Weltel
       page_param(:dashboard)
       sort_param(:dashboard, :user_name, :asc)
       session_param(:view, :per_page, 20)
-      session_param(:dashboard, :print, '')
+      session_param(:dashboard, :search, '')
       session_param(:dashboard, :view, :study)
       if is_study_dashboard?(@view)
         session_param(:dashboard, :state, :negative)
