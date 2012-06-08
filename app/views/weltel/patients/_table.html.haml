@@ -15,8 +15,4 @@
     = table_header_tag(t(".active"))
     = table_header_tag(t(".actions"))
 
-  - if @patients.empty?
-    %tr{:colspan => 6}
-      %td= t(".no_patients")
-  - else
     = render({:collection => @patients, :partial => "row", :as => :patient})

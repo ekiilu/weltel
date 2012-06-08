@@ -16,7 +16,8 @@
           = link_to(t("weltel.patient_records.statuses.#{status}"), params.merge(:status => status, :page => 1), :class => "#{active_class(status == @status.to_sym)} #{status.to_s} status")
 
 - if @patients.empty?
-  = t(".no_patients")
+  .empty_search
+    = t(".no_patients")
 - else
   = render("table")
 

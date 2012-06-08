@@ -32,8 +32,8 @@ en:
       index:
         new_link: "Add Patient"
         search: "Find Patients"
+        no_patients: "No patients found"
       table:
-        no_patients: "No Patients"
         user_name: "Username"
         study_number: "Study Number"
         phone_number: "Phone Number"
@@ -98,7 +98,7 @@ en:
       show:
         clinic_view: 'To Do'
         study_view: 'Overview'
-        no_patients: "No Patients"
+        no_patients: "No patients found.  Try the search on the Patients page if you are looking for a patient whose study may not have begun."
         search: "Find Patients"
       table:
         user_name: "Username"
