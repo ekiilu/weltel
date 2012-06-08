@@ -32,6 +32,7 @@ GEM
       rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.1.3)
+    active_link_to (1.0.0)
     activemodel (3.2.5)
       activesupport (= 3.2.5)
       builder (~> 3.0.0)
@@ -72,7 +73,7 @@ GEM
       sass (~> 3.1)
     compass-rails (1.0.2)
       compass (>= 0.12.0, < 0.14)
-    daemons (1.1.6)
+    daemons (1.1.8)
     data_objects (0.10.8)
       addressable (~> 2.1)
     database_cleaner (0.8.0)
@@ -168,7 +169,7 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    mambo-authentication (0.0.9)
+    mambo-authentication (0.0.10)
       dm-accepts_nested_attributes
       dm-constraints (~> 1.2)
       dm-core (~> 1.2)
@@ -183,7 +184,7 @@ GEM
       will_paginate
     mambo-messaging (0.0.7)
       mambo-sms
-    mambo-sms (0.0.14)
+    mambo-sms (0.0.15)
       dm-constraints (~> 1.2)
       dm-migrations (~> 1.2)
       dm-rails (~> 1.2)
@@ -195,7 +196,7 @@ GEM
       mambo-authentication
       rails
       will_paginate
-    mambo-support (0.0.8)
+    mambo-support (0.0.9)
       rails
     mambo-twilio_adapter (0.0.13)
       mambo-sms
@@ -300,6 +301,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_link_to
   capistrano
   capistrano_colors
   coffee-rails
@@ -327,11 +329,11 @@ DEPENDENCIES
   haml-rails
   jquery-rails
   magic_encoding
-  mambo-authentication (= 0.0.9)
-  mambo-messaging (= 0.0.7)
-  mambo-sms (= 0.0.14)
-  mambo-support (= 0.0.8)
-  mambo-twilio_adapter (= 0.0.13)
+  mambo-authentication (>= 0.0.10)
+  mambo-messaging (>= 0.0.7)
+  mambo-sms (>= 0.0.15)
+  mambo-support (>= 0.0.9)
+  mambo-twilio_adapter (>= 0.0.13)
   rails (= 3.2.5)
   recursive-open-struct
   rspec-rails
