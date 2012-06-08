@@ -1,7 +1,7 @@
 - content_for(:tabs) do
   = form_tag(weltel_dashboard_path, :method => :get) do
     = hidden_field_tag(:page, 1)
-    = search_field_tag(:search, @search, {:size => 40, :tabindex => 1, :onchange => submit_form})
+    = search_field_tag(:search, @search, {:size => 40, :tabindex => 1, :onsearch => submit_form})
     = submit_tag(t(".search"))
 
   - if is_study_dashboard?(@view)

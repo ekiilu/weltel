@@ -100,6 +100,17 @@ en:
         study_view: 'Overview'
         no_patients: "No patients found.  Try the search on the Patients page if you are looking for a patient whose study may not have begun."
         search: "Find Patients"
+        notes: "Notes"
+      print:
+        user_name: "Username"
+        study_number: "Study #"
+        phone_number: "Phone Number"
+        initial_state: "Initial Response"
+        current_state: "Current Status"
+        status: "Work Status"
+        contact_method: "Contact Method"
+        actions: 'Actions'
+        clinic: 'Clinic'
       table:
         user_name: "Username"
         study_number: "Study Number"
@@ -110,6 +121,7 @@ en:
         contact_method: "Contact Method"
         actions: 'Actions'
         clinic: 'Clinic'
+        print: 'Print view'
       row:
         mark_positive: "Mark OK"
         mark_negative: "Mark Not OK"

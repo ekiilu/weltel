@@ -9,6 +9,9 @@
     = table_header_tag(t(".status"))
     = table_header_tag(t(".contact_method"))
     = table_header_tag(t(".clinic"))
-    = table_header_tag(t(".actions"))
+    %th.actions
+      .title= t(".actions")
+      .print
+        = link_to t('.print'), params.merge(:print => true), :target => '_blank'
 
   = render({:collection => @patients, :partial => "row", :as => :patient})

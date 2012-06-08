@@ -5,7 +5,7 @@ module Weltel
 
 		# properties
 		property(:id, Serial)
-		property(:active, Boolean, {:index => true, :required => true, :default => true})
+		property(:active, Boolean, {:index => true, :required => true, :default => true}) # patient is visible to app users
 		property(:user_name, String, {:unique => true, :required => true, :length => 32})
 		property(:study_number, String, {:unique => true, :length => 32})
 		property(:contact_phone_number, String, :length => 10)
