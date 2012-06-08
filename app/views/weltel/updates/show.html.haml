@@ -1,6 +1,7 @@
 - content_for(:actions) do
-  = link_to("Test Checkup", create_records_weltel_task_path, {:remote => true, :class => "button"})
-  = link_to("Test Late", update_records_weltel_task_path, {:remote => true, :class => "button"})
+  - if AppConfig.demo_mode
+    = link_to("Test Checkup", create_records_weltel_task_path, {:remote => true, :class => "button"})
+    = link_to("Test Late", update_records_weltel_task_path, {:remote => true, :class => "button"})
 
   - if @update_needed
     = link_to(t(".update_link"), weltel_update_path, {:method=> :post, :class => "button"})

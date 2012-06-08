@@ -2,6 +2,7 @@ twilio:
   phone_number: '6042103431'
   account_sid: 'AC237b652f53a64bd19e62f62ee2a3d2e4'
   auth_token: '0652039bfaaa607bf5af942001dd9b72'
+demo_mode: true
 deployment:
   internal_host: "http://localhost:3000"
   rails_env: 'production'
