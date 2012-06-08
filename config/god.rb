@@ -29,11 +29,12 @@ end
 
 AppConfig.processes.to_h.each_value do |process_config|
   process_config = ::RecursiveOpenStruct.new(process_config)
+  pid_file = "#{pid_directory}/#{process_config.process_name}.pid"
   env = {
     :rails_env => AppConfig.deployment.rails_env, 
     :pwd => AppConfig.deployment.app_root,
-    :pid_file => "#{pid_directory}/#{process_config.process_name}.pid",
-    :pid => File.read("#{pid_directory}/#{process_config.process_name}.pid").read.chomp,
+    :pid_file => pid_file,
+    :pid => File.exist?(pid_file) ? File.open(pid_file).read.chomp : nil,
     :logfile => "#{AppConfig.deployment.log_directory}/#{process_config.process_name}.log"
   }
 
