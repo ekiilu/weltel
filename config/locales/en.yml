@@ -30,7 +30,7 @@ en:
       contact: 'Contact method'
       status: 'Status'
       index:
-        new_link: "Add Patient..."
+        new_link: "Add Patient"
         search: "Find Patients"
       table:
         no_patients: "No Patients"
@@ -42,17 +42,17 @@ en:
         actions: "Actions"
       row:
         no_clinic: ""
-        edit_link: "Edit..."
+        edit_link: "Edit"
         destroy_link: "Delete"
-        destroy_disable: "Deleting..."
+        destroy_disable: "Deleting"
         destroy_confirm: "Are you sure you want to delete this patient?"
       form:
         legend: "Patient"
         cancel: "Cancel"
         commit: "Save Patient"
-        commit_disable: "Saving Patient..."
+        commit_disable: "Saving Patient"
       edit:
-        messages_link: "Messages..."
+        messages_link: "Messages"
         legend: "Audit"
         created_at: "Created"
         updated_at: "Updated"
@@ -77,7 +77,7 @@ en:
     patient_messages:
       created: "Message Created"
       index:
-        add_link: "Send Message..."
+        add_link: "Send Message"
         no_messages: "No Messages"
       table:
         phone_number: "Phone Number"
@@ -87,11 +87,11 @@ en:
       form:
         legend: "Send Message"
         template: "Select Template"
-        or: "Or..."
+        or: "Or"
         custom: "Custom Message"
         cancel: "Cancel"
         commit: "Send Message"
-        commit_disable: "Sending Message..."
+        commit_disable: "Sending Message"
     dashboards:
       open: "Open"
       closed: "Closed"
@@ -134,7 +134,7 @@ en:
         positive: "OK"
         negative: "Not OK"
       index:
-        new_link: "Add Response..."
+        new_link: "Add Response"
       table:
         no_responses: "No Responses"
         name: "Name"
@@ -145,15 +145,15 @@ en:
       row:
         positive: "OK"
         negative: "Not OK"
-        edit_link: "Edit..."
+        edit_link: "Edit"
         destroy_link: "Delete"
         destroy_confirm: "Are you sure you want to delete this response?"
-        destroy_disable: "Deleting..."
+        destroy_disable: "Deleting"
       form:
         legend: "Response"
         cancel: "Cancel"
         commit: "Save Response"
-        commit_disable: "Saving Response..."
+        commit_disable: "Saving Response"
       edit:
         legend: "Audit"
         created_at: "Created"
@@ -164,16 +164,16 @@ en:
       destroyed: "Clinic Deleted"
       index:
         no_clinics: "No Clinics"
-        new_link: "Add Clinic..."
+        new_link: "Add Clinic"
       table:
         name: "Clinic"
         updated_at: "Updated"
         actions: "Actions"
       row:
-        edit_link: "Edit..."
+        edit_link: "Edit"
         destroy_link: "Delete"
         destroy_confirm: "Are you sure you want to delete this clinic?"
-        destroy_disable: "Deleting..."
+        destroy_disable: "Deleting"
       edit:
         legend: "Audit"
         created_at: "Created"
@@ -182,7 +182,7 @@ en:
         legend: "Clinic"
         cancel: "Cancel"
         commit: "Save Clinic"
-        commit_disable: "Saving Clinic..."
+        commit_disable: "Saving Clinic"
 
   ## messaging
   messaging:
