@@ -30,7 +30,6 @@ role :db, AppConfig.deployment.server, :primary => true
 task deployment do
   #null task, just for syntax
 end
-abort shared_path
 
 # set defaults 
 set :shared_children, %w(system log pids sockets config)
