@@ -20,12 +20,17 @@ AppConfig.load(File.join(deployment_config_path, 'app_config.yml'))
 
 set :application, AppConfig.deployment.app_name
 set :repository, AppConfig.deployment.app_repo
-set :deploy_to, AppConfig.deployment.app_repo
+set :deploy_to, AppConfig.deployment.deploy_to
 set :branch, AppConfig.deployment.app_branch
 set :user, AppConfig.deployment.uid
 role :web, AppConfig.deployment.server
 role :app, AppConfig.deployment.server
 role :db, AppConfig.deployment.server, :primary => true
+
+task deployment do
+  #null task, just for syntax
+end
+abort shared_path
 
 # set defaults 
 set :shared_children, %w(system log pids sockets config)
