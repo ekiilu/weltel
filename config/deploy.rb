@@ -3,59 +3,51 @@ require "bundler/capistrano"
 require 'capistrano_colors'
 
 app_root = File.expand_path("#{File.dirname(__FILE__)}/..")
+
+# get a list of all deployments
+deployments = Dir.glob(File.join(app_root, 'config', 'deployments', '*')).map {|d| File.basename(d).to_sym }
+set :deployment, ARGV[0]
+if !deployments.include?(deployment.to_sym)
+  abort_message = <<-msg
+    Please set the cap deployment: "cap demo deploy" or "cap local deploy"
+    Available environments: #{deployments.map{|d| d.to_s}.join(", ")}
+  msg
+  abort(abort_message)
+end
+
+# load the appropriate config
+set :deployment_config_path, File.join(File.dirname(__FILE__), 'deployments', deployment.to_s)
 require "#{app_root}/lib/app_config.rb"
-AppConfig.load("#{app_root}/config/app_config.yml")
+AppConfig.load(File.join(deployment_config_path, 'app_config.yml'))
 
-abort('Please set the cap environment: "cap demo deploy" or "cap local deploy"') unless ARGV[0].match /(local|demo)/
+set :application, AppConfig.deployment.app_name
+set :repository, AppConfig.deployment.app_repo
+set :deploy_to, AppConfig.deployment.app_repo
+set :branch, AppConfig.deployment.app_branch
+set :user, AppConfig.deployment.uid
+role :web, AppConfig.deployment.server
+role :app, AppConfig.deployment.server
+role :db, AppConfig.deployment.server, :primary => true
 
-set :application, "weltel"
-set :repository,  "ssh://git@dev.verticallabs.ca/git/mambo/apps/weltel.git"
-set :deploy_to, "/www/weltel"
-set :branch, "3.0"
+# set defaults 
 set :shared_children, %w(system log pids sockets config)
 set :config_files, %w(app_config.yml database.yml)
-set :sudo_user, ENV["USER"]
-
 set :use_sudo, false
 set :using_rvm, false
 set :scm, :git
-set :rake, "bundle exec rake"
 set :deploy_via, :remote_cache
 set :rails_env, 'production'
 ssh_options[:forward_agent] = true
 
+# setup whenever
 set :whenever_command, "bundle exec whenever"
 require "whenever/capistrano"
 
-task :local do
-  set :deployment, :local
-  set :user, ENV["USER"]
-
-  role :web, "localhost"
-  role :app, "localhost"
-  role :db, "localhost", :primary => true
-
-  after "deploy:setup", "deploy:upload_config"
-  before "deploy:assets:precompile", "deploy:symlink_config"
-  after "deploy:symlink_config", "deploy:migrate"
-  after "deploy:restart", "deploy:delete_deploy_file"
-
-end
-
-task :demo do
-  set :deployment, :demo
-  set :user, 'web'
-
-  role :web, "dev.verticallabs.ca"
-  role :app, "dev.verticallabs.ca"
-  role :db, "dev.verticallabs.ca", :primary => true
-
-  set :ssh_options, {:forward_agent => true}
-
-  after "deploy:setup", "deploy:upload_config"
-  before "deploy:assets:precompile", "deploy:symlink_config"
-  after "deploy:symlink_config", "deploy:migrate"
-end
+# hooks
+before "deploy", "deploy:upload_config"
+before "deploy:assets:precompile", "deploy:symlink_config"
+after "deploy:symlink_config", "deploy:migrate"
+after "deploy:restart", "deploy:delete_deploy_file"
 
 # helpers
 namespace :god do
@@ -107,7 +99,7 @@ end
 namespace :deploy do
   desc "Deletes deploy file"
   task :delete_deploy_file do
-    run("rm -f #{shared_path}/deploy")
+    run("rm -f #{shared_path}/deploy || true")
   end
 
   desc "Uploads config"
@@ -141,8 +133,4 @@ namespace :deploy do
     god.start
     god.restart_all
   end
-end
-
-on :finish do
-  puts ''
 end
