@@ -27,5 +27,5 @@ deployment:
   monitoring:
     log_file: "monitoring.log"
     group_name: mambo
-    uid: web
-    gid: web
+  uid: web
+  gid: web
