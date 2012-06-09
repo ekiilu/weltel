@@ -2,7 +2,8 @@
 require "bundler/capistrano"
 require 'capistrano_colors'
 
-app_root = File.expand_path("#{File.dirname(__FILE__)}/..")
+app_root = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+require "#{app_root}/lib/app_config.rb"
 
 # get a list of all deployments
 deployments = Dir.glob(File.join(app_root, 'config', 'deployments', '*')).map {|d| File.basename(d).to_sym }
@@ -14,10 +15,7 @@ if !deployments.include?(deployment.to_sym)
   msg
   abort(abort_message)
 end
-
-# load the appropriate config
 set :deployment_config_path, File.join(File.dirname(__FILE__), 'deployments', deployment.to_s)
-require "#{app_root}/lib/app_config.rb"
 AppConfig.load(File.join(deployment_config_path, 'app_config.yml'))
 
 set :application, AppConfig.deployment.app_name
@@ -105,15 +103,15 @@ namespace :deploy do
   desc "Uploads config"
   task :upload_config, :roles => :app do
     config_files.each do |filename|
-      full_path = "#{File.dirname(__FILE__)}/deployments/#{deployment}/#{filename}"
+      full_path = File.join(deployment_config_path, filename)
       top.upload(full_path, "#{shared_path}/config/#{filename}")
     end 
   end
 
   desc "Symlinks config"
   task :symlink_config, :roles => :app do
-    run("ln -nfs #{deploy_to}/shared/config/app_config.yml #{release_path}/config/app_config.yml")
-    run("ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml")
+    run("ln -nfs #{shared_path}/config/app_config.yml #{release_path}/config/app_config.yml")
+    run("ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml")
   end
 
   # standard tasks (must be implemented to work)
