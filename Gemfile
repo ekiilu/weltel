@@ -57,7 +57,7 @@ DEV_GIT = "http://dev.verticallabs.ca/git/mambo/gems"
 
 gem "mambo-authentication", :path => "#{HOME_PATH}/authentication"
 #gem "mambo-authentication", :git => "#{DEV_GIT}/authentication.git"
-#em "mambo-authentication", "0.0.9"
+#gem "mambo-authentication", "0.0.9"
 
 #gem "mambo-twilio_adapter", :path => "#{HOME_PATH}/twilio_adapter"
 #gem "mambo-twilio_adapter", :git => "#{DEV_GIT}/twilio_adapter.git"
@@ -67,7 +67,7 @@ gem "mambo-authentication", :path => "#{HOME_PATH}/authentication"
 #gem "mambo-sms", :git => "#{DEV_GIT}/sms.git"
 #gem "mambo-sms", "0.0.14"
 
-#gem "mambo-messaging", :path => "#{HOME_PATH}/messaging"
+gem "mambo-messaging", :path => "#{HOME_PATH}/messaging"
 #gem "mambo-messaging", :git => "#{DEV_GIT}/messaging.git"
 #gem "mambo-messaging", "0.0.7"
 

@@ -18,7 +18,7 @@ module Weltel
     validates(:contact_phone_number, :length => {:is => 10}, :format => /^\d*$/, :allow_blank => true)
 
 		# associations
-		belongs_to(:subscriber. :inverse_of => :patients)
+		belongs_to(:subscriber, :inverse_of => :patients)
 		belongs_to(:clinic, :inverse_of => :patients)
 		has_many(:records, :dependent => :destroy)
 		has_one(:active_record, :conditions => {:active => true})

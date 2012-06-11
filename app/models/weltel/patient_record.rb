@@ -16,15 +16,15 @@ module Weltel
 		# validations
 
 		# associations
-		has_many(:messages) # dependent set nil
+    has_many(:messages, :dependent => :nullify)
 		belongs_to(:patient)
 		has_many(:states, :dependent => :destroy)
 		has_one(:active_state, :conditions => {:active => true})
 
 		# hooks
-    after(:create) do
-      create_state(:pending, AppConfig.system_user)
-    end
+    #after(:create) do
+    #  create_state(:pending, AppConfig.system_user)
+    #end
 
 		# instance methods
     #

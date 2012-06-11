@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 module Weltel
-	class Clinic < ActiveModel::Base
-    attr_accessors(:system, :name)
+	class Clinic < ActiveRecord::Base
+    attr_accessor(:system, :name)
 
 		# properties
 		#property(:id, Serial)
@@ -14,7 +14,7 @@ module Weltel
     validates(:name, :length => {:in => 2..64}, :format => /^[\w ]*$/, :allow_blank => true)
 
 		# associations
-		has_many(:patients, :dependent => :protect)
+		has_many(:patients, :dependent => :restrict)
 
 		# class methods
 		#
