@@ -2,6 +2,6 @@
 module Sms
 	class Message
 		# associations
-		belongs_to(:patient_record, Weltel::PatientRecord, :required => false)
+		belongs_to(:patient_record)
 	end
 end

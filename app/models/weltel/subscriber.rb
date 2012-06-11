@@ -2,6 +2,6 @@
 module Sms
 	class Subscriber
 		# associations
-		has(1, :patient, Weltel::Patient, :constraint => :destroy)
+		has_one(:patient, :dependent => :destroy)
 	end
 end

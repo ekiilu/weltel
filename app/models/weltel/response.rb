@@ -1,16 +1,17 @@
 # -*- encoding : utf-8 -*-
 module Weltel
-	class Response
-		include DataMapper::Resource
+	class Response < ActiveRecord::Base
+    attr_accessor(:name, :value)
 
 		# properties
-		property(:id, Serial)
-		property(:name, String, {:unique => true, :required => true, :length => 160})
-		property(:value, Enum[:positive, :negative], {:index => true, :required => true, :default => :positive})
-		property(:created_at, DateTime)
-		property(:updated_at, DateTime)
+		#property(:id, Serial)
+		#property(:name, String, {:unique => true, :required => true, :length => 160})
+		#property(:value, Enum[:positive, :negative], {:index => true, :required => true, :default => :positive})
+		#property(:created_at, DateTime)
+		#property(:updated_at, DateTime)
 
 		# validations
+    validates(:name, :uniqueness => true, :length => {:maximum => 160}, :format => /^[\w ]*$/)
 
 		# associations
 
@@ -22,7 +23,7 @@ module Weltel
 		# class methods
 		#
 		def self.filtered_by(key, value)
-			return all if value.empty?
+			return all if value.blank?
 			all(key => value)
 		end
 

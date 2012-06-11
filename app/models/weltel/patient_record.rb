@@ -1,26 +1,25 @@
 # -*- encoding : utf-8 -*-
 module Weltel
-	class PatientRecord
-		include DataMapper::Resource
-    STATUSES = [:open, :closed]
+	class PatientRecord < ActiveRecord::Base
+		STATUSES = [:open, :closed]
     CONTACT_METHODS = [:none, :text, :phone, :email, :outreach_visit, :clinic_visit]
 
 		# properties
-		property(:id, Serial)
-		property(:active, Boolean, {:index => true, :required => true, :default => true})
-		property(:created_on, Date, {:index => true, :required => true})
-		property(:status, Enum[*STATUSES], {:index => true, :required => true, :default => :open})
-    property(:contact_method, Enum[*CONTACT_METHODS], {:index => true, :required => true, :default => :none})
-		property(:created_at, DateTime)
-		property(:updated_at, DateTime)
+		#property(:id, Serial)
+		#property(:active, Boolean, {:index => true, :required => true, :default => true})
+		#property(:created_on, Date, {:index => true, :required => true})
+		#property(:status, Enum[*STATUSES], {:index => true, :required => true, :default => :open})
+    #property(:contact_method, Enum[*CONTACT_METHODS], {:index => true, :required => true, :default => :none})
+		#property(:created_at, DateTime)
+		#property(:updated_at, DateTime)
 
 		# validations
 
 		# associations
-		has(n, :messages, Sms::Message, :constraint => :set_nil)
-		belongs_to(:patient, Weltel::Patient)
-		has(n, :states, Weltel::PatientRecordState, :constraint => :destroy)
-		has(1, :active_state, Weltel::PatientRecordState, :active => true)
+		has_many(:messages) # dependent set nil
+		belongs_to(:patient)
+		has_many(:states, :dependent => :destroy)
+		has_one(:active_state, :conditions => {:active => true})
 
 		# hooks
     after(:create) do

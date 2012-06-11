@@ -1,36 +1,31 @@
 # -*- encoding : utf-8 -*-
 module Weltel
-	class Patient
-		include DataMapper::Resource
+	class Patient < ActiveRecord::Base
+    attr_accessor(:active, :user_name, :study_number, :contact_phone_number)
 
 		# properties
-		property(:id, Serial)
-		property(:active, Boolean, {:index => true, :required => true, :default => true})
-		property(:user_name, String, {:unique => true, :required => true, :length => 32})
-		property(:study_number, String, {:unique => true, :length => 32})
-		property(:contact_phone_number, String, :length => 10)
-		property(:created_at, DateTime)
-		property(:updated_at, DateTime)
+		#property(:id, Serial)
+		#property(:active, Boolean, {:index => true, :required => true, :default => true})
+		#property(:user_name, String, {:unique => true, :required => true, :length => 32})
+		#property(:study_number, String, {:unique => true, :length => 32})
+		#property(:contact_phone_number, String, :length => 10)
+		#property(:created_at, DateTime)
+		#property(:updated_at, DateTime)
 
 		# validations
-		validates_length_of(:user_name, :within => 2..32)
-		validates_format_of(:user_name, :with => /^\w*$/)
-
-		validates_length_of(:study_number, {:within => 1..32, :allow_blank => true})
-		validates_format_of(:study_number, {:with => /^\w*$/, :allow_blank => true})
-
-		validates_length_of(:contact_phone_number, {:is => 10, :allow_blank => true})
-		validates_format_of(:contact_phone_number, {:with => /^\d*$/, :allow_blank => true})
+    validates(:user_name, :length => {:in => 2..32}, :format => /^\w*$/)
+    validates(:study_number, :length => {:in => 1..32}, :format => /^\w*$/, :allow_blank => true)
+    validates(:contact_phone_number, :length => {:is => 10}, :format => /^\d*$/, :allow_blank => true)
 
 		# associations
-		belongs_to(:subscriber, Sms::Subscriber)
-		belongs_to(:clinic, Weltel::Clinic, :required => false)
-		has(n, :records, Weltel::PatientRecord, :constraint => :destroy)
-		has(1, :active_record, Weltel::PatientRecord, :active => true)
-		has(1, :active_state, Weltel::PatientRecordState, :through => :active_record)
+		belongs_to(:subscriber. :inverse_of => :patients)
+		belongs_to(:clinic, :inverse_of => :patients)
+		has_many(:records, :dependent => :destroy)
+		has_one(:active_record, :conditions => {:active => true})
+		has_one(:active_state, :through => :active_record)
 
 		# nested
-		accepts_and_validates_nested_attributes_for(:subscriber)
+		accepts_nested_attributes_for(:subscriber)
 
 		# instance methods
 		#
