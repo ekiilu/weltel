@@ -17,8 +17,8 @@ deployment:
   processes:
     unicorn:
       start: "bundle exec unicorn_rails -E #{RAILS_ENV} -c #{PWD}/config/unicorn.rb -D"
-      stop: "kill -QUIT #{PID}"
-      restart: "kill -USR2 #{PID}"
+      stop: "kill -QUIT $(cat #{PID_FILE})"
+      restart: "kill -USR2 $(cat #{PID_FILE})"
       workers: 2
       port: 80
     dj:
