@@ -59,11 +59,11 @@ gem "mambo-authentication", :path => "#{HOME_PATH}/authentication"
 #gem "mambo-authentication", :git => "#{DEV_GIT}/authentication.git"
 #gem "mambo-authentication", "0.0.9"
 
-#gem "mambo-twilio_adapter", :path => "#{HOME_PATH}/twilio_adapter"
+gem "mambo-twilio_adapter", :path => "#{HOME_PATH}/twilio_adapter"
 #gem "mambo-twilio_adapter", :git => "#{DEV_GIT}/twilio_adapter.git"
 #gem "mambo-twilio_adapter", "0.0.13"
 
-#gem "mambo-sms", :path => "#{HOME_PATH}/sms"
+gem "mambo-sms", :path => "#{HOME_PATH}/sms"
 #gem "mambo-sms", :git => "#{DEV_GIT}/sms.git"
 #gem "mambo-sms", "0.0.14"
 
