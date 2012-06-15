@@ -57,6 +57,7 @@ gem "thin"
 #gem "bluepill", :git => 'https://github.com/pschuegr/bluepill.git'
 gem 'god'
 gem 'tlsmail', :require => false
+gem 'certified'
 
 # application
 gem "recursive-open-struct"
