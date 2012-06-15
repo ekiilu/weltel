@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pschuegr/delayed_job_data_mapper.git
-  revision: d1c636ddc8fef410a7bfb5f2865097697996b17b
+  revision: 540ab94653702fc4963381dd428a72473bbbc64b
   specs:
     delayed_job_data_mapper (1.0.0.rc)
       delayed_job (~> 3.0)
