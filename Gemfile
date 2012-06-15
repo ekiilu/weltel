@@ -63,7 +63,7 @@ gem "recursive-open-struct"
 gem "exception_notification"
 gem "whenever", :require => false
 gem "delayed_job"
-gem "delayed_job_data_mapper", "1.0.0.rc", :git => "https://github.com/collectiveidea/delayed_job_data_mapper.git"
+gem "delayed_job_data_mapper", "1.0.0.rc", :git => "https://github.com/pschuegr/delayed_job_data_mapper.git"
 gem "delayed_mail"
 gem "vertical-feedbacker", "0.0.2"
 gem "will_paginate"

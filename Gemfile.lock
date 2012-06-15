@@ -1,6 +1,6 @@
 GIT
-  remote: https://github.com/collectiveidea/delayed_job_data_mapper.git
-  revision: 47c9ca5e59eb951cd5052e9764daa89956216905
+  remote: https://github.com/pschuegr/delayed_job_data_mapper.git
+  revision: d1c636ddc8fef410a7bfb5f2865097697996b17b
   specs:
     delayed_job_data_mapper (1.0.0.rc)
       delayed_job (~> 3.0)
@@ -134,10 +134,10 @@ GEM
       actionmailer (>= 3.0.4)
     execjs (1.4.0)
       multi_json (~> 1.0)
-    factory_girl (3.3.0)
+    factory_girl (3.4.0)
       activesupport (>= 3.0.0)
-    factory_girl_rails (3.3.0)
-      factory_girl (~> 3.3.0)
+    factory_girl_rails (3.4.0)
+      factory_girl (~> 3.4.0)
       railties (>= 3.0.0)
     fastercsv (1.5.5)
     fssm (0.2.9)
@@ -154,7 +154,7 @@ GEM
       multi_json (~> 1.0)
       multi_xml
     i18n (0.6.0)
-    journey (1.0.3)
+    journey (1.0.4)
     jquery-rails (2.0.2)
       railties (>= 3.2.0, < 5.0)
       thor (~> 0.14)
