@@ -48,7 +48,7 @@ end
 # deploy
 gem "execjs"
 gem "therubyracer"
-gem "capistrano"
+gem "capistrano", '>= 2.9.0'
 gem 'capistrano_colors'
 gem "unicorn"
 gem "thin"

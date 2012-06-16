@@ -149,7 +149,7 @@ GEM
       activesupport (~> 3.0)
       haml (~> 3.0)
       railties (~> 3.0)
-    highline (1.6.12)
+    highline (1.6.13)
     hike (1.2.1)
     httparty (0.8.3)
       multi_json (~> 1.0)
@@ -303,7 +303,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_link_to
-  capistrano
+  capistrano (>= 2.9.0)
   capistrano_colors
   certified
   coffee-rails
