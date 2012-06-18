@@ -12,8 +12,8 @@ if !deployments.include?(deployment.to_sym)
   abort_message = <<-msg
     Please set the cap deployment: "cap demo deploy" or "cap local deploy"
     Available environments: #{deployments.map{|d| d.to_s}.join(", ")}
-  msg
-  abort(abort_message)
+    msg
+    abort(abort_message)
 end
 set :deployment_config_path, File.join(File.dirname(__FILE__), 'deployments', deployment.to_s)
 AppConfig.load(File.join(deployment_config_path, 'app_config.yml'))
@@ -155,6 +155,24 @@ namespace :deploy do
       stamp = Time.now.utc.strftime("%Y%m%d%H%M.%S")
       asset_paths = fetch(:public_children, %w(images stylesheets javascripts)).map { |p| "#{latest_release}/public/#{p}" }.join(" ")
       run "find #{asset_paths} -exec touch -t #{stamp} {} ';'; true", :env => { "TZ" => "UTC" }
+    end
+  end
+
+  namespace :web do
+    desc 'Disable'
+    task :disable, :roles => :web, :except => { :no_release => true } do
+      on_rollback { run "rm #{shared_path}/system/maintenance.html" }
+
+      require 'sass'
+      sass_input = File.read("./app/assets/stylesheets/application.css.sass")
+      sass_output = Sass::Engine.new(sass_input).render 
+
+      require 'haml'
+      haml_input = File.read("./app/views/layouts/maintenance.html.haml")
+      haml_output = Haml::Engine.new(template).render
+
+      File.open("htest", 'w').write(result)
+      #put result, "#{shared_path}/system/maintenance.html", :mode => 0644
     end
   end
 end

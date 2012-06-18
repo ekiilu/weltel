@@ -3,6 +3,7 @@ twilio:
   account_sid: 'AC237b652f53a64bd19e62f62ee2a3d2e4'
   auth_token: '0652039bfaaa607bf5af942001dd9b72'
 demo_mode: true
+time_zone: "Pacific Time (US & Canada)"
 deployment:
   server: 'dev.verticallabs.ca'
   app_name: 'weltel'
