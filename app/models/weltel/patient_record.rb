@@ -29,6 +29,14 @@ module Weltel
 
 		# instance methods
     #
+    def contact_method_s
+      contact_method != :none ? contact_method.to_s : ''
+    end
+
+    def state_changed?
+      initial_state.value != active_state.value
+    end
+
     def initial_state
       states.all(:value.not => :pending).first || states.first
     end
@@ -45,7 +53,7 @@ module Weltel
 
 		#
 		def create_state(value, user)
-			active_state.update(:active => false) if active_state
+			states.update(:active => false)
 			states.create(:value => value, :user => user)
 			active_state.reload
 		end

@@ -6,13 +6,16 @@
   %td
     = initial_state_tag(patient)
   %td
-    = active_state_tag(patient)
+    = form_for(patient.active_record, :url => weltel_patient_record_path(patient, patient.active_record)) do |f|
+      = select_tag(:current_state, options_for_select(patient_record_state_options, patient.active_record.active_state.value), :onchange => submit_form, :class => "current_state #{patient.active_record.active_state.value}")
   %td
     = form_for(patient.active_record, :url => weltel_patient_record_path(patient, patient.active_record)) do |f|
-      = select_tag(:status, options_for_select(patient_record_status_options, patient.active_record.status), :onchange => submit_form)
+      = select_tag(:status, options_for_select(patient_record_status_options, patient.active_record.status), :onchange => submit_form, :class => "status #{patient.active_record.status}")
   %td
     = form_for(patient.active_record, :url => weltel_patient_record_path(patient, patient.active_record)) do |f|
       = select_tag(:contact_method, options_for_select(patient_record_contact_method_options, patient.active_record.contact_method), :onchange => submit_form)
+  %td
+    = patient.clinic.name
   %td.actions
     = link_to(t(".messages_link", :count => patient.subscriber.messages.received.count), weltel_patient_messages_path(patient), :class => "button")
     = link_to('+', '#', :class => 'toggle_details')
@@ -27,7 +30,7 @@
         = exchange_tag(nil, first_received, [nil, 'messaging.no_initial_receive'])
     - else
       = exchange_tag(nil, nil, ['messaging.no_initial_send', nil])
-  %td.last{:colspan => 4}
+  %td.last{:colspan => 5}
     - if first_received
       %h3 Most recent messages
       = exchange_tag(patient.active_record.messages.sent.last, patient.active_record.messages.received_or_read.last)

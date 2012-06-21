@@ -6,7 +6,7 @@
       = t(".value")
     = sorted_table_header_tag(:updated_at) do
       = t(".updated_at")
-    %th= t(".actions")
+    = table_header_tag(t(".actions"))
 
   - if @responses.empty?
     %tr{:colspan => 4}

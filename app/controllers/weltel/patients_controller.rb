@@ -7,6 +7,7 @@ module Weltel
 
     before_filter(:only => :index) do
     	page_param(:patients)
+      session_param(:view, :per_page, 20)
     	session_param(:patients, :search, "")
       sort_param(:patients, :user_name, :asc)
       filter_param(:patients)
@@ -15,7 +16,7 @@ module Weltel
 		# patient list
 		def index
 			@clinics = Weltel::Clinic.sorted_by(:name, :asc)
-			@patients = Weltel::Patient.active.search(@search).filtered_by(@filter_key, @filter_value).sorted_by(@sort_key, @sort_order).paginate(:page => @page, :per_page => 20)
+			@patients = Weltel::Patient.search(@search).filtered_by(@filter_key, @filter_value).sorted_by(@sort_key, @sort_order).paginate(:page => @page, :per_page => @per_page)
 			respond_with(@patients)
 		end
 

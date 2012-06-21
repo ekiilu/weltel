@@ -2,60 +2,54 @@
 require "bundler/capistrano"
 require 'capistrano_colors'
 
-app_root = File.expand_path("#{File.dirname(__FILE__)}/..")
+app_root = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 require "#{app_root}/lib/app_config.rb"
-AppConfig.load("#{app_root}/config/app_config.yml")
 
-abort('Please set the cap environment: "cap demo deploy" or "cap local deploy"') unless ARGV[0].match /(local|demo)/
+# get a list of all deployments
+deployments = Dir.glob(File.join(app_root, 'config', 'deployments', '*')).map {|d| File.basename(d).to_sym }
+set :deployment, ARGV[0]
+if !deployments.include?(deployment.to_sym)
+  abort_message = <<-msg
+    Please set the cap deployment: "cap demo deploy" or "cap local deploy"
+    Available environments: #{deployments.map{|d| d.to_s}.join(", ")}
+    msg
+    abort(abort_message)
+end
+set :deployment_config_path, File.join(File.dirname(__FILE__), 'deployments', deployment.to_s)
+AppConfig.load(File.join(deployment_config_path, 'app_config.yml'))
 
-set :application, "weltel"
-set :repository,  "ssh://git@dev.verticallabs.ca/git/mambo/apps/weltel.git"
-set :deploy_to, "/www/weltel"
-set :branch, "3.0"
+set :application, AppConfig.deployment.app_name
+set :repository, AppConfig.deployment.app_repo
+set :deploy_to, AppConfig.deployment.deploy_to
+set :branch, AppConfig.deployment.app_branch
+set :user, AppConfig.deployment.uid
+role :web, AppConfig.deployment.server
+role :app, AppConfig.deployment.server
+role :db, AppConfig.deployment.server, :primary => true
+
+task deployment do
+  #null task, just for syntax
+end
+
+# set defaults 
 set :shared_children, %w(system log pids sockets config)
 set :config_files, %w(app_config.yml database.yml)
-set :sudo_user, ENV["USER"]
-
 set :use_sudo, false
 set :using_rvm, false
 set :scm, :git
-set :rake, "bundle exec rake"
 set :deploy_via, :remote_cache
 set :rails_env, 'production'
 ssh_options[:forward_agent] = true
 
+# setup whenever
 set :whenever_command, "bundle exec whenever"
 require "whenever/capistrano"
 
-task :local do
-  set :deployment, :local
-  set :user, ENV["USER"]
-
-  role :web, "localhost"
-  role :app, "localhost"
-  role :db, "localhost", :primary => true
-
-  after "deploy:setup", "deploy:upload_config"
-  before "deploy:assets:precompile", "deploy:symlink_config"
-  after "deploy:symlink_config", "deploy:migrate"
-  after "deploy:restart", "deploy:delete_deploy_file"
-
-end
-
-task :demo do
-  set :deployment, :demo
-  set :user, 'web'
-
-  role :web, "dev.verticallabs.ca"
-  role :app, "dev.verticallabs.ca"
-  role :db, "dev.verticallabs.ca", :primary => true
-
-  set :ssh_options, {:forward_agent => true}
-
-  after "deploy:setup", "deploy:upload_config"
-  before "deploy:assets:precompile", "deploy:symlink_config"
-  after "deploy:symlink_config", "deploy:migrate"
-end
+# hooks
+before "deploy", "deploy:upload_config"
+before "deploy:assets:precompile", "deploy:symlink_config"
+after "deploy:symlink_config", "deploy:migrate"
+after "deploy:restart", "deploy:delete_deploy_file"
 
 # helpers
 namespace :god do
@@ -107,21 +101,22 @@ end
 namespace :deploy do
   desc "Deletes deploy file"
   task :delete_deploy_file do
-    run("rm -f #{shared_path}/deploy")
+    run("rm -f #{shared_path}/deploy || true")
   end
 
   desc "Uploads config"
   task :upload_config, :roles => :app do
     config_files.each do |filename|
-      full_path = "#{File.dirname(__FILE__)}/deployments/#{deployment}/#{filename}"
+      full_path = File.join(deployment_config_path, filename)
       top.upload(full_path, "#{shared_path}/config/#{filename}")
     end 
   end
 
   desc "Symlinks config"
   task :symlink_config, :roles => :app do
-    run("ln -nfs #{deploy_to}/shared/config/app_config.yml #{release_path}/config/app_config.yml")
-    run("ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml")
+    run("ln -nfs #{shared_path}/config/app_config.yml #{release_path}/config/app_config.yml")
+    run("ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml")
+    run("ln -nfs #{shared_path}/system #{release_path}/public/system")
   end
 
   # standard tasks (must be implemented to work)
@@ -141,8 +136,43 @@ namespace :deploy do
     god.start
     god.restart_all
   end
-end
 
-on :finish do
-  puts ''
+  desc 'Finalize update'
+  task :finalize_update, :except => { :no_release => true } do
+    run "chmod -R g+w #{latest_release}" if fetch(:group_writable, true)
+
+    # mkdir -p is making sure that the directories are there for some SCM's that don't
+    # save empty folders
+    run <<-CMD
+      rm -rf #{latest_release}/log #{latest_release}/public/system &&
+      mkdir -p #{latest_release}/public &&
+      mkdir -p #{latest_release}/tmp &&
+      ln -s #{shared_path}/log #{latest_release}/log &&
+      ln -s #{shared_path}/system #{latest_release}/public/system
+    CMD
+
+    if fetch(:normalize_asset_timestamps, true)
+      stamp = Time.now.utc.strftime("%Y%m%d%H%M.%S")
+      asset_paths = fetch(:public_children, %w(images stylesheets javascripts)).map { |p| "#{latest_release}/public/#{p}" }.join(" ")
+      run "find #{asset_paths} -exec touch -t #{stamp} {} ';'; true", :env => { "TZ" => "UTC" }
+    end
+  end
+
+  namespace :web do
+    desc 'Disable'
+    task :disable, :roles => :web, :except => { :no_release => true } do
+      on_rollback { run "rm #{shared_path}/system/maintenance.html" }
+
+      require 'sass'
+      sass_input = File.read("./app/assets/stylesheets/application.css.sass")
+      sass_output = Sass::Engine.new(sass_input).render 
+
+      require 'haml'
+      haml_input = File.read("./app/views/layouts/maintenance.html.haml")
+      haml_output = Haml::Engine.new(template).render
+
+      File.open("htest", 'w').write(result)
+      #put result, "#{shared_path}/system/maintenance.html", :mode => 0644
+    end
+  end
 end
