@@ -1,3 +1,5 @@
 #! /usr/bin/env bash
 
-sudo su cdion -c "cd /www/weltel/current && RAILS_ENV=production /www/weltel/current/script/unicorn start"
+cd /www/weltel/current
+cap local god:start
+cap local god:start_all
