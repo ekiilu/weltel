@@ -52,6 +52,7 @@ gem "capistrano", '>= 2.9.0'
 gem 'capistrano_colors'
 gem "unicorn"
 gem "thin"
+gem 'certified'
 
 # monitoring
 #gem "bluepill", :git => 'https://github.com/pschuegr/bluepill.git'
