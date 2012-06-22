@@ -1,13 +1,13 @@
 twilio:
-  phone_number: '7788002767'
-  account_sid: 'AC5e98a9a0d24a4dcbbc3126473d142d35'
-  auth_token: 'da2c9e85efafa8848b3e705ae3a2afe9'
+  phone_number: '6047572716'
+  account_sid: 'AC237b652f53a64bd19e62f62ee2a3d2e4'
+  auth_token: '0652039bfaaa607bf5af942001dd9b72'
 demo_mode: false
 time_zone: "Pacific Time (US & Canada)"
 deployment:
   server: 'localhost'
   app_name: 'weltel'
-  deploy_to: '/www/weltel' 
+  deploy_to: '/www/weltel'
   app_repo: "ssh://git@dev.verticallabs.ca/git/mambo/apps/weltel.git"
   app_branch: '3.0'
   internal_host: "http://localhost:3000"
