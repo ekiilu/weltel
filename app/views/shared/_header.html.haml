@@ -5,4 +5,4 @@
       Your health, in your hands.
 
   .date
-    = Time.zone.now.to_formatted_s(:long)
+    = l(Time.now.in_time_zone)
