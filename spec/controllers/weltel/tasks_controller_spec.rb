@@ -7,13 +7,13 @@ describe Weltel::TasksController do
 		create(:message_template, :name => :checkup)
 		create(:patient)
 
-		post :create_records
+		get :create_records
 	end
 
 	#
 	it "updates records" do
 		create(:record)
 
-		post :update_records
+		get :update_records
 	end
 end
