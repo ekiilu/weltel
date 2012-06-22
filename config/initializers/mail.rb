@@ -5,7 +5,7 @@ ActionMailer::Base.smtp_settings = {
   :domain               => "verticallabs.ca",
   :user_name            => "site@verticallabs.ca",
   :password             => "v3rt1c4l",
-  :authentication       => "plain",
+  :authentication       => :plain,
   :enable_starttls_auto => true,
   :tls									=> true
 }
