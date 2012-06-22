@@ -13,8 +13,7 @@ module Weltel
 
 		#
 		def update_records
-			date = Date.today
-			Weltel::Factory.service.update_records(date)
+			Weltel::Factory.service.update_records
 			render(:text => "OK")
 		end
 
