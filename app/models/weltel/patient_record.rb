@@ -1,25 +1,26 @@
 # -*- encoding : utf-8 -*-
 module Weltel
 	class PatientRecord < ActiveRecord::Base
-		STATUSES = [:open, :closed]
-    CONTACT_METHODS = [:none, :text, :phone, :email, :outreach_visit, :clinic_visit]
+		#
+		def self.table_name
+			"weltel_patient_records"
+		end
 
-		# properties
-		#property(:id, Serial)
-		#property(:active, Boolean, {:index => true, :required => true, :default => true})
-		#property(:created_on, Date, {:index => true, :required => true})
-		#property(:status, Enum[*STATUSES], {:index => true, :required => true, :default => :open})
-    #property(:contact_method, Enum[*CONTACT_METHODS], {:index => true, :required => true, :default => :none})
-		#property(:created_at, DateTime)
-		#property(:updated_at, DateTime)
+		STATUSES = [:open, :closed]
+		enum_attr(:status, STATUSES, :init => :open, :nil => false)
+
+		CONTACT_METHODS = [:none, :text, :phone, :email, :outreach_visit, :clinic_visit]
+    enum_attr(:contact_method, CONTACT_METHODS, :init => :none, :nil => false)
 
 		# validations
+		validates(:active, :inclusion => {:in => [true, false]})
+		validates(:created_on, :presence => true)
 
 		# associations
-    has_many(:messages, :dependent => :nullify)
+    has_many(:messages, :class_name => "Sms::Message", :dependent => :nullify)
 		belongs_to(:patient)
-		has_many(:states, :dependent => :destroy)
-		has_one(:active_state, :conditions => {:active => true})
+		has_many(:states, :class_name => "Weltel::PatientRecordState", :dependent => :destroy)
+		has_one(:active_state, :class_name => "Weltel::PatientRecordState", :conditions => {:active => true})
 
 		# hooks
     #after(:create) do

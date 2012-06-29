@@ -94,14 +94,17 @@ ActiveRecord::Schema.define(:version => 20120627221622) do
   add_index "weltel_clinics", ["system"], :name => "index_weltel_clinics_on_system"
 
   create_table "weltel_patient_record_states", :force => true do |t|
-    t.boolean  "active",     :default => true, :null => false
-    t.string   "value",                        :null => false
-    t.datetime "created_at"
+    t.integer  "patient_record_id",                   :null => false
+    t.boolean  "active",            :default => true, :null => false
+    t.string   "value",                               :null => false
+    t.datetime "created_at",                          :null => false
   end
 
   add_index "weltel_patient_record_states", ["active"], :name => "index_weltel_patient_record_states_on_active"
+  add_index "weltel_patient_record_states", ["patient_record_id"], :name => "index_weltel_patient_record_states_on_patient_record_id"
 
   create_table "weltel_patient_records", :force => true do |t|
+    t.integer  "patient_id",                       :null => false
     t.boolean  "active",         :default => true, :null => false
     t.date     "created_on",                       :null => false
     t.string   "status",                           :null => false
@@ -112,17 +115,22 @@ ActiveRecord::Schema.define(:version => 20120627221622) do
 
   add_index "weltel_patient_records", ["active"], :name => "index_weltel_patient_records_on_active"
   add_index "weltel_patient_records", ["created_on"], :name => "index_weltel_patient_records_on_created_on"
+  add_index "weltel_patient_records", ["patient_id"], :name => "index_weltel_patient_records_on_patient_id"
 
   create_table "weltel_patients", :force => true do |t|
+    t.integer  "subscriber_id",                                         :null => false
+    t.integer  "clinic_id",                                             :null => false
     t.boolean  "system",                             :default => false, :null => false
     t.string   "user_name",            :limit => 32,                    :null => false
     t.string   "study_number",         :limit => 32,                    :null => false
-    t.string   "contact_phone_number",                                  :null => false
+    t.string   "contact_phone_number"
     t.datetime "created_at",                                            :null => false
     t.datetime "updated_at",                                            :null => false
   end
 
+  add_index "weltel_patients", ["clinic_id"], :name => "index_weltel_patients_on_clinic_id"
   add_index "weltel_patients", ["study_number"], :name => "index_weltel_patients_on_study_number", :unique => true
+  add_index "weltel_patients", ["subscriber_id"], :name => "index_weltel_patients_on_subscriber_id"
   add_index "weltel_patients", ["user_name"], :name => "index_weltel_patients_on_user_name", :unique => true
 
   create_table "weltel_responses", :force => true do |t|

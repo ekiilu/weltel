@@ -1,6 +1,11 @@
 # -*- encoding : utf-8 -*-
 module Weltel
 	class Response < ActiveRecord::Base
+		#
+		def self.table_name
+			"weltel_responses"
+		end
+
     attr_accessor(:name, :value)
 
 		# properties

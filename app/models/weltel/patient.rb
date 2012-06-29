@@ -1,27 +1,23 @@
 # -*- encoding : utf-8 -*-
 module Weltel
 	class Patient < ActiveRecord::Base
-    attr_accessor(:active, :user_name, :study_number, :contact_phone_number)
+		#
+		def self.table_name
+			"weltel_patients"
+		end
 
-		# properties
-		#property(:id, Serial)
-		#property(:active, Boolean, {:index => true, :required => true, :default => true})
-		#property(:user_name, String, {:unique => true, :required => true, :length => 32})
-		#property(:study_number, String, {:unique => true, :length => 32})
-		#property(:contact_phone_number, String, :length => 10)
-		#property(:created_at, DateTime)
-		#property(:updated_at, DateTime)
+    attr_accessible(:active, :user_name, :study_number, :contact_phone_number)
 
 		# validations
-    validates(:user_name, :length => {:in => 2..32}, :format => /^\w*$/)
-    validates(:study_number, :length => {:in => 1..32}, :format => /^\w*$/, :allow_blank => true)
+    validates(:user_name, :presence => true, :length => {:in => 2..32}, :format => /^\w*$/)
+    validates(:study_number, :length => {:maximum => 32}, :format => /^\w*$/, :allow_blank => true)
     validates(:contact_phone_number, :length => {:is => 10}, :format => /^\d*$/, :allow_blank => true)
 
 		# associations
-		belongs_to(:subscriber, :inverse_of => :patients)
+		belongs_to(:subscriber, :class_name => "Sms::Subscriber")
 		belongs_to(:clinic, :inverse_of => :patients)
-		has_many(:records, :dependent => :destroy)
-		has_one(:active_record, :conditions => {:active => true})
+		has_many(:records, {:class_name => "Weltel::PatientRecord", :dependent => :destroy})
+		has_one(:active_record, {:class_name => "Weltel::PatientRecord", :conditions => {:active => true}})
 		has_one(:active_state, :through => :active_record)
 
 		# nested
@@ -111,16 +107,14 @@ module Weltel
 
 		# update
 		def self.update_by_id(id, params)
-			patient = get!(id)
 			transaction do
-				patient.update(params)
+				update(id, params)
 			end
-			patient
 		end
 
 		# destroy
 		def self.destroy_by_id(id)
-			patient = get!(id)
+			patient = find(id)
 			transaction do
 				patient.subscriber.destroy
 			end

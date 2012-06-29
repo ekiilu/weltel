@@ -28,6 +28,7 @@ group :test do
 	gem "rspec-rails"
 	gem "factory_girl_rails"
 	gem "database_cleaner"
+	gem "shoulda-matchers"
 end
 
 # deploy
@@ -43,6 +44,7 @@ gem "god"
 gem "tlsmail", :require => false
 
 # application
+gem "enumerated_attribute"
 gem "recursive-open-struct"
 gem "exception_notification"
 gem "whenever", :require => false

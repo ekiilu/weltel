@@ -7,15 +7,15 @@ FactoryGirl.define do
 
 	#
 	factory(:subscriber, :class => Sms::Subscriber) do
-		active 1
+		active true
 		phone_number FactoryGirl.generate(:phone_number)
 		created_at { DateTime.now }
   	updated_at { DateTime.now }
-  	patient { |subscriber| FactoryGirl.build(:patient, :subscriber => subscriber) }
+  	#patient_id { |subscriber| FactoryGirl.build(:patient, :subscriber_id => subscriber.id).id }
 
 		#
   	factory(:inactive_subscriber) do
-  		active 0
+  		active false
   	end
 	end
 end
