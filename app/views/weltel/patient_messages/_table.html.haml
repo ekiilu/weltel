@@ -6,7 +6,7 @@
       = t(".body")
     = sorted_table_header_tag(:status) do
       = t(".status")
-    = sorted_table_header_tag(:updated_at) do
-      = t(".updated_at")
+    = sorted_table_header_tag(:created_at) do
+      = t(".created_at")
 
   = render(:collection => @messages, :partial => "row", :as => :message)

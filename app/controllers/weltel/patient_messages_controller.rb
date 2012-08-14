@@ -7,7 +7,7 @@ module Weltel
 
     before_filter(:only => :index) do
     	page_param(:patient_messages)
-      sort_param(:patient_messages, :updated_at, :desc)
+      sort_param(:patient_messages, :created_at, :desc)
     end
 
 		# list messages for patient

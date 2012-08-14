@@ -6,6 +6,9 @@ module Weltel
 			"weltel_patient_records"
 		end
 
+		# attributes
+		attr_accessible(:active)
+
 		STATUSES = [:open, :closed]
 		enum_attr(:status, STATUSES, :init => :open, :nil => false)
 
@@ -36,7 +39,7 @@ module Weltel
     #
 		def create_outgoing_message(body)
 			messages.create(
-				:subscriber => patient.subscriber,
+				:subscriber_id => patient.subscriber.id,
 				:phone_number => patient.subscriber.phone_number,
 				:body => body,
 				:status => :sending
@@ -46,18 +49,19 @@ module Weltel
 		#
 		def create_state(value, user)
 			active_state.update(:active => false) if active_state
-			states.create(:value => value, :user => user)
-			active_state.reload
+			states.create(:value => value, :user_id => user.id)
+			#active_state.reload
 		end
 
 		#
 		def change_state(value, user)
-			Rails.logger.debug(value)
 			Weltel::PatientRecord.transaction do
 				self.status = value == :positive ? :closed : :open
 				save
 
-				if active_state.value == value
+				if !active_state
+					create_state(value, user)
+				elsif active_state.value == value
 					active_state
 				else
 					create_state(value, user)
@@ -73,22 +77,22 @@ module Weltel
 		# class methods
 		#
 		def self.active
-			all(:active => true)
+			where { active == true }
 		end
 
 		#
 		def self.created_on(date)
-			all(:created_on => date)
+			where { created_on == date }
 		end
 
 		#
 		def self.created_before(date)
-			all(:created_on.lt => date)
+			where { created_on < date }
 		end
 
 		#
 		def self.with_state(value)
-			all(:active_state => {:value => value})
+			joins(:active_state).where { active_state.value == value }
 		end
 	end
 end

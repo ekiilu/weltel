@@ -6,39 +6,32 @@ module Weltel
 			"weltel_responses"
 		end
 
-    attr_accessor(:name, :value)
+		# attributes
+    attr_accessible(:name, :value)
 
-		# properties
-		#property(:id, Serial)
-		#property(:name, String, {:unique => true, :required => true, :length => 160})
-		#property(:value, Enum[:positive, :negative], {:index => true, :required => true, :default => :positive})
-		#property(:created_at, DateTime)
-		#property(:updated_at, DateTime)
+    VALUES = [:positive, :negative]
+    enum_attr(:value, VALUES, :init => :positive)
 
 		# validations
-    validates(:name, :uniqueness => true, :length => {:maximum => 160}, :format => /^[\w ]*$/)
+    validates(:name, :presence => true, :uniqueness => true, :length => {:maximum => 160}, :format => /^[\w ]*$/)
 
 		# associations
 
 		# instance methods
 		def name=(name)
-			super(name.downcase)
+			super(name.blank? ? name : name.downcase)
 		end
 
 		# class methods
 		#
 		def self.filtered_by(key, value)
 			return all if value.blank?
-			all(key => value)
+			where(key => value)
 		end
 
 		#
 		def self.sorted_by(key, order)
-			all(:order => [key.send(order)])
-		end
-
-		def self.first_by_name(name)
-			first(:name => name)
+			order("#{key} #{order.upcase}")
 		end
 	end
 end

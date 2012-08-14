@@ -6,12 +6,16 @@ describe Weltel::PatientRecord do
 	context "validations" do
 		subject { create(:patient_record) }
 
-		it { ensure_inclusion_of(:active).in_range([true, false]) }
-		it { validate_presence_of(:created_on) }
+		it { should validate_presence_of(:created_on) }
 	end
 
 	#
 	context "asscociations" do
+		subject { create(:patient_record) }
+		it { should have_many(:messages).dependent(:nullify) }
+		it { should belong_to(:patient) }
+		it { should have_many(:states).dependent(:destroy) }
+		it { should have_one(:active_state) }
 	end
 
 	context "methods" do
@@ -33,7 +37,7 @@ describe Weltel::PatientRecord do
 			record.change_state(new_state, system)
 
 			record.states.count.should == 1
-			record.states.first.state.should  == new_state
+			record.states.first.value.should == new_state
 		end
 
 		#
@@ -41,7 +45,7 @@ describe Weltel::PatientRecord do
 			create(:patient_record, :active => true)
 			create(:patient_record, :active => false)
 
-			records = Weltel::patient_record.active
+			records = Weltel::PatientRecord.active
 
 			records.count.should == 1
 			records[0].active.should == true
@@ -53,7 +57,7 @@ describe Weltel::PatientRecord do
 			create(:patient_record, :created_on => today - 1.day)
 			create(:patient_record, :created_on => today)
 
-			records = Weltel::patient_record.created_on(today)
+			records = Weltel::PatientRecord.created_on(today)
 
 			records.count.should == 1
 			records[0].created_on.should == today
@@ -65,7 +69,7 @@ describe Weltel::PatientRecord do
 			create(:patient_record, :created_on => today - 1.day)
 			create(:patient_record, :created_on => today)
 
-			records = Weltel::patient_record.created_before(today)
+			records = Weltel::PatientRecord.created_before(today)
 
 			records.count.should == 1
 			records[0].created_on.should == today - 1.day
@@ -75,11 +79,11 @@ describe Weltel::PatientRecord do
 		it "finds records with a specific state" do
 			state = :unknown
 			expected = create(:patient_record)
-			expected.states = create(:state, :state => state)
+			expected.states << create(:patient_record_state, :value => state)
 			record = create(:patient_record)
-			record.states = create(:state, :state => :positive)
+			record.states << create(:patient_record_state, :value => :positive)
 
-			records = Weltel::patient_record.with_state(state)
+			records = Weltel::PatientRecord.with_state(state)
 
 			records.count.should == 1
 			records[0].should == expected

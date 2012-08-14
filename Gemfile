@@ -53,6 +53,7 @@ gem "delayed_job_active_record"
 gem "delayed_mail"
 gem "vertical-feedbacker", "0.0.2"
 gem "will_paginate"
+gem "squeel"
 
 HOME_PATH = File.expand_path("~/mambo/gems")
 DEV_GIT = "http://dev.verticallabs.ca/git/mambo/gems"

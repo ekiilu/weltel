@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120627221622) do
+ActiveRecord::Schema.define(:version => 20120814172755) do
 
   create_table "authentication_roles", :force => true do |t|
     t.boolean  "system",                   :default => false, :null => false
@@ -46,12 +46,12 @@ ActiveRecord::Schema.define(:version => 20120627221622) do
   add_index "authentication_users", ["name"], :name => "index_authentication_users_on_name", :unique => true
 
   create_table "sms_message_templates", :force => true do |t|
-    t.boolean  "system",                    :null => false
+    t.boolean  "system",                    :default => false, :null => false
     t.string   "name",       :limit => 64
-    t.string   "desc",       :limit => 64,  :null => false
-    t.string   "body",       :limit => 200, :null => false
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.string   "desc",       :limit => 64,                     :null => false
+    t.string   "body",       :limit => 200,                    :null => false
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
   end
 
   add_index "sms_message_templates", ["desc"], :name => "index_sms_message_templates_on_desc", :unique => true
@@ -61,17 +61,21 @@ ActiveRecord::Schema.define(:version => 20120627221622) do
   create_table "sms_messages", :force => true do |t|
     t.integer  "subscriber_id"
     t.integer  "parent_id"
-    t.string   "status",                       :null => false
-    t.string   "phone_number",  :limit => 10,  :null => false
-    t.string   "body",          :limit => 160
-    t.string   "sid",           :limit => 34
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.string   "status",                           :null => false
+    t.string   "phone_number",      :limit => 10,  :null => false
+    t.string   "body",              :limit => 160
+    t.string   "sid",               :limit => 34
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.integer  "patient_record_id"
   end
 
+  add_index "sms_messages", ["parent_id"], :name => "index_sms_messages_on_parent_id"
+  add_index "sms_messages", ["patient_record_id"], :name => "index_sms_messages_on_patient_record_id"
   add_index "sms_messages", ["phone_number"], :name => "index_sms_messages_on_phone_number"
   add_index "sms_messages", ["sid"], :name => "index_sms_messages_on_sid"
   add_index "sms_messages", ["status"], :name => "index_sms_messages_on_status"
+  add_index "sms_messages", ["subscriber_id"], :name => "index_sms_messages_on_subscriber_id"
 
   create_table "sms_subscribers", :force => true do |t|
     t.boolean  "active",                     :default => false, :null => false
@@ -95,6 +99,7 @@ ActiveRecord::Schema.define(:version => 20120627221622) do
 
   create_table "weltel_patient_record_states", :force => true do |t|
     t.integer  "patient_record_id",                   :null => false
+    t.integer  "user_id",                             :null => false
     t.boolean  "active",            :default => true, :null => false
     t.string   "value",                               :null => false
     t.datetime "created_at",                          :null => false
@@ -102,6 +107,7 @@ ActiveRecord::Schema.define(:version => 20120627221622) do
 
   add_index "weltel_patient_record_states", ["active"], :name => "index_weltel_patient_record_states_on_active"
   add_index "weltel_patient_record_states", ["patient_record_id"], :name => "index_weltel_patient_record_states_on_patient_record_id"
+  add_index "weltel_patient_record_states", ["user_id"], :name => "index_weltel_patient_record_states_on_user_id"
 
   create_table "weltel_patient_records", :force => true do |t|
     t.integer  "patient_id",                       :null => false

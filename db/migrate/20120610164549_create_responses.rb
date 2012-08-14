@@ -5,6 +5,7 @@ class CreateResponses < ActiveRecord::Migration
       t.string(:value, :null => false)
       t.timestamps
     end
+
     add_index(:weltel_responses, :name, :unique => true)
   end
 end

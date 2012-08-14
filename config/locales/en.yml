@@ -82,7 +82,7 @@ en:
         phone_number: "Phone Number"
         body: "Body"
         status: "Status"
-        updated_at: "Updated"
+        created_at: "Created"
       form:
         legend: "Send Message"
         template: "Select Template"
