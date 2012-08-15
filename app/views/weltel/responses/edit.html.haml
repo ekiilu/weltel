@@ -1,0 +1,11 @@
+= render("form")
+
+%fieldset
+  %legend= t(".legend")
+  %ol
+    %li
+      %span.label= t(".created_at")
+      = l(@response.created_at)
+    %li
+      %span.label= t(".updated_at")
+      = l(@response.updated_at)

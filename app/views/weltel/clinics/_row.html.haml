@@ -1,0 +1,8 @@
+= content_tag_for(:tr, clinic) do
+  %td= clinic.name
+
+  %td= l(clinic.updated_at)
+
+  %td
+    = link_to(t(".edit_link"), edit_weltel_clinic_path(clinic), :class => "button")
+    = link_to(t(".destroy_link"), weltel_clinic_path(clinic), {:confirm => t(".destroy_confirm"), :data => {:disable_with => t(".destroy_disable")}, :method => :delete, :class => "button"})

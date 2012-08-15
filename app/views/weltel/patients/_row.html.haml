@@ -1,0 +1,21 @@
+= content_tag_for(:tr, patient, :class => "item") do
+  %td= patient.user_name
+
+  %td= patient.study_number
+
+  %td= patient.subscriber.phone_number
+
+  %td
+    - if patient.clinic.nil?
+      = t(".no_clinic")
+    - else
+      = patient.clinic.name
+
+  %td= patient.subscriber.active
+
+  %td
+    = link_to(t(".edit_link"), edit_weltel_patient_path(patient), :class => "button")
+    = link_to( |
+        t(".destroy_link"), |
+        weltel_patient_path(patient), |
+        {:data => {:method => :delete, :confirm => t(".destroy_confirm"), :disable_with => t(".destroy_disable")}, :class => "button"})

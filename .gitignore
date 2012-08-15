@@ -1,0 +1,8 @@
+log/*.log
+tmp
+.sass-cache
+config/unicorn.yml
+config/app_config.yml
+config/database.yml
+public/assets/*
+

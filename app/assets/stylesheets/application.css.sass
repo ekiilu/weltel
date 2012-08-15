@@ -1,0 +1,575 @@
+/*
+ * This is a manifest file that'll automatically include all the stylesheets available in this directory
+ * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
+ * the top of the compiled file, but it's generally better to create a new file per style scope.
+ *= require_self
+ *= require_tree .
+ */
+
+@import compass
+@import compass/reset
+@import compass/css3
+
+$radius: 2px
+$pager-radius: 2px
+
+$themecolor: #9a0101
+//#3861b8
+$pagecolor: white
+
+$gray: #c8c8c8
+$darkred: #660000
+$colorshift: 7%
+$fontcolor: #333333
+$positivecolor: #00cc00
+$negativecolor: #cc0000
+$unknowncolor: #ff6600
+$latecolor: #ffcc00
+$pendingcolor: #999999
+$opencolor: #fff
+$closedcolor: #999999
+
+$tabradius: 6px
+
+=bg-gradient($top, $bottom)
+  background: $top
+  +background(linear-gradient(color-stops($top, $bottom)))
+  +filter-gradient($top, $bottom)
+
+=up-triangle($size, $color)
+  width: 0
+  height: 0
+  display: inline-block
+  border-top: none
+  border-right-width: $size
+  border-right-style: solid
+  border-right-color: transparent
+  border-left-width: $size
+  border-left-style: solid
+  border-left-color: transparent
+  border-bottom-width: $size
+  border-bottom-style: solid
+  border-bottom-color: $color
+
+=down-triangle($size, $color)
+  width: 0
+  height: 0
+  display: inline-block
+  border-bottom: none
+  border-right-width: $size
+  border-right-style: solid
+  border-right-color: transparent
+  border-left-width: $size
+  border-left-style: solid
+  border-left-color: transparent
+  border-top-width: $size
+  border-top-style: solid
+  border-top-color: $color
+
+=tabify($size, $color, $backgroundcolor)
+  &
+    background: $backgroundcolor
+    padding-left: $size
+    padding-right: $size
+  & .content
+    background: $color
+    display: block
+    +border-corner-radius(top, left, $size*2)
+    +border-corner-radius(top, right, $size*2)
+  &::before
+    content: ''
+    width: $size
+    height: $size
+    position: absolute
+    bottom: 0px
+    left: 0px
+    background: $color
+    z-index: 0
+  & .content::before
+    content: ''
+    width: $size
+    height: $size
+    position: absolute
+    bottom: 0px
+    left: 0px
+    +border-corner-radius(bottom, right, $size)
+    background: $backgroundcolor
+    z-index: 1
+  &::after
+    content: ''
+    width: $size
+    height: $size
+    position: absolute
+    bottom: 0px
+    right: 0px
+    background: $color
+    z-index: 0
+  & .content::after
+    content: ''
+    width: $size
+    height: $size
+    position: absolute
+    bottom: 0px
+    right: 0px
+    background: $backgroundcolor
+    +border-corner-radius(bottom, left, $size)
+    z-index: 1
+
+=button($color, $fontcolor)
+  +border-radius($radius)
+  +box-shadow(1px 2px 3px rgba(0, 0, 0, 0.15))
+  +bg-gradient($color, darken($color, $colorshift))
+  text-shadow: 0px 2px 2px darken($color, $colorshift * 2)
+  border: 1px solid darken($color, $colorshift * 2)
+  color: $fontcolor
+  &:hover
+    +bg-gradient(lighten($color, $colorshift), $color)
+  &:active
+    +bg-gradient(darken($color, $colorshift), $color)
+
+html
+  padding: 0
+
+html, body, #container
+  min-height: 100%
+
+body, input, select, textarea
+  font-family: Lucida Grande, Arial, sans-serif
+
+body
+  background-color: #bbb
+  font-size: 1em
+  color: $fontcolor
+
+body *
+  outline: none
+
+input, select, textarea
+  font-size: 1em
+  padding: 5px
+  border: 1px solid #666
+  &:disabled
+    background-color: $gray
+
+a
+  text-decoration: none
+  color: darken($themecolor, $colorshift * 2)
+  text-shadow: 0px 1px #eee
+
+b
+  font-weight: bold
+
+h2
+  font-size: 1.1em
+  font-weight: bold
+  margin: 10px 0px
+
+h3
+  font-size: 1em
+  font-weight: bold
+  margin: 10px 0px
+
+ol
+  +border-radius($radius)
+  list-style-type: none
+
+li
+  +border-radius($radius)
+  border: 1px solid darken($gray, 7%)
+  padding: 10px
+  background: $gray
+  margin: 0px 0px 10px 0px
+  label
+    padding: 6px 0px 0px 0px
+
+fieldset label, .label
+  width: 200px
+  display: inline-block
+  text-align: left
+
+fieldset
+  +border-radius($radius)
+  background-color: #fff
+  margin-bottom: 20px
+  border: solid 1px $themecolor
+  padding: 10px
+
+legend
+  +border-radius($radius)
+  border: solid 1px $themecolor
+  background-color: #fff
+  color: darken($themecolor, $colorshift)
+  font-size: 1.4em
+  padding: 6px
+
+table
+  width: 100%
+  margin-bottom: 20px
+  font-size: 0.95em
+  th
+    vertical-align: top
+    +bg-gradient($themecolor, darken($themecolor, $colorshift/2))
+    color: white
+    height: 40px
+    .title
+      margin: 10px 5px 0px 0px
+      text-shadow: 0px 0px 4px darken($themecolor, 30%)
+      display: inline-block
+      float: left
+    .sort, .filter
+      float: left
+    .sort
+      padding-top: 6px
+      width: 20px
+      line-height: 10px
+    .sort a.ascending
+      +box-sizing(content-box)
+      +up-triangle(8px, #888)
+      text-indent: -9999px
+      &.active
+        border-bottom-color: white
+    .sort a.descending
+      +box-sizing(content-box)
+      +down-triangle(8px, #888)
+      text-indent: -9999px
+      &.active
+        border-top-color: white
+
+  tr
+    border-top: 2px solid $themecolor
+    background: #f0f0f0
+  th, td
+    padding: 5px
+  td
+    vertical-align: middle
+  th.actions .print a
+    padding: 5px
+    float: right
+    color: #bbb
+    margin-right: 5px
+    font-size: 12px
+    text-shadow: none
+  tr.patient_last 
+    display: none
+    border-top: 1px solid #888
+    td
+      vertical-align: top
+  tr.patient_first.open, tr.patient_last
+    background: #fff
+  td.actions
+    a.button
+      width: 150px
+      text-align: center
+    a.toggle_details
+      margin: 10px
+      text-indent: -9999px
+      +down-triangle(12px, #888)
+      float: right
+  tr.patient_first.open
+    a.toggle_details
+      +up-triangle(12px, #888)
+
+.sent
+  background: #fff
+
+.received, .read
+  background: #bbb
+
+.list
+  list-style-type: none
+  padding: 10px
+  background: #fff
+
+.translation_missing
+  background-color: $darkred
+
+.button, input[type="submit"]
+  +button($themecolor, white)
+  line-height: 18px
+  display: inline-block
+  padding: 6px
+
+#container
+  width: 1160px
+  margin: 0px auto
+  background: #fff
+  +box-shadow(0px 0px 8px rgba(0, 0, 0, 0.3))
+
+#header
+  padding-bottom: 10px
+  .page_header
+    position: relative
+    padding: 5px 0px 2px 0px
+    margin: 0px 20px 10px 20px
+    .brand
+      display: inline-block
+      width: 250px
+      height: 145px
+      img
+        height: 130px
+        padding: 0px 60px
+      .slogan
+        padding-left: 25px
+        text-align: center
+        color: darken($themecolor, $colorshift)
+    .date
+      position: absolute
+      bottom: 0px
+      right: 0px
+      float: right
+      font-size: 20px
+  #nav
+    +clearfix
+    +bg-gradient($themecolor, darken($themecolor, $colorshift/2))
+    //background: #5599ff;
+    padding: 10px 20px
+    margin-left: 0
+    display: block
+    min-height: 32px
+    a
+      font-size: 1.2em
+      +button(#eee, darken($themecolor, $colorshift * 2))
+      color: #555
+      float: left
+      margin: 0px
+      margin-right: 5px
+      padding: 6px 15px
+      &.active
+        +button(#fff, darken($themecolor, $colorshift * 2))
+      &.logout
+        float: right
+        margin-right: 0px
+
+#footer
+  #page_footer
+    text-align: center
+    background: $gray
+    padding: 10px 20px
+    height: 30px
+    a
+      float: left
+  #subfooter
+    min-height: 30px
+    .revision
+      padding: 5px
+      float: right
+      color: #999
+      font-size: 12px
+
+#actions, #tabs
+  +clearfix
+  min-height: 24px
+  background: $gray
+  padding: 10px 20px
+  > a
+    float: left
+    margin-right: 10px
+  form
+    float: right
+    #search
+      width: 300px
+
+.views
+  margin-bottom: 10px
+  a.active
+    +button(#fff, darken($themecolor, $colorshift * 2))
+  a.inactive
+    +button(#ccc, darken($themecolor, $colorshift * 2))
+    
+    
+#tabs, .views
+  .tab
+    +tabify($tabradius, #eee, $gray)
+    +transition-property(opacity)
+    +transition-duration(0.3s)
+    position: relative
+    display: inline-block
+    padding: 0
+    margin: 0
+    opacity: 0.8
+    &:hover
+      opacity: 0.95
+    .content
+      padding: 10px 10px 5px 10px
+  .tab.active
+    opacity: 1.0
+    +tabify($tabradius, white, $gray)
+  a
+    display: inline-block
+    min-width: 100px
+    text-align: center
+  a.active
+
+#tabs
+  padding: 10px 20px 0px 20px
+
+#tabs a
+  text-shadow: none
+  padding: 7.5px
+  text-align: center
+  +box-sizing(border-box)
+  &.positive
+    +bg-gradient($positivecolor, darken($positivecolor, $colorshift))
+    +border-radius($radius)
+    text-shadow: 0px 2px 2px darken($positivecolor, $colorshift * 2)
+    color: #fff
+  &.negative
+    +bg-gradient($negativecolor, darken($negativecolor, $colorshift))
+    +border-radius($radius)
+    text-shadow: 0px 2px 2px darken($negativecolor, $colorshift * 2)
+    color: #fff
+  &.unknown
+    +bg-gradient($unknowncolor, darken($unknowncolor, $colorshift))
+    +border-radius($radius)
+    text-shadow: 0px 2px 2px darken($unknowncolor, $colorshift * 2)
+    color: #fff
+  &.late
+    +bg-gradient($latecolor, darken($latecolor, $colorshift))
+    +border-radius($radius)
+    text-shadow: 0px 2px 2px darken($latecolor, $colorshift * 3)
+    color: #fff
+  &.pending
+    +bg-gradient($pendingcolor, darken($pendingcolor, $colorshift))
+    +border-radius($radius)
+    text-shadow: 0px 2px 2px darken($pendingcolor, $colorshift * 2)
+    color: #fff
+  &.closed
+    +bg-gradient($closedcolor, darken($closedcolor, $colorshift))
+    +border-radius($radius)
+    border: 1px solid darken($closedcolor, $colorshift)
+    text-shadow: 0px 2px 2px darken($closedcolor, $colorshift * 2)
+    color: #fff
+  &.open
+    +bg-gradient($opencolor, darken($opencolor, $colorshift))
+    +border-radius($radius)
+    border: 1px solid darken($opencolor, 30%)
+    text-shadow: 0px 2px 2px darken($opencolor, $colorshift * 2)
+
+select, option, .item .state, .item .status
+  margin: 2px
+  &.positive
+    +background(none)
+    background: $positivecolor
+    color: #fff
+  &.negative
+    background: $negativecolor
+    color: #fff
+  &.unknown
+    background: $unknowncolor
+    color: #fff
+  &.late
+    background: $latecolor
+    color: #fff
+  &.pending
+    background: $pendingcolor
+    color: #fff
+  &.open
+    background: $opencolor
+    color: #222
+  &.closed
+    background: $closedcolor
+    color: #fff
+.item div.state, .item div.status
+  padding: 8px
+option
+  display: inline-block
+
+
+#content
+  padding: 0px 20px 15px 20px
+  min-height: 200px
+
+.pagination
+  text-align: center
+  display: inline-block
+  padding: 5px
+  a, span, em
+    float: none !important
+    +border-radius($pager-radius)
+    background: #fff
+    color: #fff
+    display: inline-block
+    font-size: 1em
+    margin: 0px
+    padding: 4px
+    color: darken($themecolor, $colorshift)
+  em.current
+    background: darken($themecolor, $colorshift)
+    border: solid 1px darken($themecolor, $colorshift)
+    color: #fff
+    font-weight: bold
+
+.flash_messages
+  padding: 5px
+  +clearfix
+  +border-radius($radius)
+  background: $gray
+  border: 1px solid darken($gray, $colorshift * 2)
+  +box-shadow(0px 1px 3px darken($gray, $colorshift * 2))
+  padding: 10x
+  margin: 10px 20px
+  text-shadow: darken($gray, $colorshift * 2)
+
+.item
+  .body
+    width: 780px
+  .sidebar
+    float: right
+    a
+      +box-sizing(border-box)
+      margin-bottom: 10px
+      width: 100%
+
+.exchange
+  .sent, .received, .null
+    +clearfix
+    +border-radius($radius)
+    +box-shadow(0px 1px 0px rgba(0, 0, 0, 0.15))
+    border: 1px solid darken($closedcolor, 10%)
+    background: $closedcolor
+    color: white
+    padding: 8px
+    .actions 
+      float: right
+      margin-left: 10px
+      a
+        display: block
+        color: #666
+        &:hover
+          color: #444
+        span
+          display: inline-block
+          margin-right: 5px
+          font-size: 20px
+          font-weight: bold
+          vertical-align: text-top
+      a.positive span
+        color: $positivecolor
+      a.negative span
+        color: $negativecolor
+  .sent, .null
+    margin-bottom: 10px
+  .received
+    background: #f0f0f0
+    color: #222
+  padding: 10px 0px
+
+.new_credentials
+  width: 600px
+  margin: 0 auto
+
+.field_with_errors
+  display: inline
+
+.empty_search
+  padding: 30px 0px
+  margin: 0 auto
+  font-size: 20px
+  text-align: center
+
+#feedbacker_container #feedbacker
+  -webkit-box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.15)
+  -moz-box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.15)
+  box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.15)
+  right: -20px
+  bottom: 33px
