@@ -1,0 +1,11 @@
+- if !flash.empty?
+  .flash_messages
+    - if flash[:alert]
+      %div#alert= flash[:alert]
+    - if flash[:notice]
+      %div#notice= flash[:notice]
+
+:javascript
+  $('.flash_messages').live('click', function() {
+    $(this).slideUp();    
+  });

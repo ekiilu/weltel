@@ -1,0 +1,12 @@
+= render({:partial => "shared/errors", :object => @clinic})
+= form_for([@clinic]) do |r|
+  %fieldset
+    %legend= t(".legend")
+    %ol
+      %li
+        = r.label(:name)
+        = r.text_field(:name, {:required => true, :size => 60, :maxlength => 64})
+  %fieldset
+    .center
+      = link_to(t(".cancel"), weltel_clinics_path, :class => "button")
+      = r.submit(t(".commit"), :disable_with => t(".commit_disable"))

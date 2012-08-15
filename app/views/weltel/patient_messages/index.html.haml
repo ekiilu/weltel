@@ -1,0 +1,14 @@
+- content_for(:actions) do
+  = link_to( |
+    "#{@patient.user_name} - #{@patient.study_number} - #{@patient.subscriber.phone_number}", |
+    edit_weltel_patient_path(@patient), |
+    :class => "button")
+  = link_to(t(".add_link"), new_weltel_patient_message_path(@patient), :class => "button")
+
+- if @messages.empty?
+  = t(".no_messages")
+- else
+  = render("table")
+
+  - content_for(:footer) do
+    = will_paginate(@messages)

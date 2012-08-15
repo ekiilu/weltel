@@ -1,0 +1,6 @@
+#! /usr/bin/env bash
+
+cd /www/weltel/current
+bundle exec cap local god:start
+bundle exec cap local god:start_all
+

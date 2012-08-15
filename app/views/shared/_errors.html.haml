@@ -1,0 +1,4 @@
+- if !errors.errors.nil?                  
+  = content_tag(:ul, :id => 'errors') do    
+    - errors.errors.full_messages.each do |e| 
+      = content_tag(:li, e)

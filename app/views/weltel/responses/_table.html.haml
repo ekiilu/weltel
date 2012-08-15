@@ -1,0 +1,15 @@
+%table
+  %tr
+    = sorted_table_header_tag(:name) do
+      = t(".name")
+    = filter_table_header_tag(:value, response_value_options) do
+      = t(".value")
+    = sorted_table_header_tag(:updated_at) do
+      = t(".updated_at")
+    = table_header_tag(t(".actions"))
+
+  - if @responses.empty?
+    %tr{:colspan => 4}
+      %td= t(".no_responses")
+  - else
+    = render(:collection => @responses, :partial => "row", :as => :response)

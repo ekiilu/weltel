@@ -1,0 +1,12 @@
+%table
+  %tr
+    = sorted_table_header_tag(:phone_number) do
+      = t(".phone_number")
+    = sorted_table_header_tag(:body) do
+      = t(".body")
+    = sorted_table_header_tag(:status) do
+      = t(".status")
+    = sorted_table_header_tag(:updated_at) do
+      = t(".updated_at")
+
+  = render(:collection => @messages, :partial => "row", :as => :message)

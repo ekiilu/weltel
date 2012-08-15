@@ -1,0 +1,8 @@
+.page_header
+  = link_to(main_app.root_path, :class => "brand") do
+    = image_tag "weltel.jpg"
+    .slogan
+      Your health, in your hands.
+
+  .date
+    = l(Time.now.in_time_zone)
