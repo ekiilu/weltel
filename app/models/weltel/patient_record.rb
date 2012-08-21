@@ -92,7 +92,7 @@ module Weltel
 
 		#
 		def self.with_state(value)
-			joins(:active_state).where { active_state.value == value }
+			joins(:active_state).where { active_state.value == value.to_s }
 		end
 	end
 end

@@ -78,10 +78,8 @@ describe Weltel::PatientRecord do
 		#
 		it "finds records with a specific state" do
 			state = :unknown
-			expected = create(:patient_record)
-			expected.states << create(:patient_record_state, :value => state)
-			record = create(:patient_record)
-			record.states << create(:patient_record_state, :value => :positive)
+			expected = create(:patient_record_with_state, :state => state)
+			record = create(:patient_record_with_state, :state => :positive)
 
 			records = Weltel::PatientRecord.with_state(state)
 
