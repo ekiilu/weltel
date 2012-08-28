@@ -39,7 +39,7 @@ module Weltel
 
 		# search patients
 		def self.search(search)
-			return all if search.blank?
+			return self if search.blank?
 			search = "%#{search}%"
 			where{(user_name =~ search) | (study_number =~ search)}
 		end

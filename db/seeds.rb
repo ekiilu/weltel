@@ -96,35 +96,9 @@ clinic = Weltel::Clinic.create(
 	:system => true
 )
 
-500.times do |p|
-	subscriber = Sms::Subscriber.create(
-		:phone_number => "6047000%03d" % p,
-		:active => false
-	)
-
-	Weltel::Patient.create(
-		:subscriber => subscriber,
-		:user_name => "patient%03d" % p,
-		:study_number => "number%03d" % p,
-		:clinic => clinic
-	)
-end
-
-Weltel::Patient.all[0...400].each do |p|
-	p.create_record(Time.now)
-	p.save
-end
-
-Weltel::Patient.all[0...350].each do |p|
-	p.active_record.messages.create(:status => :sent, :phone_number => '7783175526', :body => 'Are you ok?')
-	p.active_record.messages.create(:status => :received, :phone_number => '7783175526', :body => 'hi')
-end
-
-{(0..99) => :unknown, (100..190) => :positive, (200..290) => :negative, (300..350) => :late }.each_pair do |range, state|
-	Weltel::Patient.all[range].each do |p|
-		p.active_record.change_state(state, AppConfig.system_user)
-	end
-end
+Weltel::Clinic.create(
+	:name => "BCCDC"
+)
 
 Weltel::Response.create(
 	:name => "yes",
@@ -134,8 +108,4 @@ Weltel::Response.create(
 Weltel::Response.create(
 	:name => "no",
 	:value => :negative
-)
-
-Weltel::Clinic.create(
-	:name => "BCCDC"
 )
