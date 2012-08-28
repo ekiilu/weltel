@@ -26,12 +26,12 @@ module Weltel
 		#
 		def self.filtered_by(key, value)
 			return all if value.blank?
-			where(key => value)
+			where{key == value}
 		end
 
 		#
 		def self.sorted_by(key, order)
-			order("#{key} #{order.upcase}")
+			order{__send__(key).__send__(order)}
 		end
 	end
 end

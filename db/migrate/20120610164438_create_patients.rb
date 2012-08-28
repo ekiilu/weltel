@@ -3,7 +3,7 @@ class CreatePatients < ActiveRecord::Migration
     create_table(:weltel_patients) do |t|
     	t.references(:subscriber, :null => false)
     	t.references(:clinic, :null => false)
-      t.boolean(:system, :null => false, :default => false)
+      t.boolean(:active, :null => false, :default => false)
       t.string(:user_name, :null => false, :limit => 32)
       t.string(:study_number, :null => false, :limit => 32)
       t.string(:contact_phone_number, :length => 10)

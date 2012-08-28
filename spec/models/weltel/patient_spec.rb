@@ -24,31 +24,106 @@ describe Weltel::Patient do
 
 	#
 	context "methods" do
-		#
-		it "updates a patient by id" do
-			patient = create(:patient)
-			expected = "test"
-			patient = Weltel::Patient.update_by_id(patient.id, :user_name => expected)
-			patient.should be_valid
-			patient.user_name.should == expected
+
+		context "class methods" do
+			subject { Weltel::Patient }
+
+			#
+			it "finds active patients" do
+				expected = create(:patient)
+				create(:patient, :active => false)
+				patients = subject.active
+				patients.count.should == 1
+				patients[0].should == expected
+			end
+
+			#
+			it "returns all patients when searching for blank" do
+				expected = create(:patient)
+				patients = subject.search(nil)
+				patients.count.should == 1
+				patients[0].should == expected
+			end
+
+			#
+			it "returns patients with matching user name" do
+				search = "test"
+				create(:patient)
+				expected = create(:patient, :user_name => search)
+				patients = subject.search(search[1..2])
+				patients.count.should == 1
+				patients[0].should == expected
+			end
+
+			#
+			it "returns patients with matching study number" do
+				search = "test"
+				create(:patient)
+				expected = create(:patient, :study_number => search)
+
+				patients = subject.search(search[1..2])
+
+				patients.count.should == 1
+				patients[0].should == expected
+			end
+
+			#
+			it "filters" do
+				create(:patient)
+				create(:patient)
+				expected = create(:patient)
+
+				patients = subject.filtered_by(:clinic, :id, expected.clinic.id)
+
+				patients.count.should == 1
+				patients[0].should == expected
+			end
+
+			#
+			it "sorts by attribute" do
+				c = create(:patient, :user_name => "32")
+				a = create(:patient, :user_name => "11")
+				b = create(:patient, :user_name => "22")
+
+				patients = subject.sorted_by(nil, :user_name, :asc)
+
+				patients.count.should == 3
+				patients.should == [a, b, c]
+			end
+
+			#
+			it "sorts by subscriber phone number" do
+				a = create(:patient, :subscriber => create(:subscriber, :phone_number => "2222222222"))
+				c = create(:patient, :subscriber => create(:subscriber, :phone_number => "4444444444"))
+				b = create(:patient, :subscriber => create(:subscriber, :phone_number => "3333333333"))
+
+				patients = subject.sorted_by(:subscriber, :phone_number, :desc)
+
+				patients.count.should == 3
+				patients.should == [c, b, a]
+			end
+
+			#
+			it "sorts by clinic name" do
+				b = create(:patient, :clinic => create(:clinic, :name => "22"))
+				c = create(:patient, :clinic => create(:clinic, :name => "33"))
+				a = create(:patient, :clinic => create(:clinic, :name => "11"))
+
+				patients = subject.sorted_by(:clinic, :name, :asc)
+
+				patients.count.should == 3
+				patients.should == [a, b, c]
+			end
+
+			it "filters by active record" do
+				create(:patient)
+				subject.with_active_record.count
+			end
+
+			it "filters by no active record" do
+				create(:patient)
+				subject.without_active_record.count
+			end
 		end
-
-		#
-		it "destroys a patient by id" do
-			patient = create(:patient)
-			Weltel::Patient.destroy_by_id(patient.id)
-			#patient.should_not exist
-		end
-
-		#
-		#it "patient creates a record" do
-		#	patient = create(:patient)
-
-		#	date = Date.today
-		#	r = patient.create_record(date)
-
-		#	r.should be_valid
-		#	r.created_on.should == date
-		#end
 	end
 end

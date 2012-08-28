@@ -1,4 +1,4 @@
-# -*- encoding : utf-8 -*-
+4# -*- encoding : utf-8 -*-
 module Weltel
 	class Patient < ActiveRecord::Base
 		#
@@ -34,68 +34,57 @@ module Weltel
 		# class methods
 		# active patients
 		def self.active
-			all(:active => true)
+			where{active == true}
 		end
 
 		# search patients
 		def self.search(search)
-			if search.blank?
-				all
-			else
-				search = "%#{search}%"
-				all(:user_name.like => search) + all(:study_number.like => search)
-			end
+			return all if search.blank?
+			search = "%#{search}%"
+			where{(user_name =~ search) | (study_number =~ search)}
 		end
 
 		# filter patients
-		def self.filtered_by(key, value)
+		def self.filtered_by(association, attribute, value)
 			return all if value.blank?
-			case key
-			when :clinic
-				all(:clinic_id => value)
-			end
+			return joins{association}.where{{association => {attribute => value}}} if association
+			where{attribute == value}
 		end
 
 		# sort patients
-		def self.sorted_by(key, order)
-			case key
-			when :phone_number
-				all(:order => subscriber.phone_number.send(order), :links => [relationships[:subscriber].inverse])
-			when :clinic
-				all(:order => clinic.name.send(order), :links => [relationships[:clinic].inverse])
-			else
-				all(:order => [key.send(order)])
-			end
+		def self.sorted_by(association, attribute, order)
+			return joins{association}.order{{association => __send__(attribute).__send__(order)}} if association
+			order{__send__(attribute).__send__(order)}
 		end
 
 		# patients with active subscriber
 		def self.with_active_subscriber
-			all(:subscriber => {:active => true})
+			joins{subscriber}.where{subscriber.active == true}
 		end
 
 		# find by patient state
 		def self.with_state(state)
-			all(:active_record => {:active_state => {:value => state}})
+			joins{active_record.active_state}.where{active_record.active_state.value == state}
 		end
 
 		# find by record status (open/closed)
 		def self.with_status(status)
-			all(:active_record => {:status => status})
+			joins{active_record}.where{active_record.status == status}
 		end
 
     #
     def self.with_active_record
-      all(:active_record.not => nil)
+      joins{active_record}
     end
 
 		#
     def self.without_active_record
-    	all(:active_record => nil)
+    	joins{active_record.outer}.where{active_record.id == nil}
     end
 
 		#
 		def self.without_active_record_created_on(date)
-			all(:active_record => nil) || all(:active_record => {:created_on.not => date})
+			where{(active_record == nil) | (active_record.created_on != date)}
 		end
 
 		# create

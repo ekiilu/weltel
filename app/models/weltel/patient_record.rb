@@ -77,22 +77,22 @@ module Weltel
 		# class methods
 		#
 		def self.active
-			where { active == true }
+			where{active == true}
 		end
 
 		#
 		def self.created_on(date)
-			where { created_on == date }
+			where{created_on == date}
 		end
 
 		#
 		def self.created_before(date)
-			where { created_on < date }
+			where{created_on < date}
 		end
 
 		#
 		def self.with_state(value)
-			joins(:active_state).where { active_state.value == value.to_s }
+			joins{active_state}.where{active_state.value == value.to_s}
 		end
 	end
 end

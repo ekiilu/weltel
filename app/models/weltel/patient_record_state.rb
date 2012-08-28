@@ -24,7 +24,7 @@ module Weltel
 		# class methods
 		#
 		def self.active
-			where { active == true }
+			where{active == true}
 		end
 	end
 end

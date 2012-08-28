@@ -2,7 +2,7 @@ source "https://vertical:g3m4cc3ss@gems.verticallabs.ca"
 source "http://rubygems.org"
 
 # rails
-RAILS_VERSION = "3.2.5"
+RAILS_VERSION = "~> 3.2"
 gem "rails", RAILS_VERSION
 gem "mysql2"
 

@@ -142,7 +142,7 @@ ActiveRecord::Schema.define(:version => 20120821165128) do
   create_table "weltel_patients", :force => true do |t|
     t.integer  "subscriber_id",                                         :null => false
     t.integer  "clinic_id",                                             :null => false
-    t.boolean  "system",                             :default => false, :null => false
+    t.boolean  "active",                             :default => false, :null => false
     t.string   "user_name",            :limit => 32,                    :null => false
     t.string   "study_number",         :limit => 32,                    :null => false
     t.string   "contact_phone_number"
