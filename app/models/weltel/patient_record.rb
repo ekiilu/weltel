@@ -32,6 +32,14 @@ module Weltel
 
 		# instance methods
     #
+    def contact_method_s
+      contact_method != :none ? contact_method.to_s : ''
+    end
+
+    def state_changed?
+      initial_state.value != active_state.value
+    end
+
     def initial_state
       states.all(:value.not => :pending).first || states.first
     end

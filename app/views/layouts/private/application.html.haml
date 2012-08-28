@@ -2,10 +2,10 @@
 %html
   %head
     %title WelTel Administration
-    = stylesheet_link_tag    "application"
-    = javascript_include_tag "application"
     = stylesheet_link_tag    "feedbacker/application"
     = javascript_include_tag "feedbacker/application"
+    = stylesheet_link_tag    "application"
+    = javascript_include_tag "application"
 
     = csrf_meta_tags
   %body
@@ -15,20 +15,27 @@
         = render(:partial => "shared/flash", :locals => { :flash => flash })
 
         #nav
-          = link_to(t(".dashboard_link"), main_app.weltel_dashboard_path, :class => "button")
-          = link_to(t(".patients_link"), main_app.weltel_patients_path, :class => "button")
+          = link_to(t('.study_dashboard_link'), main_app.weltel_study_dashboard_path, :class => "#{active_class(@view && @view == :study)} button")
+          = link_to(t('.clinic_dashboard_link'), main_app.weltel_clinic_dashboard_path, :class => "#{active_class(@view && @view == :clinic)} button")
+          = active_link_to(t(".patients_link"), main_app.weltel_patients_path, :class => "button")
           -if authenticated_user.has_role(:administrator)
-            = link_to(t(".message_templates_link"), sms.message_templates_path, :class => "button")
-            = link_to(t(".responses_link"), main_app.weltel_responses_path, :class => "button")
-            = link_to(t(".users_link"), authentication.users_path, :class => "button")
-            = link_to(t(".roles_link"), authentication.roles_path, :class => "button")
-            = link_to(t(".clinics_link"), main_app.weltel_clinics_path, :class => "button")
-            = link_to(t(".update_link"), main_app.weltel_update_path, :class => "button")
+            = active_link_to(t(".message_templates_link"), sms.message_templates_path, :class => "button")
+            = active_link_to(t(".responses_link"), main_app.weltel_responses_path, :class => "button")
+            = active_link_to(t(".users_link"), authentication.users_path, :class => "button")
+            = active_link_to(t(".roles_link"), authentication.roles_path, :class => "button")
+            = active_link_to(t(".clinics_link"), main_app.weltel_clinics_path, :class => "button")
+            - content_for(:footer) do
+              = active_link_to(t(".update_link"), main_app.weltel_update_path, :class => "button")
           - unless authenticated_user.nil?
             = link_to(t(".logout_link"), authentication.session_path(request.session_options[:id]), :method => :delete, :class => "logout")
 
-        #actions
-          = yield(:actions)
+
+        - if !content_for(:actions).blank?
+          #actions
+            = yield(:actions)
+        - if !content_for(:tabs).blank?
+          #tabs
+            = yield(:tabs)
 
       #content
         = yield
@@ -36,4 +43,6 @@
       #footer
         = render(:partial => "shared/footer")
 
-  = yield :scripts
+  = yield(:scripts)
+
+

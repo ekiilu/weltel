@@ -12,12 +12,7 @@
     = filter_table_header_tag(:clinic, clinic_options) do
       = t(".clinic")
 
-    %th= t(".active")
+    = table_header_tag(t(".active"))
+    = table_header_tag(t(".actions"))
 
-    %th= t(".actions")
-
-  - if @patients.empty?
-    %tr{:colspan => 6}
-      %td= t(".no_patients")
-  - else
     = render({:collection => @patients, :partial => "row", :as => :patient})

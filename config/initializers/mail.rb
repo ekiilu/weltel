@@ -1,13 +1,14 @@
 # -*- encoding : utf-8 -*-
+OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 ActionMailer::Base.smtp_settings = {
   :address              => "smtp.gmail.com",
   :port                 => 587,
   :domain               => "verticallabs.ca",
   :user_name            => "site@verticallabs.ca",
   :password             => "v3rt1c4l",
-  :authentication       => "plain",
+  :authentication       => 'plain',
   :enable_starttls_auto => true,
-  :tls									=> true
+  :tls                  => true
 }
 
 ActionMailer::Base.raise_delivery_errors = true

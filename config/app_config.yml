@@ -2,11 +2,18 @@ twilio:
   phone_number: '7788002767'
   account_sid: 'AC5e98a9a0d24a4dcbbc3126473d142d35'
   auth_token: 'da2c9e85efafa8848b3e705ae3a2afe9'
+demo_mode: true
+time_zone: "Pacific Time (US & Canada)"
 deployment:
-  internal_host: "http://localhost:3000"
-  rails_env: 'development'
+  server: 'localhost'
+  app_name: 'weltel'
+  app_repo: "ssh://git@dev.verticallabs.ca/git/mambo/apps/weltel.git"
+  app_branch: '3.0'
+  deploy_to: '/www/weltel' 
   app_root: '/www/weltel/current'
   working_directory: "/www/weltel/shared"
+  internal_host: "http://localhost:3000"
+  rails_env: 'development'
   log_directory: "/www/weltel/current/log"
   processes:
     unicorn:
@@ -20,6 +27,6 @@ deployment:
       daemonize: true
   monitoring:
     log_file: "monitoring.log"
-    group_name: mambo
-    uid: web
-    gid: web
+    group_name: 'mambo'
+  uid: 'web'
+  gid: 'web'
