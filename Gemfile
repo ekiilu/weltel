@@ -34,19 +34,20 @@ end
 # deploy
 gem "execjs"
 gem "therubyracer"
-gem "capistrano", '>= 2.9.0'
-gem 'capistrano_colors'
+gem "capistrano", ">= 2.9.0"
+gem "capistrano_colors"
 gem "unicorn"
 gem "thin"
-#gem 'certified'
+#gem "certified"
 
 # monitoring
-gem 'god'
-gem 'tlsmail', :require => false
-gem 'certified'
+gem "god"
+gem "tlsmail", :require => false
+gem "certified"
 
 # application
-gem "enumerated_attribute"
+# need git version until this is released: https://github.com/jeffp/enumerated_attribute/pull/45
+gem "enumerated_attribute", :git => "https://github.com/jeffp/enumerated_attribute.git"
 gem "recursive-open-struct"
 gem "exception_notification"
 gem "whenever", :require => false
@@ -56,7 +57,7 @@ gem "delayed_mail"
 gem "vertical-feedbacker", "0.0.2"
 gem "will_paginate"
 gem "squeel"
-gem 'active_link_to'
+gem "active_link_to"
 
 HOME_PATH = File.expand_path("~/mambo/gems")
 DEV_GIT = "http://dev.verticallabs.ca/git/mambo/gems"

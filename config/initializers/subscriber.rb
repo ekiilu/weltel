@@ -1,7 +1,8 @@
 # -*- encoding : utf-8 -*-
-module Sms
-	class Subscriber < ActiveRecord::Base
-		# associations
-		has_one(:patient, {:class_name => "Weltel::Patient", :dependent => :destroy})
-	end
+Sms::Subscriber.class_eval do
+	# attributes
+	attr_accessible(:patient_id)
+
+	# associations
+	belongs_to(:patient, :class_name => "Weltel::Patient")
 end

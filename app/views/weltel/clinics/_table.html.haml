@@ -1,9 +1,10 @@
 %table
   %tr
-    = sorted_table_header_tag(:name) do
+    = sorted_table_header_tag("", :name) do
       = t(".name")
-    = sorted_table_header_tag(:updated_at) do
+    = sorted_table_header_tag("", :updated_at) do
       = t(".updated_at")
-    %th= t(".actions")
+    %th
+      .title= t(".actions")
 
   = render(:collection => @clinics, :partial => "row", :as => :clinic)

@@ -6,17 +6,17 @@ module Weltel
 		layout("private/application")
 
     before_filter(:only => :index) do
-    	page_param(:responses)
-      sort_param(:responses, :name, :asc)
+    	page_param(:responses, 20)
+      sort_param(:responses, "", :name, :asc)
       filter_param(:responses)
     end
 
 		#
 		def index
 			@responses = Weltel::Response
-				.filtered_by(@filter_key, @filter_value)
-				.sorted_by(@sort_key, @sort_order)
-				.paginate(:page => @page, :per_page => 20)
+				.filtered_by(@filter_attribute, @filter_value)
+				.sorted_by(@sort_attribute, @sort_order)
+				.paginate(:page => @page, :per_page => @per_page)
 			respond_with(@responses)
 		end
 
@@ -34,12 +34,12 @@ module Weltel
           weltel_response[:name] = CGI::unescape(weltel_response[:name])
           weltel_response.delete(:url_encoded)
         end
-				@response = Weltel::Response.create(weltel_response)
+				@response = Weltel::Response.create!(weltel_response)
 				flash[:notice] = t(:created)
 				respond_with(@response, :location => weltel_responses_path)
 
-			rescue DataMapper::SaveFailureError => error
-				@response = error.resource
+			rescue ActiveRecord::RecordInvalid => error
+				@response = error.record
 				respond_with(@response) do |format|
 					format.html { render(:new) }
 				end
@@ -48,7 +48,7 @@ module Weltel
 
 		#
 		def edit
-			@response = Weltel::Response.get!(params[:id])
+			@response = Weltel::Response.find(params[:id])
 			respond_with(@response)
 		end
 
@@ -56,13 +56,14 @@ module Weltel
 		def update
 			begin
 				weltel_response = params[:weltel_response]
-				@response = Weltel::Response.get!(params[:id])
-				@response.update(weltel_response)
+				@response = Weltel::Response.find(params[:id])
+				@response.attributes = weltel_response
+				@response.save!
 				flash[:notice] = t(:updated)
 				respond_with(@response, :location => weltel_responses_path)
 
-			rescue DataMapper::SaveFailureError => error
-				@response = error.resource
+			rescue ActiveRecord::RecordInvalid => error
+				@response = error.record
 				respond_with(@response) do |format|
 					format.html { render(:edit) }
 				end
@@ -71,7 +72,7 @@ module Weltel
 
 		#
 		def destroy
-			@response = Weltel::Response.get!(params[:id])
+			@response = Weltel::Response.find(params[:id])
 			@response.destroy
 			flash[:notice] = t(:destroyed)
 			respond_with(@response, :location => weltel_responses_path)

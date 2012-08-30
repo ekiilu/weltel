@@ -6,7 +6,7 @@ module Weltel
 			"weltel_patients"
 		end
 
-    attr_accessible(:active, :user_name, :study_number, :contact_phone_number)
+    attr_accessible(:subscriber_attributes, :clinic_id, :active, :user_name, :study_number, :contact_phone_number)
 
 		# validations
     validates(:user_name, :presence => true, :length => {:in => 2..32}, :format => /^\w*$/)
@@ -14,7 +14,7 @@ module Weltel
     validates(:contact_phone_number, :length => {:is => 10}, :format => /^\d*$/, :allow_blank => true)
 
 		# associations
-		belongs_to(:subscriber, :class_name => "Sms::Subscriber")
+		has_one(:subscriber, :class_name => "Sms::Subscriber", :dependent => :destroy)
 		belongs_to(:clinic, :inverse_of => :patients)
 		has_many(:records, {:class_name => "Weltel::PatientRecord", :dependent => :destroy})
 		has_one(:active_record, {:class_name => "Weltel::PatientRecord", :conditions => {:active => true}})
@@ -39,21 +39,21 @@ module Weltel
 
 		# search patients
 		def self.search(search)
-			return self if search.blank?
+			return where{true} if search.blank?
 			search = "%#{search}%"
 			where{(user_name =~ search) | (study_number =~ search)}
 		end
 
 		# filter patients
 		def self.filtered_by(association, attribute, value)
-			return all if value.blank?
-			return joins{association}.where{{association => {attribute => value}}} if association
-			where{attribute == value}
+			return where{true} if value.blank?
+			return joins{association}.where{{association => {attribute => value}}} if !association.blank?
+			where{{attribute => value}}
 		end
 
 		# sort patients
 		def self.sorted_by(association, attribute, order)
-			return joins{association}.order{{association => __send__(attribute).__send__(order)}} if association
+			return joins{association}.order{{association => __send__(attribute).__send__(order)}} if !association.blank?
 			order{__send__(attribute).__send__(order)}
 		end
 
@@ -64,12 +64,12 @@ module Weltel
 
 		# find by patient state
 		def self.with_state(state)
-			joins{active_record.active_state}.where{active_record.active_state.value == state}
+			joins{active_record.active_state}.where{active_record.active_state.value == state.to_s}
 		end
 
 		# find by record status (open/closed)
 		def self.with_status(status)
-			joins{active_record}.where{active_record.status == status}
+			joins{active_record}.where{active_record.status == status.to_s}
 		end
 
     #
@@ -85,29 +85,6 @@ module Weltel
 		#
 		def self.without_active_record_created_on(date)
 			where{(active_record == nil) | (active_record.created_on != date)}
-		end
-
-		# create
-		def self.create_by(params)
-			transaction do
-				create(params)
-			end
-		end
-
-		# update
-		def self.update_by_id(id, params)
-			transaction do
-				update(id, params)
-			end
-		end
-
-		# destroy
-		def self.destroy_by_id(id)
-			patient = find(id)
-			transaction do
-				patient.subscriber.destroy
-			end
-			patient
 		end
 	end
 end

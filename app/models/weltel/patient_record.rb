@@ -65,7 +65,7 @@ module Weltel
 		def change_state(value, user)
 			Weltel::PatientRecord.transaction do
 				self.status = value == :positive ? :closed : :open
-				save
+				save!
 
 				if !active_state
 					create_state(value, user)

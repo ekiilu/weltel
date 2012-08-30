@@ -6,13 +6,16 @@ module Weltel
 		layout("private/application")
 
     before_filter(:only => :index) do
-    	session_param(:clinics, :page, 1)
-    	sort_param(:clinics, :name, :asc)
+    	page_param(:clinics, 20)
+    	sort_param(:clinics, nil, :name, :asc)
     end
 
 		#
 		def index
-			@clinics = Weltel::Clinic.user.sorted_by(@sort_key, @sort_order).paginate(:page => 1, :per_page => 2)
+			@clinics = Weltel::Clinic
+				.user
+				.sorted_by(@sort_attribute, @sort_order)
+				.paginate(:page => @page, :per_page => @per_page)
 			respond_with(@clinics)
 		end
 
@@ -25,12 +28,13 @@ module Weltel
 		#
 		def create
 			begin
-				@clinic = Weltel::Clinic.create(params[:weltel_clinic])
+				weltel_clinic = params[:weltel_clinic]
+				@clinic = Weltel::Clinic.create!(weltel_clinic)
 				flash[:notice] = t(:created)
 				respond_with(@clinic, :location => weltel_clinics_path)
 
-			rescue DataMapper::SaveFailureError => error
-				@clinic = error.resource
+			rescue ActiveRecord::RecordInvalid => error
+				@clinic = error.record
 				respond_with(@clinic) do |format|
 					format.html { render(:new) }
 				end
@@ -39,30 +43,31 @@ module Weltel
 
 		#
 		def edit
-			@clinic = Weltel::Clinic.get!(params[:id])
+			@clinic = Weltel::Clinic.find(params[:id])
 			respond_with(@clinic)
 		end
 
 		#
 		def update
 			begin
-				@clinic = Weltel::Clinic.get!(params[:id])
-				@clinic.update(params[:weltel_clinic])
+				weltel_clinic = params[:weltel_clinic]
+				@clinic = Weltel::Clinic.find(params[:id])
+				@clinic.attributes = weltel_clinic
+				@clinic.save!
 				flash[:notice] = t(:updated)
 				respond_with(@clinic, :location => weltel_clinics_path)
 
-			rescue DataMapper::SaveFailureError => error
-				@clinic = error.resource
+			rescue ActiveRecord::RecordInvalid => error
+				@clinic = error.record
 				respond_with(@clinic) do |format|
 					format.html { render(:edit) }
 				end
 			end
 		end
 
-
 		#
 		def destroy
-			@clinic = Weltel::Clinic.get!(params[:id])
+			@clinic = Weltel::Clinic.find(params[:id])
 			@clinic.destroy
 			flash[:notice] = t(:destroyed)
 			respond_with(@clinic, :location => weltel_clinics_path)

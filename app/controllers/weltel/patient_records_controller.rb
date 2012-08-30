@@ -7,7 +7,7 @@ module Weltel
 
     #
 		def update
-      @patient = Weltel::Patient.get!(params[:patient_id])
+      @patient = Weltel::Patient.find(params[:patient_id])
       @patient_record = @patient.records.get(params[:id])
 
       @patient_record.change_state(params[:current_state].to_sym, authenticated_user) if params[:current_state]

@@ -6,17 +6,22 @@ module Weltel
 		layout("private/application")
 
     before_filter(:only => :index) do
-    	page_param(:patients)
-      session_param(:view, :per_page, 20)
-    	session_param(:patients, :search, "")
-      sort_param(:patients, :user_name, :asc)
+    	session_param_value(:patients, :search, "")
+    	page_param(:patients, 20)
+      sort_param(:patients, nil, :user_name, :asc)
       filter_param(:patients)
     end
 
 		# patient list
 		def index
 			@clinics = Weltel::Clinic.sorted_by(:name, :asc)
-			@patients = Weltel::Patient.search(@search).filtered_by(@filter_key, @filter_value).sorted_by(@sort_key, @sort_order).paginate(:page => @page, :per_page => @per_page)
+			@patients = Weltel::Patient
+				.includes(:subscriber, :clinic)
+				.search(@search)
+				.filtered_by(@filter_association, @filter_attribute, @filter_value)
+				.sorted_by(@sort_association, @sort_attribute, @sort_order)
+				.paginate(:page => @page, :per_page => @per_page)
+
 			respond_with(@patients)
 		end
 
@@ -30,12 +35,15 @@ module Weltel
 		# create new patient
 		def create
 			begin
-				@patient = Weltel::Patient.create_by(params[:weltel_patient])
-				flash[:notice] = t(:created)
-				respond_with(@patient, :location => weltel_patients_path)
+				Weltel::Patient.transaction do
+					weltel_patient = params[:weltel_patient]
+					@patient = Weltel::Patient.create!(weltel_patient)
+					flash[:notice] = t(:created)
+					respond_with(@patient, :location => weltel_patients_path)
+				end
 
-			rescue DataMapper::SaveFailureError => error
-				@patient = error.resource
+			rescue ActiveRecord::RecordInvalid => error
+				@patient = error.record
 				respond_with(@patient) do |format|
 					format.html { render(:new) }
 				end
@@ -44,19 +52,24 @@ module Weltel
 
 		# edit patient form
 		def edit
-			@patient = Weltel::Patient.get!(params[:id])
+			@patient = Weltel::Patient.find(params[:id])
 			respond_with(@patient)
 		end
 
 		# update patient
 		def update
 			begin
-				@patient = Weltel::Patient.update_by_id(params[:id], params[:weltel_patient])
-				flash[:notice] = t(:updated)
-				respond_with(@patient, :location => weltel_patients_path)
+				Weltel::Patient.transaction do
+					weltel_patient = params[:weltel_patient]
+					@patient = Weltel::Patient.find(params[:id])
+					@patient.attributes = weltel_patient
+					@patient.save!
+					flash[:notice] = t(:updated)
+					respond_with(@patient, :location => weltel_patients_path)
+				end
 
-			rescue DataMapper::SaveFailureError => error
-				@patient = error.resource
+			rescue ActiveRecord::RecordInvalid => error
+				@patient = error.record
 				respond_with(@patient) do |format|
 					format.html { render(:edit) }
 				end
@@ -65,9 +78,12 @@ module Weltel
 
 		#
 		def destroy
-			@patient = Weltel::Patient.destroy_by_id(params[:id])
-			flash[:notice] = t(:destroyed)
-			respond_with(@patient, :location => weltel_patients_path)
+			Weltel::Patient.transaction do
+				@patient = Weltel::Patient.find(params[:id])
+				@patient.destroy
+				flash[:notice] = t(:destroyed)
+				respond_with(@patient, :location => weltel_patients_path)
+			end
 		end
 
 	private

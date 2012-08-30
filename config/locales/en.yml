@@ -32,7 +32,6 @@ en:
       index:
         new_link: "Add Patient"
         search: "Find Patients"
-        no_patients: "No patients found"
       table:
         user_name: "Username"
         study_number: "Study Number"
@@ -40,6 +39,7 @@ en:
         clinic: "Clinic"
         active: "Active"
         actions: "Actions"
+        no_patients: "No Patients Found"
       row:
         no_clinic: ""
         edit_link: "Edit"
@@ -78,7 +78,7 @@ en:
       created: "Message Created"
       index:
         add_link: "Send Message"
-        no_messages: "No Messages"
+        no_messages: "No Messages Found"
       table:
         phone_number: "Phone Number"
         body: "Body"

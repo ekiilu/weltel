@@ -8,6 +8,9 @@ FactoryGirl.define do
   	sequence(:study_number) { |n| "study_number#{n}" }
   	created_at { DateTime.now }
   	updated_at { DateTime.now }
-  	subscriber_id { FactoryGirl.create(:subscriber).id }
+
+  	after(:create) do |patient|
+  		patient.subscriber = create(:subscriber, :patient => patient)
+  	end
   end
 end

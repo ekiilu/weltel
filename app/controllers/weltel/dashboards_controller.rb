@@ -6,9 +6,9 @@ module Weltel
 
     before_filter do
       page_param(:dashboard)
-      sort_param(:dashboard, :user_name, :asc)
-      session_param(:view, :per_page, 20)
-      session_param(:dashboard, :search, '')
+      sort_param(:dashboard, nil, :user_name, :asc)
+      session_param(:dashboard, :per_page, 20)
+      session_param(:dashboard, :search, "")
       session_param(:dashboard, :view, :study)
       if is_study_dashboard?(@view)
         session_param(:dashboard, :state, :negative)
@@ -29,7 +29,7 @@ module Weltel
         @patients = @patients.with_status(@status.to_sym)
       end
 
-      @patients = @patients.sorted_by(@sort_key, @sort_order)
+      @patients = @patients.sorted_by(@sort_association, @sort_attribute, @sort_order)
 
       @print = params[:print]
       @patients = @patients.paginate(:page => @page, :per_page => @per_page) if @print.blank?

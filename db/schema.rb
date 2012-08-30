@@ -98,9 +98,11 @@ ActiveRecord::Schema.define(:version => 20120821165128) do
     t.string   "phone_number", :limit => 10,                    :null => false
     t.datetime "created_at",                                    :null => false
     t.datetime "updated_at",                                    :null => false
+    t.integer  "patient_id",                                    :null => false
   end
 
   add_index "sms_subscribers", ["active"], :name => "index_sms_subscribers_on_active"
+  add_index "sms_subscribers", ["patient_id"], :name => "index_sms_subscribers_on_patient_id"
   add_index "sms_subscribers", ["phone_number"], :name => "index_sms_subscribers_on_phone_number", :unique => true
 
   create_table "weltel_clinics", :force => true do |t|
@@ -140,7 +142,6 @@ ActiveRecord::Schema.define(:version => 20120821165128) do
   add_index "weltel_patient_records", ["patient_id"], :name => "index_weltel_patient_records_on_patient_id"
 
   create_table "weltel_patients", :force => true do |t|
-    t.integer  "subscriber_id",                                         :null => false
     t.integer  "clinic_id",                                             :null => false
     t.boolean  "active",                             :default => false, :null => false
     t.string   "user_name",            :limit => 32,                    :null => false
@@ -152,7 +153,6 @@ ActiveRecord::Schema.define(:version => 20120821165128) do
 
   add_index "weltel_patients", ["clinic_id"], :name => "index_weltel_patients_on_clinic_id"
   add_index "weltel_patients", ["study_number"], :name => "index_weltel_patients_on_study_number", :unique => true
-  add_index "weltel_patients", ["subscriber_id"], :name => "index_weltel_patients_on_subscriber_id"
   add_index "weltel_patients", ["user_name"], :name => "index_weltel_patients_on_user_name", :unique => true
 
   create_table "weltel_responses", :force => true do |t|

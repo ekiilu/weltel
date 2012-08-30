@@ -4,6 +4,7 @@
     %legend= t(".legend")
     %ol
       = p.fields_for(:subscriber, @patient.subscriber) do |s|
+        = s.hidden_field(:active)
         %li
           = s.label(:phone_number)
           = s.telephone_field(:phone_number, {:required => true, :placeholder => "2223334444", :size => 10, :maxlength => 10})

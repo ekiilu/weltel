@@ -2,8 +2,9 @@
 module ClinicsHelper
 	#
 	def clinic_options
+		[""] +
 		Weltel::Clinic.all(:order => :name).map do |clinic|
-			[clinic.name, clinic.id]
+			clinic.name
 		end
 	end
 end
