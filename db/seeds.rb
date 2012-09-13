@@ -97,24 +97,6 @@ begin
 		:system => true
 	)
 
-	10.times do |p|
-		subscriber = Sms::Subscriber.create(
-			:phone_number => "6047000%03d" % p,
-			:active => false
-		)
-
-		Weltel::Patient.create(
-			:subscriber => subscriber,
-			:user_name => "patient%03d" % p,
-			:study_number => "number%03d" % p,
-			:clinic => clinic
-		)
-	end
-
-  Weltel::Patient.all.each do |p|
-    p.create_record(Time.now)
-  end
-
 	Weltel::Response.create(
 		:name => "yes",
 		:value => :positive

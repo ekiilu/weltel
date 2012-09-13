@@ -1,0 +1,32 @@
+twilio:
+  phone_number: '6047572719'
+  account_sid: 'AC237b652f53a64bd19e62f62ee2a3d2e4'
+  auth_token: '0652039bfaaa607bf5af942001dd9b72'
+demo_mode: false
+time_zone: "Pacific Time (US & Canada)"
+deployment:
+  server: 'localhost'
+  app_name: 'weltel'
+  deploy_to: '/www/weltel'
+  app_repo: "ssh://git@dev.verticallabs.ca/git/mambo/apps/weltel.git"
+  app_branch: '3.0'
+  internal_host: "http://localhost:3000"
+  rails_env: 'production'
+  app_root: '/www/weltel/current'
+  working_directory: "/www/weltel/shared"
+  log_directory: "/www/weltel/shared/log"
+  processes:
+    unicorn:
+      start: "bundle exec unicorn_rails -E #{RAILS_ENV} -c #{PWD}/config/unicorn.rb -D"
+      stop: "kill -QUIT $(cat #{PID_FILE})"
+      restart: "kill -USR2 $(cat #{PID_FILE})"
+      workers: 2
+      port: 3000
+    dj:
+      start: "bundle exec rake jobs:work"
+      daemonize: true
+  monitoring:
+    log_file: "monitoring.log"
+    group_name: mambo
+  uid: cdion
+  gid: cdion

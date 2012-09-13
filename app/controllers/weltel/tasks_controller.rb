@@ -6,7 +6,7 @@ module Weltel
 		#
 		def create_records
 			# send reminders
-			date = Date.today
+			date = Date.today.monday
 			Weltel::Factory.service.create_records(date)
 			render(:text => "OK")
 		end
