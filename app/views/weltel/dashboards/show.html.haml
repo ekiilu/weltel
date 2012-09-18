@@ -15,14 +15,10 @@
         .content
           = link_to(t("weltel.patient_records.statuses.#{status}"), params.merge(:status => status, :page => 1), :class => "#{active_class(status == @status.to_sym)} #{status.to_s} status")
 
-- if @patients.empty?
-  .empty_search
-    = t(".no_patients")
-- else
-  = render("table")
+= render("table")
 
-  - content_for(:footer) do
-    = will_paginate(@patients)
+- content_for(:footer) do
+  = will_paginate(@patients)
 
 - content_for(:scripts) do
   :javascript

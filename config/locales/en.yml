@@ -98,7 +98,6 @@ en:
       show:
         clinic_view: 'To Do'
         study_view: 'Overview'
-        no_patients: "No patients found.  Try the search on the Patients page if you are looking for a patient whose study may not have begun."
         search: "Find Patients"
         notes: "Notes"
       print:
@@ -121,7 +120,8 @@ en:
         contact_method: "Contact Method"
         actions: 'Actions'
         clinic: 'Clinic'
-        print: 'Print view'
+        print: 'Print View'
+        no_patients: "No patients found.  Try the search on the Patients page if you are looking for a patient whose study may not have begun."
       row:
         mark_positive: "Mark OK"
         mark_negative: "Mark Not OK"

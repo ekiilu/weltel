@@ -43,7 +43,7 @@ describe Weltel::PatientMessagesController do
 				before do
 					patient = create(:patient)
 					message = attributes_for(:message)
-					post(:create, patient_id => patient.id)
+					post(:create, :patient_id => patient.id, :message => message)
 				end
 
 				it "succeeds" do

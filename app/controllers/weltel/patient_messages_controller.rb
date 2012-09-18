@@ -41,7 +41,7 @@ module Weltel
 				@patient = Weltel::Patient.find(params[:patient_id])
 
 				body = params[:message][:body]
-				if body.empty?
+				if body.blank?
 					body = Sms::MessageTemplate.find(params[:message_template_id]).body
 				end
 

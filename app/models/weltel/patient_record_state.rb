@@ -7,7 +7,7 @@ module Weltel
 		end
 
 		# attributes
-		attr_accessible(:active, :value, :user)
+		attr_accessible(:user_id, :active, :value)
 
 		VALUES = [:pending, :unknown, :positive, :negative, :late]
 		enum_attr(:value, VALUES, :init => :unknown, :nil => false)

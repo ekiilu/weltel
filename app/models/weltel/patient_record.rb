@@ -7,7 +7,7 @@ module Weltel
 		end
 
 		# attributes
-		attr_accessible(:active)
+		attr_accessible(:active, :created_on)
 
 		STATUSES = [:open, :closed]
 		enum_attr(:status, STATUSES, :init => :open, :nil => false)
@@ -23,6 +23,7 @@ module Weltel
     has_many(:messages, :class_name => "Sms::Message", :dependent => :nullify)
 		belongs_to(:patient)
 		has_many(:states, :class_name => "Weltel::PatientRecordState", :dependent => :destroy)
+		has_one(:initial_state, :class_name => "Weltel::PatientRecordState")
 		has_one(:active_state, :class_name => "Weltel::PatientRecordState", :conditions => {:active => true})
 
 		# hooks
@@ -40,9 +41,9 @@ module Weltel
       initial_state.value != active_state.value
     end
 
-    def initial_state
-      states.all(:value.not => :pending).first || states.first
-    end
+    #def initial_state
+    #  states.all(:value.not => :pending).first || states.first
+    #end
 
     #
 		def create_outgoing_message(body)
@@ -56,9 +57,11 @@ module Weltel
 
 		#
 		def create_state(value, user)
-			active_state.update(:active => false) if active_state
-			states.create(:value => value, :user_id => user.id)
-			#active_state.reload
+			if active_state
+				active_state.active = false
+				active_state.save!
+			end
+			active_state = states.create!(:value => value, :user_id => user.id)
 		end
 
 		#

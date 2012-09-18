@@ -15,9 +15,23 @@ module Weltel
 
 		# associations
 		has_one(:subscriber, :class_name => "Sms::Subscriber", :dependent => :destroy)
+
 		belongs_to(:clinic, :inverse_of => :patients)
-		has_many(:records, {:class_name => "Weltel::PatientRecord", :dependent => :destroy})
+
+		has_many(:records, {:class_name => "Weltel::PatientRecord", :dependent => :destroy}, :inverse_of => :patient) do
+			def initial
+				where{initial == true}
+			end
+
+			def active
+				where{active == true}
+			end
+		end
+
 		has_one(:active_record, {:class_name => "Weltel::PatientRecord", :conditions => {:active => true}})
+
+		has_one(:initial_state, :through => :active_record)
+
 		has_one(:active_state, :through => :active_record)
 
 		# nested
@@ -26,9 +40,11 @@ module Weltel
 		# instance methods
 		#
 		def create_record(date)
-			active_record.update(:active => false) if active_record
-			active_record = records.create(:created_on => date)
-			active_record
+			if active_record
+				active_record.active = false
+				active_record.save!
+			end
+			active_record = records.create!(:created_on => date)
 		end
 
 		# class methods
@@ -47,8 +63,8 @@ module Weltel
 		# filter patients
 		def self.filtered_by(association, attribute, value)
 			return where{true} if value.blank?
-			return joins{association}.where{{association => {attribute => value}}} if !association.blank?
-			where{{attribute => value}}
+			return joins{association}.where{{association => {attribute => value.to_s}}} if !association.blank?
+			where{{attribute => value.to_s}}
 		end
 
 		# sort patients

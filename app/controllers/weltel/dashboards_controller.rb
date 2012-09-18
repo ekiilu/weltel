@@ -5,21 +5,21 @@ module Weltel
     include DashboardsHelper
 
     before_filter do
-      page_param(:dashboard)
-      sort_param(:dashboard, nil, :user_name, :asc)
-      session_param(:dashboard, :per_page, 20)
-      session_param(:dashboard, :search, "")
-      session_param(:dashboard, :view, :study)
+      page_param(:dashboard, 20)
+      sort_param(:dashboard, "", :user_name, :asc)
+      session_param_value(:dashboard, :search, "")
+      session_param_symbol(:dashboard, :view, :study)
       if is_study_dashboard?(@view)
-        session_param(:dashboard, :state, :negative)
+        session_param_symbol(:dashboard, :state, :negative)
       else
-        session_param(:dashboard, :status, :open)
+        session_param_symbol(:dashboard, :status, :open)
       end
     end
 
 		#
 		def show
-      @patients = Weltel::Patient.active.with_active_record
+      @patients = Weltel::Patient
+      	.active.with_active_record
 
       if !@search.blank?
         @patients = @patients.search(@search)

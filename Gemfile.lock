@@ -19,6 +19,7 @@ PATH
   specs:
     mambo-messaging (0.0.8)
       mambo-sms
+      mambo-support
       rails
 
 PATH
@@ -44,11 +45,12 @@ PATH
   specs:
     mambo-twilio_adapter (0.0.14)
       mambo-sms
+      mambo-support
       rails
       twilio-rb
 
 GEM
-  remote: https://vertical:g3m4cc3ss@gems.verticallabs.ca/
+  remote: http://gems.verticallabs.ca/
   remote: http://rubygems.org/
   specs:
     actionmailer (3.2.8)
