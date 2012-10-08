@@ -5,6 +5,7 @@ class ConnectionConfigController < ActionController::Base
 
   def edit
     @connection_config = ConnectionConfig.first
+    @available_devices = ConnectionConfig.available_devices 
   end
 
   def update

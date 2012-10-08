@@ -24,4 +24,9 @@ class ConnectionConfig < ActiveRecord::Base
       return false
     end
   end
+
+  def self.available_devices
+    lines = `dmesg | grep ttyUSB`.split
+    lines.map {|l| l.match(/ttyUSB\w*/) }.compact.map{|port| "/dev/#{port}"}
+  end
 end

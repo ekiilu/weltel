@@ -2,7 +2,7 @@
   %fieldset
     %legend= t(".connection_configuration")
     = f.label(:device)
-    = f.text_field(:device)
+    = f.select(:device, options_for_select(@available_devices, @connection_config.device))
     = f.label(:extra)
     = f.text_area(:extra)
     = f.submit(t(".save"))
