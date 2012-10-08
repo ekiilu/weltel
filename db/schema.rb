@@ -118,12 +118,14 @@ ActiveRecord::Schema.define(:version => 20120821165128) do
   create_table "weltel_patient_record_states", :force => true do |t|
     t.integer  "patient_record_id",                   :null => false
     t.integer  "user_id",                             :null => false
+    t.boolean  "initial",           :default => true, :null => false
     t.boolean  "active",            :default => true, :null => false
     t.string   "value",                               :null => false
     t.datetime "created_at",                          :null => false
   end
 
   add_index "weltel_patient_record_states", ["active"], :name => "index_weltel_patient_record_states_on_active"
+  add_index "weltel_patient_record_states", ["initial"], :name => "index_weltel_patient_record_states_on_initial"
   add_index "weltel_patient_record_states", ["patient_record_id"], :name => "index_weltel_patient_record_states_on_patient_record_id"
   add_index "weltel_patient_record_states", ["user_id"], :name => "index_weltel_patient_record_states_on_user_id"
 

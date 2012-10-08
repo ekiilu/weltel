@@ -17,16 +17,16 @@ module Weltel
 		# class methods
 		#
 		def self.system
-			where{system == true}
+			where(:system => true)
 		end
 
 		def self.user
-			where{system == false}
+			where(:system => false)
 		end
 
 		#
 		def self.sorted_by(key, order)
-			order{__send__(key).__send__(order)}
+			order("#{key} #{order.upcase}")
 		end
 	end
 end

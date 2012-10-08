@@ -7,7 +7,7 @@ module Weltel
 
     before_filter(:only => :index) do
     	page_param(:clinics, 20)
-    	sort_param(:clinics, nil, :name, :asc)
+    	sort_param(:clinics, :name, :asc)
     end
 
 		#

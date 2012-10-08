@@ -18,21 +18,21 @@ module Weltel
 
 		belongs_to(:clinic, :inverse_of => :patients)
 
-		has_many(:records, {:class_name => "Weltel::PatientRecord", :dependent => :destroy}, :inverse_of => :patient) do
-			def initial
-				where{initial == true}
-			end
-
+		has_many(:records, {:class_name => "Weltel::PatientRecord", :dependent => :destroy, :inverse_of => :patient}) do
 			def active
-				where{active == true}
+				where(:active => true)
 			end
 		end
 
-		has_one(:active_record, {:class_name => "Weltel::PatientRecord", :conditions => {:active => true}})
+		has_many(:states, {:class_name => "Weltel::PatientRecordState", :through => :records}) do
+			def initial
+				where(:initial => true)
+			end
 
-		has_one(:initial_state, :through => :active_record)
-
-		has_one(:active_state, :through => :active_record)
+			def active
+				where(:active => true)
+			end
+		end
 
 		# nested
 		accepts_nested_attributes_for(:subscriber)
@@ -50,57 +50,62 @@ module Weltel
 		# class methods
 		# active patients
 		def self.active
-			where{active == true}
+			where(:active => true)
 		end
 
 		# search patients
 		def self.search(search)
-			return where{true} if search.blank?
+			return where("1") if search.blank?
 			search = "%#{search}%"
-			where{(user_name =~ search) | (study_number =~ search)}
+			where("user_name LIKE ? OR study_number LIKE ?", search, search)
 		end
 
 		# filter patients
-		def self.filtered_by(association, attribute, value)
-			return where{true} if value.blank?
-			return joins{association}.where{{association => {attribute => value.to_s}}} if !association.blank?
-			where{{attribute => value.to_s}}
+		def self.filtered_by(attribute, value)
+			return where("1") if value.blank?
+			where("#{attribute} = ?", value)
 		end
 
 		# sort patients
-		def self.sorted_by(association, attribute, order)
-			return joins{association}.order{{association => __send__(attribute).__send__(order)}} if !association.blank?
-			order{__send__(attribute).__send__(order)}
+		def self.sorted_by(attribute, order)
+			order("#{attribute} #{order.upcase}")
 		end
 
 		# patients with active subscriber
 		def self.with_active_subscriber
-			joins{subscriber}.where{subscriber.active == true}
+			joins(:subscriber).where(:subscriber => {:active => true})
 		end
 
 		# find by patient state
 		def self.with_state(state)
-			joins{active_record.active_state}.where{active_record.active_state.value == state.to_s}
+			#joins(:active_record => :active_state).where(:active_record => {:active_state => {:value => state}})
 		end
 
 		# find by record status (open/closed)
 		def self.with_status(status)
-			joins{active_record}.where{active_record.status == status.to_s}
+			#joins(:states)
+			#joins(:active_record).where(:active_record => {:status => status})
 		end
 
     #
     def self.with_active_record
-      joins{active_record}
+      joins(:records).where(:record => {:active => true})
     end
 
 		#
     def self.without_active_record
-    	joins{active_record.outer}.where{active_record.id == nil}
+			p = Weltel::Patient.table_name
+			pr = Weltel::PatientRecord.table_name
+			joins("LEFT JOIN #{pr} ON #{p}.id = #{pr}.patient_id AND #{pr}.active = 1")
+			.where("#{pr}.id IS NULL")
     end
 
 		#
 		def self.without_active_record_created_on(date)
-			where{(active_record == nil) | (active_record.created_on != date)}
+			p = Weltel::Patient.table_name
+			pr = Weltel::PatientRecord.table_name
+			joins("LEFT JOIN #{pr} ON #{p}.id = #{pr}.patient_id AND #{pr}.active = 1")
+			.where("#{pr.id} IS NULL OR #{pr}.created_on != ?", date)
 		end
 	end
 end

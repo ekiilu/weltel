@@ -15,11 +15,11 @@ describe Weltel::Patient do
 	#
 	context "associations" do
 		subject { create(:patient) }
-		it { should belong_to(:subscriber) }
+		it { should have_one(:subscriber) }
 		it { should belong_to(:clinic) }
 		it { should have_many(:records).dependent(:destroy) }
-		it { should have_one(:active_record) }
-		it { should have_one(:active_state).through(:active_record) }
+		it { should have_many(:states).through(:records) }
+		#it { should have_one(:active_record) }
 	end
 
 	#
@@ -73,7 +73,8 @@ describe Weltel::Patient do
 				create(:patient)
 				expected = create(:patient)
 
-				patients = subject.filtered_by(:clinic, :id, expected.clinic.id)
+				c = Weltel::Clinic.table_name
+				patients = subject.joins(:clinic).filtered_by("#{c}.id", expected.clinic.id)
 
 				patients.count.should == 1
 				patients[0].should == expected
@@ -85,7 +86,7 @@ describe Weltel::Patient do
 				a = create(:patient, :user_name => "11")
 				b = create(:patient, :user_name => "22")
 
-				patients = subject.sorted_by(nil, :user_name, :asc)
+				patients = subject.sorted_by(:user_name, :asc)
 
 				patients.count.should == 3
 				patients.should == [a, b, c]
@@ -97,7 +98,8 @@ describe Weltel::Patient do
 				c = create(:patient, :subscriber => create(:subscriber, :phone_number => "4444444444"))
 				b = create(:patient, :subscriber => create(:subscriber, :phone_number => "3333333333"))
 
-				patients = subject.sorted_by(:subscriber, :phone_number, :desc)
+				s = Sms::Subscriber.table_name
+				patients = subject.joins(:subscriber).sorted_by("#{s}.phone_number", :desc)
 
 				patients.count.should == 3
 				patients.should == [c, b, a]
@@ -109,7 +111,8 @@ describe Weltel::Patient do
 				c = create(:patient, :clinic => create(:clinic, :name => "33"))
 				a = create(:patient, :clinic => create(:clinic, :name => "11"))
 
-				patients = subject.sorted_by(:clinic, :name, :asc)
+				c = Weltel::Clinic.table_name
+				patients = subject.joins(:clinic).sorted_by("#{c}.name", :asc)
 
 				patients.count.should == 3
 				patients.should == [a, b, c]

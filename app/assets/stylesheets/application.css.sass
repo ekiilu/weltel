@@ -40,6 +40,7 @@ $tabradius: 6px
   width: 0
   height: 0
   display: inline-block
+  margin-bottom: 1px
   border-top: none
   border-right-width: $size
   border-right-style: solid
@@ -224,13 +225,13 @@ table
       line-height: 10px
     .sort a.ascending
       +box-sizing(content-box)
-      +up-triangle(8px, #888)
+      +up-triangle(10px, #888)
       text-indent: -9999px
       &.active
         border-bottom-color: white
     .sort a.descending
       +box-sizing(content-box)
-      +down-triangle(8px, #888)
+      +down-triangle(10px, #888)
       text-indent: -9999px
       &.active
         border-top-color: white
@@ -249,7 +250,7 @@ table
     margin-right: 5px
     font-size: 12px
     text-shadow: none
-  tr.patient_last 
+  tr.patient_last
     display: none
     border-top: 1px solid #888
     td
@@ -375,8 +376,8 @@ table
     +button(#fff, darken($themecolor, $colorshift * 2))
   a.inactive
     +button(#ccc, darken($themecolor, $colorshift * 2))
-    
-    
+
+
 #tabs, .views
   .tab
     +tabify($tabradius, #eee, $gray)
@@ -529,7 +530,7 @@ option
     background: $closedcolor
     color: white
     padding: 8px
-    .actions 
+    .actions
       float: right
       margin-left: 10px
       a

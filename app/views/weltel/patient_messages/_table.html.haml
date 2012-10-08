@@ -9,4 +9,9 @@
     = sorted_table_header_tag(:created_at) do
       = t(".created_at")
 
-  = render(:collection => @messages, :partial => "row", :as => :message)
+  - if @messages.empty?
+    %tr
+      %td{:colspan => 4}
+        .empty_search= t(".no_messages")
+  - else
+    = render(:collection => @messages, :partial => "row", :as => :message)

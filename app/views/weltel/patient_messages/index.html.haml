@@ -5,9 +5,6 @@
     :class => "button")
   = link_to(t(".add_link"), new_weltel_patient_message_path(@patient), :class => "button")
 
-- if @messages.empty?
-  = t(".no_messages")
-- else
   = render("table")
 
   - content_for(:footer) do

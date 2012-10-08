@@ -38,12 +38,13 @@ describe Weltel::Response do
 		end
 
 		it "sorts" do
-			create(:response, :name => "b")
-			expected = create(:response, :name => "a")
+			create(:response, :name => "B")
+			expected = create(:response, :name => "A")
+			create(:response, :name => "C")
 
 			responses = Weltel::Response.sorted_by(:name, :asc)
 
-			responses.count.should == 2
+			responses.count.should == 3
 			responses[0].should == expected
 		end
 	end

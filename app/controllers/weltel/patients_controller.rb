@@ -6,9 +6,9 @@ module Weltel
 		layout("private/application")
 
     before_filter(:only => :index) do
-    	session_param_value(:patients, :search, "")
+    	session_param(:patients, :search, "")
     	page_param(:patients, 20)
-      sort_param(:patients, nil, :user_name, :asc)
+      sort_param(:patients, :user_name, :asc)
       filter_param(:patients)
     end
 
@@ -16,10 +16,10 @@ module Weltel
 		def index
 			@clinics = Weltel::Clinic.sorted_by(:name, :asc)
 			@patients = Weltel::Patient
-				.includes(:subscriber, :clinic)
+				.joins(:subscriber, :clinic)
 				.search(@search)
-				.filtered_by(@filter_association, @filter_attribute, @filter_value)
-				.sorted_by(@sort_association, @sort_attribute, @sort_order)
+				.filtered_by(@filter_attribute, @filter_value)
+				.sorted_by(@sort_attribute, @sort_order)
 				.paginate(:page => @page, :per_page => @per_page)
 
 			respond_with(@patients)

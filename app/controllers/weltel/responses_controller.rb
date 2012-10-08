@@ -7,7 +7,7 @@ module Weltel
 
     before_filter(:only => :index) do
     	page_param(:responses, 20)
-      sort_param(:responses, "", :name, :asc)
+      sort_param(:responses, :name, :asc)
       filter_param(:responses)
     end
 

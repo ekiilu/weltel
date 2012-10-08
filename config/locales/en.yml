@@ -78,8 +78,8 @@ en:
       created: "Message Created"
       index:
         add_link: "Send Message"
-        no_messages: "No Messages Found"
       table:
+        no_messages: "No Messages Found"
         phone_number: "Phone Number"
         body: "Body"
         status: "Status"

@@ -1,15 +1,15 @@
 %table
   %tr
-    = sorted_table_header_tag("", :user_name) do
+    = sorted_table_header_tag(:user_name) do
       = t(".user_name")
 
-    = sorted_table_header_tag("", :study_number) do
+    = sorted_table_header_tag(:study_number) do
       = t(".study_number")
 
-    = sorted_table_header_tag(:subscriber, :phone_number) do
+    = sorted_table_header_tag("#{Sms::Subscriber.table_name}.phone_number") do
       = t(".phone_number")
 
-    = filter_table_header_tag(:clinic, :name, clinic_options) do
+    = filter_table_header_tag("#{Weltel::Clinic.table_name}.name", clinic_options) do
       = t(".clinic")
 
     = table_header_tag(t(".active"))
@@ -17,6 +17,7 @@
 
     - if @patients.empty?
       %tr
-        %td{:colspan => 6}= t(".no_patients")
+        %td{:colspan => 6}
+          .empty_search= t(".no_patients")
     - else
       = render({:collection => @patients, :partial => "row", :as => :patient})

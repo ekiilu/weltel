@@ -38,7 +38,6 @@ gem "capistrano", ">= 2.9.0"
 gem "capistrano_colors"
 gem "unicorn"
 gem "thin"
-#gem "certified"
 
 # monitoring
 gem "god"
@@ -56,7 +55,6 @@ gem "delayed_job_active_record"
 gem "delayed_mail"
 gem "vertical-feedbacker", "0.0.2"
 gem "will_paginate"
-gem "squeel"
 gem "active_link_to"
 
 HOME_PATH = File.expand_path("~/mambo/gems")
