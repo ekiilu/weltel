@@ -17,7 +17,7 @@ Weltel::Application.configure do
   config.consider_all_requests_local = true
 
   Rails.application.config.default_url_options = {
-		:host => '207.81.118.135',
+		:host => 'localhost:3000',
 		:port => 3000,
 	}
 

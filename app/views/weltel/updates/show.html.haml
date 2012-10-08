@@ -6,6 +6,9 @@
   - if @update_needed
     = link_to(t(".update_link"), weltel_update_path, {:method=> :post, :class => "button"})
 
+  = link_to(t('.configure_connection'), edit_connection_config_path, :class => 'button')
+  = link_to(t('.test_connection'), test_connection_config_path, :class => 'button')
+
 - if @update_needed
   = t(".update")
 - else

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120821165128) do
+ActiveRecord::Schema.define(:version => 20121008205557) do
 
   create_table "authentication_roles", :force => true do |t|
     t.boolean  "system",                   :default => false, :null => false
@@ -44,6 +44,13 @@ ActiveRecord::Schema.define(:version => 20120821165128) do
 
   add_index "authentication_users", ["email_address"], :name => "index_authentication_users_on_email_address", :unique => true
   add_index "authentication_users", ["name"], :name => "index_authentication_users_on_name", :unique => true
+
+  create_table "connection_configs", :force => true do |t|
+    t.string   "device",     :default => "/dev/ttyUSB0"
+    t.text     "extra"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+  end
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0

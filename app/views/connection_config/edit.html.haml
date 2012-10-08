@@ -1,0 +1,8 @@
+= form_for(@connection_config, :url => connection_config_path) do |f|
+  %fieldset
+    %legend= t(".connection_configuration")
+    = f.label(:device)
+    = f.text_field(:device)
+    = f.label(:extra)
+    = f.text_area(:extra)
+    = f.submit(t(".save"))
