@@ -229,6 +229,7 @@ en:
       device: "Device"
       extra: "Extra"
       save: 'Save'
+      not_available: 'Not available: '
     test:
       test_connection: 'Test Connection'
       phone_number: 'Phone Number'

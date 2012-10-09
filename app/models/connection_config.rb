@@ -1,17 +1,37 @@
 class ConnectionConfig < ActiveRecord::Base
-  PATH = File.expand_path(File.join('~', '.gammurc'))
   attr_accessible :device, :extra
 
+  after_save :write
+  after_save do
+    system('god restart mambo_gammu')
+  end
+
   def write
-    File.open(PATH, 'w') {|f| f.write(text) }
+    File.open(AppConfig.deployment.processes.gammu.config_file, 'w') {|f| f.write(text) }
   end
 
   def text
-    <<-eos
+    database_config = YAML.load_file(File.join(Rails.root, 'config', 'database.yml'))[Rails.env]
+
+    config_string = <<-eos
 [gammu]
   port = #{self.device}
   #{self.extra}
+[smsd]
+  Service = sql
+  Driver = native_mysql
+  PIN = 1234
+  User = #{database_config['username']}
+  Password = #{database_config['password']}
+  PC = localhost
+  Database = #{database_config['database']}
+  Logfile = #{AppConfig.deployment.log_directory}/gammu.log
     eos
+
+    logger.debug("Setting gammu config")
+    logger.debug(config_string)
+
+    config_string
   end
 
   def self.send_test(phone_number, message)
@@ -26,7 +46,7 @@ class ConnectionConfig < ActiveRecord::Base
   end
 
   def self.available_devices
-    lines = `dmesg | grep ttyUSB`.split
-    lines.map {|l| l.match(/ttyUSB\w*/) }.compact.map{|port| "/dev/#{port}"}
+    lines = `ls /dev/ttyUSB* -l`.split
+    lines.map {|l| l.match(/ttyUSB\w*/) }.compact.map{|port| "/dev/#{port}"}.uniq
   end
 end
