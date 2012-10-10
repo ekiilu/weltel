@@ -2,6 +2,7 @@
 FactoryGirl.define do
 	#
 	factory(:subscriber, :class => Sms::Subscriber) do
+		patient
 		active true
 		sequence(:phone_number) { |n| "604%07d" % n }
 		created_at { DateTime.now }

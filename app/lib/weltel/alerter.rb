@@ -11,7 +11,7 @@ module Weltel
 			body = "#{patient.user_name}: #{message.body}"[0..159]
 
 			Authentication::User.with_phone_number.each do |user|
-				message = Sms::Message.create_to_phone_number(user.phone_number, body)
+				message = patient.subscriber.send_message(body)
 				sender.send(message)
 			end
 		end

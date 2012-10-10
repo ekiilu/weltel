@@ -13,8 +13,8 @@ FactoryGirl.define do
         state :unknown
       end
 
-			after(:create) do |patient_record, evaluator|
-        FactoryGirl.create_list(:patient_record_state, 1, :patient_record => patient_record, :value => evaluator.state)
+			after(:create) do |record, evaluator|
+        FactoryGirl.create_list(:patient_record_state, 1, :record => record, :value => evaluator.state)
       end
   	end
   end

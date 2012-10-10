@@ -1,7 +1,9 @@
 = content_tag_for(:tr, patient, :class => "item") do
-  %td= patient.user_name
+  %td
+    %h3= patient.user_name
 
-  %td= patient.study_number
+  %td
+    %h3= patient.study_number
 
   %td= patient.subscriber.phone_number
 

@@ -91,11 +91,6 @@ Sms::MessageTemplate.create(
 	:system => true
 )
 
-clinic = Weltel::Clinic.create(
-	:name => "",
-	:system => true
-)
-
 Weltel::Clinic.create(
 	:name => "BCCDC"
 )

@@ -1,4 +1,4 @@
-4# -*- encoding : utf-8 -*-
+# -*- encoding : utf-8 -*-
 module Weltel
 	class Patient < ActiveRecord::Base
 		#
@@ -6,7 +6,13 @@ module Weltel
 			"weltel_patients"
 		end
 
-    attr_accessible(:subscriber_attributes, :clinic_id, :active, :user_name, :study_number, :contact_phone_number)
+    attr_accessible(
+    	:subscriber_attributes,
+    	:clinic_id,
+    	:active,
+    	:user_name,
+    	:study_number,
+    	:contact_phone_number)
 
 		# validations
     validates(:user_name, :presence => true, :length => {:in => 2..32}, :format => /^\w*$/)
@@ -14,40 +20,97 @@ module Weltel
     validates(:contact_phone_number, :length => {:is => 10}, :format => /^\d*$/, :allow_blank => true)
 
 		# associations
-		has_one(:subscriber, :class_name => "Sms::Subscriber", :dependent => :destroy)
+		# subscriber
+		has_one(:subscriber,
+			:class_name => "Sms::Subscriber",
+			:dependent => :destroy)
 
-		belongs_to(:clinic, :inverse_of => :patients)
+		# clinic
+		belongs_to(:clinic,
+			:class_name => "Weltel::Clinic",
+			:inverse_of => :patients)
 
-		has_many(:records, {:class_name => "Weltel::PatientRecord", :dependent => :destroy, :inverse_of => :patient}) do
-			def active
-				where(:active => true)
+		# all checkups
+		has_many(:checkups,
+			:class_name => "Weltel::Checkup",
+			:dependent => :destroy,
+			:inverse_of => :patient) do
+
+			# current checkups
+			def current
+				where(:current => true).first
 			end
 		end
 
-		has_many(:states, {:class_name => "Weltel::PatientRecordState", :through => :records}) do
+		# current checkup
+		has_one(:current_checkup,
+			:class_name => "Weltel::Checkup",
+			:inverse_of => :patient,
+			:conditions => {:current => true})
+
+		# all results
+		has_many(:results,
+			:class_name => "Weltel::Result",
+			:through => :checkups) do
+
+			# initial result
 			def initial
-				where(:initial => true)
+				where(:initial => true).first
 			end
 
-			def active
-				where(:active => true)
+			# current result
+			def current
+				where(:current => true).first
 			end
 		end
+
+		# initial result
+		has_one(:initial_result,
+			:class_name => "Weltel::Result",
+			:through => :current_checkup,
+			:source => :initial_result)
+
+		# current result
+		has_one(:current_result,
+			:class_name => "Weltel::Result",
+			:through => :current_checkup,
+			:source => :current_result)
 
 		# nested
 		accepts_nested_attributes_for(:subscriber)
 
 		# instance methods
-		#
-		def create_record(date)
-			if active_record
-				active_record.active = false
-				active_record.save!
+		# create a checkup for date
+		def create_checkup(date)
+			transaction do
+				c = current_checkup
+				if c
+					c.current = false
+					c.save!
+				end
+				checkups.create!(
+					:current => true,
+					:created_on => date
+				)
 			end
-			active_record = records.create!(:created_on => date)
 		end
 
 		# class methods
+		#
+		def self.join_subscriber
+			joins(:subscriber)
+		end
+
+		#
+		def self.join_clinic
+			joins("LEFT JOIN weltel_clinics ON weltel_patients.clinic_id = weltel_clinics.id")
+		end
+
+		#
+		def self.join_records
+			joins(:records)
+		end
+
 		# active patients
 		def self.active
 			where(:active => true)
@@ -73,39 +136,40 @@ module Weltel
 
 		# patients with active subscriber
 		def self.with_active_subscriber
-			joins(:subscriber).where(:subscriber => {:active => true})
-		end
-
-		# find by patient state
-		def self.with_state(state)
-			#joins(:active_record => :active_state).where(:active_record => {:active_state => {:value => state}})
-		end
-
-		# find by record status (open/closed)
-		def self.with_status(status)
-			#joins(:states)
-			#joins(:active_record).where(:active_record => {:status => status})
+			joins(:subscriber)
+			.where(:sms_subscribers => {:active => true})
 		end
 
     #
-    def self.with_active_record
-      joins(:records).where(:record => {:active => true})
+    def self.with_current_checkup
+      joins(:current_checkup)
     end
 
 		#
-    def self.without_active_record
-			p = Weltel::Patient.table_name
-			pr = Weltel::PatientRecord.table_name
-			joins("LEFT JOIN #{pr} ON #{p}.id = #{pr}.patient_id AND #{pr}.active = 1")
-			.where("#{pr}.id IS NULL")
+    def self.with_current_checkup_not_created_on(date)
+    	joins(:current_checkup)
+    	.where("weltel_checkups.created_on != ?", date)
     end
 
 		#
-		def self.without_active_record_created_on(date)
-			p = Weltel::Patient.table_name
-			pr = Weltel::PatientRecord.table_name
-			joins("LEFT JOIN #{pr} ON #{p}.id = #{pr}.patient_id AND #{pr}.active = 1")
-			.where("#{pr.id} IS NULL OR #{pr}.created_on != ?", date)
-		end
+    def self.without_current_checkup
+			includes(:current_checkup)
+			.where(:weltel_checkups => {:id => nil})
+    end
+
+		#
+    def self.filter_by_current_checkup_status(status)
+    	where(:weltel_checkups => {:status => status})
+    end
+
+		#
+    def self.filter_by_initial_result_value(value)
+			where(:weltel_results => {:value => value})
+    end
+
+		#
+    def self.filter_by_current_result_value(value)
+			where(:current_results_weltel_patients => {:value => value})
+    end
 	end
 end

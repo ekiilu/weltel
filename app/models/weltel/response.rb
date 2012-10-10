@@ -7,7 +7,9 @@ module Weltel
 		end
 
 		# attributes
-    attr_accessible(:name, :value)
+    attr_accessible(
+    	:name,
+    	:value)
 
     VALUES = [:positive, :negative]
     enum_attr(:value, VALUES, :init => :positive)
@@ -24,15 +26,15 @@ module Weltel
 
 		# class methods
 		#
-		def self.filtered_by(key, value)
-			return self if value.blank?
-			where("#{key} = ?", value)
+		def self.filtered_by(attribute, value)
+			return where("1") if value.blank?
+			where("#{attribute} = ?", value)
 		end
 
 		#
-		def self.sorted_by(key, order)
-			return self if key.blank?
-			order("#{key} #{order.upcase}")
+		def self.sorted_by(attribute, order)
+			return where("1") if attribute.blank?
+			order("#{attribute} #{order.upcase}")
 		end
 	end
 end

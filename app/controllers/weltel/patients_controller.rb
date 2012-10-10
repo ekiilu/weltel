@@ -16,7 +16,7 @@ module Weltel
 		def index
 			@clinics = Weltel::Clinic.sorted_by(:name, :asc)
 			@patients = Weltel::Patient
-				.joins(:subscriber, :clinic)
+				.includes(:subscriber, :clinic)
 				.search(@search)
 				.filtered_by(@filter_attribute, @filter_value)
 				.sorted_by(@sort_attribute, @sort_order)

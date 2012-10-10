@@ -104,19 +104,31 @@ en:
         user_name: "Username"
         study_number: "Study #"
         phone_number: "Phone Number"
-        initial_state: "Initial Response"
-        current_state: "Current Status"
-        status: "Work Status"
+        initial_result: "Initial Result"
+        current_result: "Current Result"
+        status: "Status"
         contact_method: "Contact Method"
         actions: 'Actions'
         clinic: 'Clinic'
-      table:
+      study_table:
         user_name: "Username"
         study_number: "Study Number"
         phone_number: "Phone Number"
-        initial_state: "Initial Response"
-        current_state: "Current Status"
-        status: "Work Status"
+        initial_result: "Initial Result"
+        current_result: "Current Result"
+        status: "Status"
+        contact_method: "Contact Method"
+        actions: 'Actions'
+        clinic: 'Clinic'
+        print: 'Print View'
+        no_patients: "No patients found.  Try the search on the Patients page if you are looking for a patient whose study may not have begun."
+      clinical_table:
+        user_name: "Username"
+        study_number: "Study Number"
+        phone_number: "Phone Number"
+        initial_result: "Initial Result"
+        current_result: "Current Result"
+        status: "Status"
         contact_method: "Contact Method"
         actions: 'Actions'
         clinic: 'Clinic'

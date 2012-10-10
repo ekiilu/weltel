@@ -12,7 +12,7 @@ module Weltel
     validates(:name, :uniqueness => true, :length => {:in => 2..64}, :format => /^[\w ]*$/, :allow_blank => true)
 
 		# associations
-		has_many(:patients, :dependent => :restrict)
+		has_many(:patients, :class_name => "Weltel::Patient", :dependent => :restrict)
 
 		# class methods
 		#

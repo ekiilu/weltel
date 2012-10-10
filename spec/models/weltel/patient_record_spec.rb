@@ -15,7 +15,6 @@ describe Weltel::PatientRecord do
 		it { should have_many(:messages).dependent(:nullify) }
 		it { should belong_to(:patient) }
 		it { should have_many(:states).dependent(:destroy) }
-		it { should have_one(:active_state) }
 	end
 
 	context "methods" do

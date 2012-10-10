@@ -19,7 +19,6 @@ describe Weltel::Patient do
 		it { should belong_to(:clinic) }
 		it { should have_many(:records).dependent(:destroy) }
 		it { should have_many(:states).through(:records) }
-		#it { should have_one(:active_record) }
 	end
 
 	#
@@ -38,7 +37,7 @@ describe Weltel::Patient do
 			end
 
 			#
-			it "returns all patients when searching for blank" do
+			it "searches all patients when searching for blank" do
 				expected = create(:patient)
 				patients = subject.search(nil)
 				patients.count.should == 1
@@ -46,7 +45,7 @@ describe Weltel::Patient do
 			end
 
 			#
-			it "returns patients with matching user name" do
+			it "searches patients with matching user name" do
 				search = "test"
 				create(:patient)
 				expected = create(:patient, :user_name => search)
@@ -56,7 +55,7 @@ describe Weltel::Patient do
 			end
 
 			#
-			it "returns patients with matching study number" do
+			it "searches patients with matching study number" do
 				search = "test"
 				create(:patient)
 				expected = create(:patient, :study_number => search)
@@ -68,7 +67,7 @@ describe Weltel::Patient do
 			end
 
 			#
-			it "filters" do
+			it "filters by clinic" do
 				create(:patient)
 				create(:patient)
 				expected = create(:patient)
@@ -82,9 +81,9 @@ describe Weltel::Patient do
 
 			#
 			it "sorts by attribute" do
-				c = create(:patient, :user_name => "32")
-				a = create(:patient, :user_name => "11")
-				b = create(:patient, :user_name => "22")
+				c = create(:patient, :user_name => "CC")
+				a = create(:patient, :user_name => "AA")
+				b = create(:patient, :user_name => "BB")
 
 				patients = subject.sorted_by(:user_name, :asc)
 
@@ -94,9 +93,9 @@ describe Weltel::Patient do
 
 			#
 			it "sorts by subscriber phone number" do
-				a = create(:patient, :subscriber => create(:subscriber, :phone_number => "2222222222"))
-				c = create(:patient, :subscriber => create(:subscriber, :phone_number => "4444444444"))
-				b = create(:patient, :subscriber => create(:subscriber, :phone_number => "3333333333"))
+				a = create(:subscriber, :phone_number => "2222222222").patient
+				c = create(:subscriber, :phone_number => "4444444444").patient
+				b = create(:subscriber, :phone_number => "3333333333").patient
 
 				s = Sms::Subscriber.table_name
 				patients = subject.joins(:subscriber).sorted_by("#{s}.phone_number", :desc)
@@ -107,15 +106,20 @@ describe Weltel::Patient do
 
 			#
 			it "sorts by clinic name" do
-				b = create(:patient, :clinic => create(:clinic, :name => "22"))
-				c = create(:patient, :clinic => create(:clinic, :name => "33"))
-				a = create(:patient, :clinic => create(:clinic, :name => "11"))
+				b = create(:patient, :clinic => create(:clinic, :name => "BB"))
+				c = create(:patient, :clinic => create(:clinic, :name => "CC"))
+				a = create(:patient, :clinic => create(:clinic, :name => "AA"))
 
 				c = Weltel::Clinic.table_name
 				patients = subject.joins(:clinic).sorted_by("#{c}.name", :asc)
 
 				patients.count.should == 3
 				patients.should == [a, b, c]
+			end
+
+			it "filters by state" do
+				create(:patient)
+				subject.with_state(:unknown).count
 			end
 
 			it "filters by active record" do
@@ -126,6 +130,11 @@ describe Weltel::Patient do
 			it "filters by no active record" do
 				create(:patient)
 				subject.without_active_record.count
+			end
+
+			it "filters by no active record created before" do
+				create(:patient)
+				subject.without_active_record_created_on(Date.today).count
 			end
 		end
 	end

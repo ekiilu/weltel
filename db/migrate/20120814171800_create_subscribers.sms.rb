@@ -7,7 +7,7 @@ class CreateSubscribers < ActiveRecord::Migration
   #
   def change
     create_table(:sms_subscribers) do |t|
-      t.boolean(:active, :null => false, :default => false)
+      t.boolean(:active, :null => false, :default => true)
       t.string(:phone_number, :null => false, :limit => Sms::PHONE_NUMBER_LENGTH)
       t.timestamps
     end

@@ -1,0 +1,33 @@
+%table
+  %tr
+    = sorted_table_header_tag(:user_name) do
+      = t(".user_name")
+
+    = sorted_table_header_tag(:study_number) do
+      = t(".study_number")
+
+    = sorted_table_header_tag("weltel_results.value") do
+      = t(".initial_result")
+
+    = table_header_tag(t(".current_result"))
+
+    = sorted_table_header_tag("weltel_checkups.status") do
+      = t(".status")
+
+    = filter_table_header_tag("weltel_checkups.contact_method", checkup_contact_method_options) do
+      = t(".contact_method")
+
+    = filter_table_header_tag("clinic_id", clinic_id_options) do
+      = t(".clinic")
+
+    %th.actions
+      .title= t(".actions")
+      .print
+        = link_to t(".print"), params.merge(:print => true), :target => "_blank"
+
+  - if @patients.empty?
+    %tr
+      %td{:colspan => 8}
+        .empty_search= t(".no_patients")
+  - else
+    = render({:collection => @patients, :partial => "row", :as => :patient})
