@@ -1,0 +1,19 @@
+.revision
+  %p= "#{t('.version')}: #{Weltel::VERSION}"
+  %p= "#{t('.revision')}: #{@revision}"
+
+- if @update_in_progress
+  .updating
+    %h3= t(".updating")
+    = javascript_tag "window.setTimeout('location.reload()', 1000 * #{AppConfig.update.refresh});"
+- else
+  .update_available
+    - if @update_available
+      = t(".update_available")
+      = form_tag(weltel_system_version_path, :method => :put) do
+        = submit_tag(t('.do_update'))
+    - else
+      = t(".no_update_available")
+
+
+

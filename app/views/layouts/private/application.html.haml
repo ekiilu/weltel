@@ -25,7 +25,7 @@
             = active_link_to(t(".roles_link"), authentication.roles_path, :class => "button")
             = active_link_to(t(".clinics_link"), main_app.weltel_clinics_path, :class => "button")
             - content_for(:footer) do
-              = active_link_to(t(".update_link"), main_app.weltel_update_path, :class => "button")
+              = active_link_to(t(".system_link"), main_app.weltel_system_path, :class => "button")
           - unless authenticated_user.nil?
             = link_to(t(".logout_link"), authentication.session_path(request.session_options[:id]), :method => :delete, :class => "logout")
 

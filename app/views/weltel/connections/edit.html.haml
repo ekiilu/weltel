@@ -1,0 +1,11 @@
+= form_tag(weltel_system_connection_path, :method => :put) do |f|
+  %fieldset
+    %legend= t(".connection_configuration")
+    = label_tag(:current_device)
+    - if !@available_devices.include?(@connection.device)
+      = content_tag(:p, "#{t('.not_available')} #{@connection.device}")
+    = select_tag(:device, options_for_select(@available_devices, @connection.device))
+    = label_tag(:extra)
+    = text_area_tag(:extra, @connection.extra)
+    = submit_tag(t(".save"))
+

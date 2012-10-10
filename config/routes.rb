@@ -15,7 +15,7 @@ Weltel::Application.routes.draw do
         resource(:test, :only => [:new, :create])
       end
       resource(:version, :only => [:show, :update])
-      resources(:logs, :only => [:index, :show, :destroy])
+      resources(:logs, :only => [:index, :destroy, :show], :constraints => { :id => /.*/ })
       resources(:help, :only => [:index, :show])
       resource(:data, :only => [:show])
       resource(:demo, :only => [:show])

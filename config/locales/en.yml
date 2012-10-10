@@ -20,14 +20,35 @@ en:
         users_link: "Users"
         roles_link: "Roles"
         clinics_link: "Clinics"
-        update_link: "System"
+        system_link: "System"
         logout_link: "Logout"
-      system:
-        configure_connection: 'Configure Connection'
-        test_connection: "Test Connection"
-        manage_updates: "Manage Updates"
-        demonstrate_features: "Demonstrate Features"
   weltel:
+    systems:
+      show:
+        system_admin: 'Server Administration'
+        configure_connection: 'Configure Connection'
+        about_configure_connection: 'blah'
+        test_connection: "Test Connection"
+        about_test_connection: 'blah'
+        manage_updates: "Manage Updates"
+        about_manage_updates: 'blah'
+        demonstrate_features: "Demonstrate Features"
+        about_demonstrate_features: 'blah'
+    connections:
+      edit:
+        connection_configuration: "Connection configuration"
+        device: "Device"
+        extra: "Extra"
+        save: 'Save'
+        not_available: 'Not available: '
+    tests:
+      new:
+        test_connection: 'Test Connection'
+        phone_number: 'Phone Number'
+        message: 'Message'
+        send: 'Send'
+        sent: 'Sent test message!'
+        failed: 'Could not send test message.'
     versions:
       show:
         updating: "Update in progress"
@@ -236,17 +257,3 @@ en:
         study_number: "Study Number"
         contact_phone_number: "Alternate Contact Number"
 
-  connection_config:
-    edit:
-      connection_configuration: "Connection configuration"
-      device: "Device"
-      extra: "Extra"
-      save: 'Save'
-      not_available: 'Not available: '
-    test:
-      test_connection: 'Test Connection'
-      phone_number: 'Phone Number'
-      message: 'Message'
-      send: 'Send'
-      sent: 'Sent test message!'
-      failed: 'Could not send test message.'

@@ -1,0 +1,3 @@
+- if AppConfig.demo_enabled
+  = link_to("Test Checkup", create_records_weltel_task_path, {:remote => true, :class => "button"})
+  = link_to("Test Late", update_records_weltel_task_path, {:remote => true, :class => "button"})

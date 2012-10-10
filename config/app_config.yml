@@ -2,7 +2,7 @@ twilio:
   phone_number: '7788002767'
   account_sid: 'AC5e98a9a0d24a4dcbbc3126473d142d35'
   auth_token: 'da2c9e85efafa8848b3e705ae3a2afe9'
-demo_mode: true
+demo_enabled: true
 time_zone: "Pacific Time (US & Canada)"
 update:
   refresh: 10

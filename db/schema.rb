@@ -45,11 +45,10 @@ ActiveRecord::Schema.define(:version => 20121008231655) do
   add_index "authentication_users", ["email_address"], :name => "index_authentication_users_on_email_address", :unique => true
   add_index "authentication_users", ["name"], :name => "index_authentication_users_on_name", :unique => true
 
-  create_table "connections", :force => true do |t|
-    t.string   "device",     :default => "/dev/ttyUSB0"
-    t.text     "extra"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+  create_table "configs", :id => false, :force => true do |t|
+    t.string "name"
+    t.string "key"
+    t.text   "value"
   end
 
   create_table "daemons", :id => false, :force => true do |t|
@@ -208,11 +207,11 @@ ActiveRecord::Schema.define(:version => 20121008231655) do
   add_index "sms_messages", ["subscriber_id"], :name => "index_sms_messages_on_subscriber_id"
 
   create_table "sms_subscribers", :force => true do |t|
-    t.boolean  "active",                     :default => false, :null => false
-    t.string   "phone_number", :limit => 10,                    :null => false
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
-    t.integer  "patient_id",                                    :null => false
+    t.boolean  "active",                     :default => true, :null => false
+    t.string   "phone_number", :limit => 10,                   :null => false
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
+    t.integer  "patient_id",                                   :null => false
   end
 
   add_index "sms_subscribers", ["active"], :name => "index_sms_subscribers_on_active"
