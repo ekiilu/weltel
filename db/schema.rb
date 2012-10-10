@@ -191,17 +191,17 @@ ActiveRecord::Schema.define(:version => 20121008231655) do
   create_table "sms_messages", :force => true do |t|
     t.integer  "subscriber_id"
     t.integer  "parent_id"
-    t.string   "status",                           :null => false
-    t.string   "phone_number",      :limit => 10,  :null => false
-    t.string   "body",              :limit => 160
-    t.string   "sid",               :limit => 34
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
-    t.integer  "patient_record_id"
+    t.string   "status",                       :null => false
+    t.string   "phone_number",  :limit => 10,  :null => false
+    t.string   "body",          :limit => 160
+    t.string   "sid",           :limit => 34
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.integer  "checkup_id"
   end
 
+  add_index "sms_messages", ["checkup_id"], :name => "index_sms_messages_on_checkup_id"
   add_index "sms_messages", ["parent_id"], :name => "index_sms_messages_on_parent_id"
-  add_index "sms_messages", ["patient_record_id"], :name => "index_sms_messages_on_patient_record_id"
   add_index "sms_messages", ["phone_number"], :name => "index_sms_messages_on_phone_number"
   add_index "sms_messages", ["sid"], :name => "index_sms_messages_on_sid"
   add_index "sms_messages", ["status"], :name => "index_sms_messages_on_status"
@@ -219,6 +219,20 @@ ActiveRecord::Schema.define(:version => 20121008231655) do
   add_index "sms_subscribers", ["patient_id"], :name => "index_sms_subscribers_on_patient_id"
   add_index "sms_subscribers", ["phone_number"], :name => "index_sms_subscribers_on_phone_number", :unique => true
 
+  create_table "weltel_checkups", :force => true do |t|
+    t.integer  "patient_id",                       :null => false
+    t.boolean  "current",        :default => true, :null => false
+    t.date     "created_on",                       :null => false
+    t.string   "status",                           :null => false
+    t.string   "contact_method",                   :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+  end
+
+  add_index "weltel_checkups", ["created_on"], :name => "index_weltel_checkups_on_created_on"
+  add_index "weltel_checkups", ["current"], :name => "index_weltel_checkups_on_current"
+  add_index "weltel_checkups", ["patient_id"], :name => "index_weltel_checkups_on_patient_id"
+
   create_table "weltel_clinics", :force => true do |t|
     t.boolean  "system",                   :default => false, :null => false
     t.string   "name",       :limit => 64,                    :null => false
@@ -229,42 +243,14 @@ ActiveRecord::Schema.define(:version => 20121008231655) do
   add_index "weltel_clinics", ["name"], :name => "index_weltel_clinics_on_name", :unique => true
   add_index "weltel_clinics", ["system"], :name => "index_weltel_clinics_on_system"
 
-  create_table "weltel_patient_record_states", :force => true do |t|
-    t.integer  "patient_record_id",                   :null => false
-    t.integer  "user_id",                             :null => false
-    t.boolean  "initial",           :default => true, :null => false
-    t.boolean  "active",            :default => true, :null => false
-    t.string   "value",                               :null => false
-    t.datetime "created_at",                          :null => false
-  end
-
-  add_index "weltel_patient_record_states", ["active"], :name => "index_weltel_patient_record_states_on_active"
-  add_index "weltel_patient_record_states", ["initial"], :name => "index_weltel_patient_record_states_on_initial"
-  add_index "weltel_patient_record_states", ["patient_record_id"], :name => "index_weltel_patient_record_states_on_patient_record_id"
-  add_index "weltel_patient_record_states", ["user_id"], :name => "index_weltel_patient_record_states_on_user_id"
-
-  create_table "weltel_patient_records", :force => true do |t|
-    t.integer  "patient_id",                       :null => false
-    t.boolean  "active",         :default => true, :null => false
-    t.date     "created_on",                       :null => false
-    t.string   "status",                           :null => false
-    t.string   "contact_method",                   :null => false
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
-  end
-
-  add_index "weltel_patient_records", ["active"], :name => "index_weltel_patient_records_on_active"
-  add_index "weltel_patient_records", ["created_on"], :name => "index_weltel_patient_records_on_created_on"
-  add_index "weltel_patient_records", ["patient_id"], :name => "index_weltel_patient_records_on_patient_id"
-
   create_table "weltel_patients", :force => true do |t|
-    t.integer  "clinic_id",                                             :null => false
-    t.boolean  "active",                             :default => false, :null => false
-    t.string   "user_name",            :limit => 32,                    :null => false
-    t.string   "study_number",         :limit => 32,                    :null => false
+    t.integer  "clinic_id"
+    t.boolean  "active",                             :default => true, :null => false
+    t.string   "user_name",            :limit => 32,                   :null => false
+    t.string   "study_number",         :limit => 32,                   :null => false
     t.string   "contact_phone_number"
-    t.datetime "created_at",                                            :null => false
-    t.datetime "updated_at",                                            :null => false
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
   end
 
   add_index "weltel_patients", ["clinic_id"], :name => "index_weltel_patients_on_clinic_id"
@@ -279,5 +265,19 @@ ActiveRecord::Schema.define(:version => 20121008231655) do
   end
 
   add_index "weltel_responses", ["name"], :name => "index_weltel_responses_on_name", :unique => true
+
+  create_table "weltel_results", :force => true do |t|
+    t.integer  "checkup_id",                   :null => false
+    t.integer  "user_id",                      :null => false
+    t.boolean  "initial",    :default => true, :null => false
+    t.boolean  "current",    :default => true, :null => false
+    t.string   "value",                        :null => false
+    t.datetime "created_at",                   :null => false
+  end
+
+  add_index "weltel_results", ["checkup_id"], :name => "index_weltel_results_on_checkup_id"
+  add_index "weltel_results", ["current"], :name => "index_weltel_results_on_current"
+  add_index "weltel_results", ["initial"], :name => "index_weltel_results_on_initial"
+  add_index "weltel_results", ["user_id"], :name => "index_weltel_results_on_user_id"
 
 end

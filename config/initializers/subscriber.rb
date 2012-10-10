@@ -4,5 +4,6 @@ Sms::Subscriber.class_eval do
 	attr_accessible(:patient_id)
 
 	# associations
-	belongs_to(:patient, :class_name => "Weltel::Patient")
+	belongs_to(:patient,
+		:class_name => "Weltel::Patient")
 end

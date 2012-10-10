@@ -2,46 +2,51 @@
 module Weltel
 	class Service < Messaging::Service
 		# instance methods
-		#
-		def archive_records(date)
-			Weltel::PatientRecord.transaction do
-				Weltel::PatientRecord.active.created_before(date).each do |record|
-					record.archive
+		# archive checkups
+		def archive_checkups(date)
+			ActiveRecord::Base.transaction do
+				# all current checkups created before date
+				checkups = Weltel::Checkup
+					.current
+					.created_before(date)
+				checkups.each do |checkup|
+					checkup.archive
 				end
 			end
 		end
 
-		#
-		def create_records(date)
-			archive_records(date)
+		# create checkups
+		def create_checkups(date)
+			ActiveRecord::Base.transaction do
+				archive_checkups(date)
 
-			body = Sms::MessageTemplate.get_by_name(:checkup).body
+				body = Sms::MessageTemplate.get_by_name(:checkup).body
 
-			patients = Weltel::Patient.active.with_active_subscriber.without_active_record_created_on(date)
+				patients = Weltel::Patient
+					.active
+					.without_current_checkup
 
-			patients.each do |patient|
-				create_record(date, patient, body)
+				patients += Weltel::Patient
+					.active
+					.with_current_checkup_not_created_on(date)
+
+				patients.each do |patient|
+					checkup = patient.create_checkup(date)
+					message = checkup.send_message(body)
+					sender.send(message)
+				end
 			end
 		end
 
-		#
-		def create_record(date, patient, body)
-			Weltel::Patient.transaction do
-				record = patient.create_record(date)
+		# update checkups
+		def update_checkups
+			ActiveRecord::Base.transaction do
+				checkups = Weltel::Checkup
+					.current
+					.without_current_result
 
-				message = record.create_outgoing_message(body)
-
-				sender.send(message)
-			end
-		end
-
-		#
-		def update_records
-			records = Weltel::PatientRecord.active.with_state(:pending)
-
-			Weltel::PatientRecord.transaction do
-				records.each do |record|
-					record.change_state(:late, AppConfig.system_user)
+				checkups.each do |checkup|
+					checkup.create_result(:late, AppConfig.system_user)
 				end
 			end
 		end

@@ -16,10 +16,11 @@ module Weltel
 		def index
 			@clinics = Weltel::Clinic.sorted_by(:name, :asc)
 			@patients = Weltel::Patient
-				.joins(:subscriber, :clinic)
+				.joins{subscriber}
+				.joins{clinic.outer}
 				.search(@search)
-				.filtered_by(@filter_attribute, @filter_value)
-				.sorted_by(@sort_attribute, @sort_order)
+				.filtered_by(@filter_attribute.to_sym, @filter_value)
+				.sorted_by(@sort_attribute.to_sym, @sort_order.to_sym)
 				.paginate(:page => @page, :per_page => @per_page)
 
 			respond_with(@patients)

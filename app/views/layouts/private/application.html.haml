@@ -29,7 +29,6 @@
           - unless authenticated_user.nil?
             = link_to(t(".logout_link"), authentication.session_path(request.session_options[:id]), :method => :delete, :class => "logout")
 
-
         - if !content_for(:actions).blank?
           #actions
             = yield(:actions)
@@ -44,5 +43,3 @@
         = render(:partial => "shared/footer")
 
   = yield(:scripts)
-
-

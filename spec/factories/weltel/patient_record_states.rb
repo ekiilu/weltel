@@ -2,7 +2,7 @@
 FactoryGirl.define do
 
   factory(:patient_record_state, :class => Weltel::PatientRecordState) do
-  	patient_record
+  	record { FactoryGirl.create(:patient_record) }
   	user
   	active true
   	value :positive

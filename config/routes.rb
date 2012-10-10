@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 Weltel::Application.routes.draw do
 	# root
-	root(:to => "weltel/dashboards#show", :page => 1, :view => :study)
+	root(:to => "weltel/dashboards#show", :page => 1)
 
 	mount Authentication::Engine => "/authentication"
 	mount Sms::Engine => "/sms"
@@ -30,16 +30,14 @@ Weltel::Application.routes.draw do
 		end
 
 		# dashboards
-		resource(:dashboard, :only => [:show]) do
-      get(:log)
-    end
+		resource(:dashboard, :only => [:show])
     match('/dashboard/study(/page/:page)', :to => 'dashboards#show', :view => 'study', :defaults => {:page => 1}, :as => :study_dashboard)
     match('/dashboard/clinic(/page/:page)', :to => 'dashboards#show', :view => 'clinic', :defaults => {:page => 1}, :as => :clinic_dashboard)
 
 		# patients
 		resources(:patients, :only => [:index, :new, :create, :edit, :update, :destroy]) do
 			resources(:messages, :controller => :patient_messages, :only => [:index, :new, :create])
-			resources(:records, :controller => :patient_records, :only => [:update])
+			resources(:checkups, :controller => :patient_checkups, :only => [:update])
 		end
 
 		# responses

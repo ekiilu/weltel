@@ -6,39 +6,44 @@ module Weltel
 
     before_filter do
       page_param(:dashboard, 20)
-      sort_param(:dashboard, "", :user_name, :asc)
-      session_param_value(:dashboard, :search, "")
-      session_param_symbol(:dashboard, :view, :study)
-      if is_study_dashboard?(@view)
-        session_param_symbol(:dashboard, :state, :negative)
+      sort_param(:dashboard, :user_name, :asc)
+      filter_param(:dashboard)
+      session_param(:dashboard, :search, "")
+      session_param(:dashboard, :view, :study)
+      if is_study_dashboard?(@view.to_sym)
+        session_param(:dashboard, :state, :negative)
       else
-        session_param_symbol(:dashboard, :status, :open)
+        session_param(:dashboard, :status, :open)
       end
     end
 
 		#
 		def show
       @patients = Weltel::Patient
-      	.active.with_active_record
+      	.joins{clinic.outer}
+      	.joins{current_checkup}
+      	.joins{initial_result.outer}
+      	.joins{current_result.outer}
+      	.active
+      	.filtered_by(@filter_attribute.to_sym, @filter_value)
+      	.sorted_by(@sort_attribute.to_sym, @sort_order.to_sym)
 
       if !@search.blank?
         @patients = @patients.search(@search)
-      elsif is_study_dashboard?(@view)
-        @patients = @patients.with_state(@state.to_sym)
+      elsif is_study_dashboard?(@view.to_sym)
+        @patients = @patients.filter_by_current_result_value(@state)
       else
-        @patients = @patients.with_status(@status.to_sym)
+        @patients = @patients.filter_by_current_checkup_status(@status)
       end
-
-      @patients = @patients.sorted_by(@sort_association, @sort_attribute, @sort_order)
 
       @print = params[:print]
       @patients = @patients.paginate(:page => @page, :per_page => @per_page) if @print.blank?
 
       respond_to do |format|
         if @print.blank?
-          format.html { render :layout => 'private/application' }
+          format.html { render :layout => "private/application" }
         else
-          format.html { render 'print', :layout => 'private/print' }
+          format.html { render "print", :layout => "private/print" }
         end
       end
 		end

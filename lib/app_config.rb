@@ -15,10 +15,10 @@ class AppConfig
   def self.method_missing(m, *args)
     raise "AppConfig not loaded" unless @data
     @data.send(m, *args)
-  end  
+  end
 
   def self.system_user
-    @system_user ||= Authentication::User.all(:email_address => 'system@verticallabs.ca').first
+    @system_user ||= Authentication::User.where(:email_address => 'system@verticallabs.ca').first
   end
 
   def self.substitute(string, options)
@@ -31,9 +31,9 @@ class AppConfig
   end
 
   def self.processes
-    hash = self.deployment.processes.to_h.each_pair do |k, v| 
+    hash = self.deployment.processes.to_h.each_pair do |k, v|
       v['name'] = k.to_s
-      v['process_name'] = "#{self.deployment.monitoring.group_name}_#{k.to_s}" 
+      v['process_name'] = "#{self.deployment.monitoring.group_name}_#{k.to_s}"
     end
     ::RecursiveOpenStruct.new(hash)
   end

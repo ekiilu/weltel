@@ -12,19 +12,10 @@ describe Weltel::PatientRecordState do
 	context "asscociations" do
 		subject { create(:patient_record_state) }
 
-		it { should belong_to(:patient_record) }
+		it { should belong_to(:record) }
 		it { should belong_to(:user) }
 	end
 
 	context "methods" do
-		it "should find active states" do
-			create(:patient_record_state, :active => false)
-			expected = create(:patient_record_state, :active => true)
-
-			states = Weltel::PatientRecordState.active
-
-			states.count.should == 1
-			states[0].should == expected
-		end
 	end
 end

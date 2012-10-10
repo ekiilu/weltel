@@ -19,8 +19,11 @@ module Weltel
 				.sorted_by(@sort_attribute, @sort_order)
 				.paginate(:page => @page, :per_page => @per_page)
 
-			@messages.select{|message| message.status == :received}.each do |message|
-				message.update(:status => :read)
+			@messages.each do |message|
+				if message.status == :received
+					message.status = :read
+					message.save
+				end
 			end
 
 			respond_with(@patient, @messages)
@@ -39,15 +42,14 @@ module Weltel
 		def create
 			begin
 				@patient = Weltel::Patient.find(params[:patient_id])
+				message = params[:message]
 
-				body = params[:message][:body]
-				if body.blank?
-					body = Sms::MessageTemplate.find(params[:message_template_id]).body
-				end
+				body = message[:body]
+				body = Sms::MessageTemplate.find(params[:message_template_id]).body	if body.blank?
 
 				Weltel::Patient.transaction do
-					if @patient.active_record
-						@message = @patient.active_record.send_message(body)
+					if @patient.records.active
+						@message = @patient.records.active.send_message(body)
 					else
 						@message = @patient.subscriber.send_message(body)
 					end

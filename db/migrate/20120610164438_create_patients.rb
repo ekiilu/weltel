@@ -1,8 +1,8 @@
 class CreatePatients < ActiveRecord::Migration
   def change
     create_table(:weltel_patients) do |t|
-    	t.references(:clinic, :null => false)
-      t.boolean(:active, :null => false, :default => false)
+    	t.references(:clinic)
+      t.boolean(:active, :null => false, :default => true)
       t.string(:user_name, :null => false, :limit => 32)
       t.string(:study_number, :null => false, :limit => 32)
       t.string(:contact_phone_number, :length => 10)
