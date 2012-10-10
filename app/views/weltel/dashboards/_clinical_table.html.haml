@@ -6,18 +6,18 @@
     = sorted_table_header_tag(:study_number) do
       = t(".study_number")
 
-    = sorted_table_header_tag("weltel_results.value") do
+    = sorted_table_header_tag(:initial_result_value) do
       = t(".initial_result")
 
-    = sorted_table_header_tag("current_results_weltel_patients.value") do
+    = sorted_table_header_tag(:current_result_value) do
       = t(".current_result")
 
     = table_header_tag(t(".status"))
 
-    = filter_table_header_tag("weltel_checkups.contact_method", checkup_contact_method_options) do
+    = filter_table_header_tag(:current_checkup_contact_method, checkup_contact_method_options) do
       = t(".contact_method")
 
-    = filter_table_header_tag("clinic_id", clinic_id_options) do
+    = filter_table_header_tag(:clinic_name, clinic_name_options) do
       = t(".clinic")
 
     %th.actions

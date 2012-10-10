@@ -17,11 +17,11 @@ module Weltel
 		# class methods
 		#
 		def self.system
-			where(:system => true)
+			where{system == true}
 		end
 
 		def self.user
-			where(:system => false)
+			where{system == false}
 		end
 
 		#

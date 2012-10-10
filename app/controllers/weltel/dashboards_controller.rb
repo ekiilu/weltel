@@ -20,19 +20,20 @@ module Weltel
 		#
 		def show
       @patients = Weltel::Patient
-      	.includes(:subscriber, :clinic)
-      	.includes(:current_checkup)
-      	.includes(:initial_result, :current_result)
+      	.joins{clinic.outer}
+      	.joins{current_checkup}
+      	.joins{initial_result.outer}
+      	.joins{current_result.outer}
       	.active
-      	.filtered_by(@filter_attribute, @filter_value)
-      	.sorted_by(@sort_attribute, @sort_order)
+      	.filtered_by(@filter_attribute.to_sym, @filter_value)
+      	.sorted_by(@sort_attribute.to_sym, @sort_order.to_sym)
 
       if !@search.blank?
         @patients = @patients.search(@search)
       elsif is_study_dashboard?(@view.to_sym)
-        @patients = @patients.filter_by_current_result_value(@state.to_sym)
+        @patients = @patients.filter_by_current_result_value(@state)
       else
-        @patients = @patients.filter_by_current_checkup_status(@status.to_sym)
+        @patients = @patients.filter_by_current_checkup_status(@status)
       end
 
       @print = params[:print]

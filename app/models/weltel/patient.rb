@@ -97,79 +97,86 @@ module Weltel
 
 		# class methods
 		#
-		def self.join_subscriber
-			joins(:subscriber)
-		end
-
-		#
-		def self.join_clinic
-			joins("LEFT JOIN weltel_clinics ON weltel_patients.clinic_id = weltel_clinics.id")
-		end
-
-		#
-		def self.join_records
-			joins(:records)
-		end
-
 		# active patients
 		def self.active
-			where(:active => true)
+			where{active == true}
 		end
 
 		# search patients
 		def self.search(search)
-			return where("1") if search.blank?
+			return where{true} if search.blank?
 			search = "%#{search}%"
-			where("user_name LIKE ? OR study_number LIKE ?", search, search)
+			where{(user_name =~ search) | (study_number =~ search)}
 		end
 
 		# filter patients
-		def self.filtered_by(attribute, value)
-			return where("1") if value.blank?
-			where("#{attribute} = ?", value)
+		def self.filtered_by(key, value)
+			return where(true) if value.blank?
+
+			case key
+			when :clinic_name
+				where{clinic.name == value}
+			when :subscriber_phone_number
+				where{subscriber.phone_number == value}
+			when :initial_result_value
+				where{initial_result.value == value}
+			when :current_result_value
+				where{current_result.value == value}
+			when :current_checkup_status
+				where{current_checkup.status == value}
+			when :current_checkup_contact_method
+				where{current_checkup.contact_method == value}
+			else
+				where{{key => value}}
+			end
 		end
 
 		# sort patients
-		def self.sorted_by(attribute, order)
-			order("#{attribute} #{order.upcase}")
-		end
-
-		# patients with active subscriber
-		def self.with_active_subscriber
-			joins(:subscriber)
-			.where(:sms_subscribers => {:active => true})
+		def self.sorted_by(key, order)
+			case key
+			when :clinic_name
+				order{clinic.name.__send__(order)}
+			when :subscriber_phone_number
+				order{subscriber.phone_number.__send__(order)}
+			when :current_checkup_status
+				order{current_checkup.status.__send__(order)}
+			when :current_checkup_contact_method
+				order{current_checkup.contact_method.__send__(order)}
+			else
+				order{__send__(key).__send__(order)}
+			end
 		end
 
     #
     def self.with_current_checkup
-      joins(:current_checkup)
+      joins{current_checkup}
     end
 
 		#
     def self.with_current_checkup_not_created_on(date)
-    	joins(:current_checkup)
-    	.where("weltel_checkups.created_on != ?", date)
+    	joins{current_checkup}
+    	.where{current_checkup.created_on != date}
     end
 
 		#
     def self.without_current_checkup
-			includes(:current_checkup)
-			.where(:weltel_checkups => {:id => nil})
+			joins{current_checkup.outer}
+			.where{current_checkup.id == nil}
     end
 
 		#
     def self.filter_by_current_checkup_status(status)
-    	where(:weltel_checkups => {:status => status})
+    	where{current_checkup.status == status}
     end
 
 		#
     def self.filter_by_initial_result_value(value)
-			where(:weltel_results => {:value => value})
+			where{initial_result.value == value}
     end
 
 		#
     def self.filter_by_current_result_value(value)
-			where(:current_results_weltel_patients => {:value => value})
+			where{current_result.value == value}
     end
 	end
 end

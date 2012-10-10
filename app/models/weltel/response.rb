@@ -26,15 +26,15 @@ module Weltel
 
 		# class methods
 		#
-		def self.filtered_by(attribute, value)
-			return where("1") if value.blank?
-			where("#{attribute} = ?", value)
+		def self.filtered_by(key, value)
+			return where{true} if value.blank?
+			where{{key => value}}
 		end
 
 		#
-		def self.sorted_by(attribute, order)
-			return where("1") if attribute.blank?
-			order("#{attribute} #{order.upcase}")
+		def self.sorted_by(key, order)
+			return where{true} if key.blank?
+			order{__send__(key).__send__(order)}
 		end
 	end
 end
