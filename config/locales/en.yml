@@ -23,6 +23,10 @@ en:
         update_link: "System"
         logout_link: "Logout"
   weltel:
+    updates:
+      show:
+        configure_connection: 'Configure Connection'
+        test_connection: "Test Connection"
     patients:
       created: "Patient Created"
       updated: "Patient Updated"
@@ -216,7 +220,7 @@ en:
     not_received: "No message received"
 
   ## feedback
-  submit_title: "Submit feedback"
+  submit_title: "Submit feedback" 
   submit_text: "Help us improve WelTel!"
 
   ## validation messages
@@ -230,3 +234,18 @@ en:
         user_name: "User Name"
         study_number: "Study Number"
         contact_phone_number: "Alternate Contact Number"
+
+  connection_config:
+    edit:
+      connection_configuration: "Connection configuration"
+      device: "Device"
+      extra: "Extra"
+      save: 'Save'
+      not_available: 'Not available: '
+    test:
+      test_connection: 'Test Connection'
+      phone_number: 'Phone Number'
+      message: 'Message'
+      send: 'Send'
+      sent: 'Sent test message!'
+      failed: 'Could not send test message.'

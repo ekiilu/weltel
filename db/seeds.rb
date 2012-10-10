@@ -104,3 +104,8 @@ Weltel::Response.create(
 	:name => "no",
 	:value => :negative
 )
+
+ConnectionConfig.create(
+  :device => '/dev/ttyUSB0',
+  :extra => ''
+)

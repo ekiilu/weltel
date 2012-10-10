@@ -7,6 +7,11 @@ Weltel::Application.routes.draw do
 	mount Sms::Engine => "/sms"
   mount Feedbacker::Engine => "/feedback"
 
+  resource(:connection_config, :only => [:edit, :update], :controller => :connection_config) do
+    post :send_test, :on => :collection
+    get :test, :on => :collection
+  end
+
 	# admin
 	namespace(:weltel) do
 		# tasks

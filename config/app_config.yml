@@ -7,26 +7,31 @@ time_zone: "Pacific Time (US & Canada)"
 deployment:
   server: 'localhost'
   app_name: 'weltel'
-  app_repo: "ssh://git@dev.verticallabs.ca/git/mambo/apps/weltel.git"
-  app_branch: '3.0'
-  deploy_to: '/www/weltel' 
-  app_root: '/www/weltel/current'
-  working_directory: "/www/weltel/shared"
+  app_repo: "https://github.com/weltel/weltel.git"
+  app_branch: 'ar'
+  deploy_to: '/home/paul/dev/weltel' 
+  app_root: '/home/paul/dev/weltel'
+  working_directory: "/home/paul/dev/weltel/tmp"
   internal_host: "http://localhost:3000"
   rails_env: 'development'
-  log_directory: "/www/weltel/current/log"
+  log_directory: "/home/paul/dev/weltel/log"
   processes:
     unicorn:
-      start: "bundle exec unicorn_rails -E #{RAILS_ENV} -c #{PWD}/config/unicorn.rb -D"
+      start: "bundle exec unicorn_rails -E #{RAILS_ENV} -c #{APP_ROOT}/config/unicorn.rb -D"
       stop: "kill -QUIT #{PID}"
       restart: "kill -USR2 #{PID}"
       workers: 2
-      port: 80
+      port: 3000
     dj:
       start: "bundle exec rake jobs:work"
+      daemonize: true
+    gammu:
+      config_file: '/home/paul/dev/weltel/config/gammurc'
+      start: 'gammu-smsd -c /home/paul/dev/weltel/config/gammurc'
+      stop: "kill -TERM #{PID}" 
       daemonize: true
   monitoring:
     log_file: "monitoring.log"
     group_name: 'mambo'
-  uid: 'web'
-  gid: 'web'
+  uid: 'paul'
+  gid: 'paul'

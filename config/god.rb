@@ -32,15 +32,16 @@ AppConfig.processes.to_h.each_value do |process_config|
   pid_file = "#{pid_directory}/#{process_config.process_name}.pid"
   env = {
     :rails_env => AppConfig.deployment.rails_env, 
-    :pwd => AppConfig.deployment.app_root,
+    :app_root => AppConfig.deployment.app_root,
+    :working_directory => AppConfig.deployment.working_directory,
     :pid_file => pid_file,
-    :logfile => "#{AppConfig.deployment.log_directory}/#{process_config.process_name}.log"
+    :logfile => "#{AppConfig.deployment.log_directory}/#{process_config.process_name}.log",
   }
 
   God.watch do |w|
     w.name        = process_config.process_name
     w.interval    = 30.seconds
-    w.dir         = env[:pwd]
+    w.dir         = env[:working_directory]
 
     w.pid_file    = "#{pid_directory}/#{process_config.process_name}.pid" if !process_config.daemonize
     w.env         = Hash[ env.collect {|k,v| [k.to_s.upcase, v] } ] 
