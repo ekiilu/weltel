@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(:version => 20121008231655) do
   add_index "authentication_users", ["email_address"], :name => "index_authentication_users_on_email_address", :unique => true
   add_index "authentication_users", ["name"], :name => "index_authentication_users_on_name", :unique => true
 
-  create_table "connection_configs", :force => true do |t|
+  create_table "connections", :force => true do |t|
     t.string   "device",     :default => "/dev/ttyUSB0"
     t.text     "extra"
     t.datetime "created_at",                             :null => false

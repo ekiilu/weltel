@@ -22,11 +22,21 @@ en:
         clinics_link: "Clinics"
         update_link: "System"
         logout_link: "Logout"
-  weltel:
-    updates:
-      show:
+      system:
         configure_connection: 'Configure Connection'
         test_connection: "Test Connection"
+        manage_updates: "Manage Updates"
+        demonstrate_features: "Demonstrate Features"
+  weltel:
+    versions:
+      show:
+        updating: "Update in progress"
+        update_available: "There is an update available for the application"
+        no_update_available: "Application is up to date"
+        update_link: "Update"
+        version: "Current Version"
+        revision: "Revision"
+        do_update: "Do Update"
     patients:
       created: "Patient Created"
       updated: "Patient Updated"
@@ -133,15 +143,6 @@ en:
           zero: "No New Messages"
           one: "1 New Message"
           other: "%{count} New Messages"
-    updates:
-      show:
-        update: "There is an update available for the application"
-        no_update: "Application is up to date"
-        update_link: "Update"
-        revision: "Revision"
-      status:
-        complete: "Complete"
-        updating: "Updating"
     responses:
       created: "Response Created"
       updated: "Response Updated"

@@ -7,24 +7,26 @@ Weltel::Application.routes.draw do
 	mount Sms::Engine => "/sms"
   mount Feedbacker::Engine => "/feedback"
 
-  resource(:connection_config, :only => [:edit, :update], :controller => :connection_config) do
-    post :send_test, :on => :collection
-    get :test, :on => :collection
-  end
-
 	# admin
 	namespace(:weltel) do
+    # system
+    resource(:system, :only => [:show]) do
+      resource(:connection, :only => [:edit, :update]) do
+        resource(:test, :only => [:new, :create])
+      end
+      resource(:version, :only => [:show, :update])
+      resources(:logs, :only => [:index, :show, :destroy])
+      resources(:help, :only => [:index, :show])
+      resource(:data, :only => [:show])
+      resource(:demo, :only => [:show])
+      resource(:time_zone, :only => [:show])
+    end
+
 		# tasks
 		resource(:task, :only => []) do
 			get(:create_records)
 			get(:update_records)
 			get(:receive_responses)
-		end
-
-		# updates
-		resource(:update, :only => [:show]) do
-			post(:update)
-			get(:status)
 		end
 
 		# dashboards

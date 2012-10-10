@@ -4,6 +4,8 @@ twilio:
   auth_token: 'da2c9e85efafa8848b3e705ae3a2afe9'
 demo_mode: true
 time_zone: "Pacific Time (US & Canada)"
+update:
+  refresh: 10
 deployment:
   server: 'localhost'
   app_name: 'weltel'
@@ -22,6 +24,7 @@ deployment:
       restart: "kill -USR2 #{PID}"
       workers: 2
       port: 3000
+      process_name: 'mambo_unicorn'
     dj:
       start: "bundle exec rake jobs:work"
       daemonize: true
