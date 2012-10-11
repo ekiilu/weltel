@@ -1,6 +1,13 @@
-# -*- encoding : utf-8 -*-
+#-  -*- encoding : utf-8 -*-
+#- This Source Code Form is subject to the terms of the Mozilla Public
+#- License, v. 2.0. If a copy of the MPL was not distributed with this
+#- file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 module Weltel
 	class Patient < ActiveRecord::Base
+
+		include Support::ModelHelper
+
 		#
 		def self.table_name
 			"weltel_patients"
@@ -107,44 +114,6 @@ module Weltel
 			return where{true} if search.blank?
 			search = "%#{search}%"
 			where{(user_name =~ search) | (study_number =~ search)}
-		end
-
-		# filter patients
-		def self.filtered_by(key, value)
-			return where(true) if value.blank?
-
-			case key
-			when :clinic_name
-				where{clinic.name == value}
-			when :subscriber_phone_number
-				where{subscriber.phone_number == value}
-			when :initial_result_value
-				where{initial_result.value == value}
-			when :current_result_value
-				where{current_result.value == value}
-			when :current_checkup_status
-				where{current_checkup.status == value}
-			when :current_checkup_contact_method
-				where{current_checkup.contact_method == value}
-			else
-				where{{key => value}}
-			end
-		end
-
-		# sort patients
-		def self.sorted_by(key, order)
-			case key
-			when :clinic_name
-				order{clinic.name.__send__(order)}
-			when :subscriber_phone_number
-				order{subscriber.phone_number.__send__(order)}
-			when :current_checkup_status
-				order{current_checkup.status.__send__(order)}
-			when :current_checkup_contact_method
-				order{current_checkup.contact_method.__send__(order)}
-			else
-				order{__send__(key).__send__(order)}
-			end
 		end
 
     #

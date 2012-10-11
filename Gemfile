@@ -77,6 +77,6 @@ gem "mambo-sms", :git => "#{DEV_GIT}/sms.git", :branch => 'ar' #MAMBO_DEV
 gem "mambo-messaging", :git => "#{DEV_GIT}/messaging.git", :branch => 'ar' #MAMBO_DEV
 #gem "mambo-messaging", ">= 0.0.7" #MAMBO_PUBLIC
 
-#gem "mambo-support", :path => "#{HOME_PATH}/support" #MAMBO_LOCAL
-gem "mambo-support", :git => "#{DEV_GIT}/support.git", :branch => 'ar' #MAMBO_DEV
+gem "mambo-support", :path => "#{HOME_PATH}/support" #MAMBO_LOCAL
+#gem "mambo-support", :git => "#{DEV_GIT}/support.git", :branch => 'ar' #MAMBO_DEV
 #gem "mambo-support", ">= 0.0.9" #MAMBO_PUBLIC

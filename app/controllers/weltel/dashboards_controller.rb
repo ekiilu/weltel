@@ -1,4 +1,8 @@
-# -*- encoding : utf-8 -*-
+#-  -*- encoding : utf-8 -*-
+#- This Source Code Form is subject to the terms of the Mozilla Public
+#- License, v. 2.0. If a copy of the MPL was not distributed with this
+#- file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 module Weltel
 	class DashboardsController < ApplicationController
 		include Authentication::AuthenticatedController
@@ -25,8 +29,8 @@ module Weltel
       	.joins{initial_result.outer}
       	.joins{current_result.outer}
       	.active
-      	.filtered_by(@filter_attribute.to_sym, @filter_value)
-      	.sorted_by(@sort_attribute.to_sym, @sort_order.to_sym)
+      	.filtered_by(@filter_attribute, @filter_value)
+      	.sorted_by(@sort_attribute, @sort_order.to_sym)
 
       if !@search.blank?
         @patients = @patients.search(@search)

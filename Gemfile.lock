@@ -35,15 +35,6 @@ GIT
       will_paginate
 
 GIT
-  remote: http://dev.verticallabs.ca/git/mambo/gems/support.git
-  revision: bc30359e0c663aa0e3c37fb9f3255264f906b5d2
-  branch: ar
-  specs:
-    mambo-support (0.0.10)
-      mmcopyrights
-      rails
-
-GIT
   remote: http://dev.verticallabs.ca/git/mambo/gems/twilio_adapter.git
   revision: 8cc9f01168d66155ff24a271c2c21bb67c034403
   branch: ar
@@ -60,6 +51,13 @@ GIT
   specs:
     enumerated_attribute (0.3.0.beta1)
       meta_programming (>= 0.2.1)
+
+PATH
+  remote: /home/cdion/mambo/gems/support
+  specs:
+    mambo-support (0.0.10)
+      mmcopyrights
+      rails
 
 GEM
   remote: http://gems.verticallabs.ca/
