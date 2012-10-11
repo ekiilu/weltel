@@ -1,25 +1,26 @@
-#-  -*- encoding : utf-8 -*- 
+#-  -*- encoding : utf-8 -*-
 #- This Source Code Form is subject to the terms of the Mozilla Public
 #- License, v. 2.0. If a copy of the MPL was not distributed with this
 #- file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# -*- encoding : utf-8 -*-
 FactoryGirl.define do
 
-  factory(:patient_record, :class => Weltel::PatientRecord) do
+  factory(:checkup, :class => Weltel::Checkup) do
   	patient
-  	contact_method { Support::Randomizer.array(Weltel::PatientRecord::CONTACT_METHODS) }
+  	contact_method { Support::Randomizer.array(Weltel::Checkup::CONTACT_METHODS) }
+  	current true
   	created_on { Date.today }
   	created_at { DateTime.now }
   	updated_at { DateTime.now }
 
-  	factory(:patient_record_with_state) do
+		#
+  	factory(:checkup_with_result) do
 			ignore do
         state :unknown
       end
 
-			after(:create) do |record, evaluator|
-        FactoryGirl.create_list(:patient_record_state, 1, :record => record, :value => evaluator.state)
+			after(:create) do |checkup, evaluator|
+        checkup.results = create_list(:result, 1, :checkup => checkup, :value => evaluator.state)
       end
   	end
   end

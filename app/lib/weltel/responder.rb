@@ -1,9 +1,8 @@
-#-  -*- encoding : utf-8 -*- 
+#-  -*- encoding : utf-8 -*-
 #- This Source Code Form is subject to the terms of the Mozilla Public
 #- License, v. 2.0. If a copy of the MPL was not distributed with this
 #- file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# -*- encoding : utf-8 -*-
 module Weltel
 	class Responder < Messaging::Responder
 		#
@@ -38,7 +37,7 @@ module Weltel
 		START_COMMANDS = ["start"]
 
 		#
-		def process_message(message)
+		def respond(message)
 			# subscriber
 			subscriber = message.subscriber
 

@@ -6,20 +6,18 @@
   %tr
     = table_header_tag(t(".user_name"))
     = table_header_tag(t(".study_number"))
-    = table_header_tag(t(".initial_state"))
-    = table_header_tag(t(".current_state"))
+    = table_header_tag(t(".initial_result"))
+    = table_header_tag(t(".current_result"))
     = table_header_tag(t(".status"))
     = table_header_tag(t(".contact_method"))
     = table_header_tag(t(".clinic"))
-    = table_header_tag(t(".notes"))
 
   - @patients.each do |p|
     %tr
       %td= p.user_name
       %td= p.study_number
-      %td= t("weltel.patient_record_states.values.#{p.active_record.initial_state.value}")
-      %td= p.active_record.state_changed? ? t("weltel.patient_record_states.values.#{p.active_record.active_state.value}") : ''
-      %td= p.active_record.status.to_s
-      %td= p.active_record.contact_method_s
+      %td= result_value_t(result_value(p.initial_result))
+      %td= result_value_t(result_value(p.current_result))
+      %td= checkup_status_t(p.current_checkup.status)
+      %td= checkup_contact_method_t(p.current_checkup.contact_method)
       %td= p.clinic.name
-      %td 

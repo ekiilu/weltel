@@ -60,7 +60,7 @@ en:
         legend: "Audit"
         created_at: "Created"
         updated_at: "Updated"
-    patient_records:
+    checkups:
       statuses:
         open: "Open"
         closed: "Closed"
@@ -71,7 +71,7 @@ en:
         email: "Email"
         outreach_visit: "Outreach Visit"
         clinic_visit: "Clinic Visit"
-    patient_record_states:
+    results:
       values:
         pending: "Pending"
         positive: "OK"
@@ -220,7 +220,7 @@ en:
     not_received: "No message received"
 
   ## feedback
-  submit_title: "Submit feedback" 
+  submit_title: "Submit feedback"
   submit_text: "Help us improve WelTel!"
 
   ## validation messages

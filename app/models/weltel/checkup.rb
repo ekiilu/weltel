@@ -145,7 +145,7 @@ module Weltel
 		#
 		def self.without_current_result
 			joins{current_result.outer}
-			.where{current_result == nil}
+			.where{current_result.id == nil}
 		end
 	end
 end

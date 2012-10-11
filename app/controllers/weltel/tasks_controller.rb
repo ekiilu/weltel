@@ -1,4 +1,4 @@
-#-  -*- encoding : utf-8 -*- 
+#-  -*- encoding : utf-8 -*-
 #- This Source Code Form is subject to the terms of the Mozilla Public
 #- License, v. 2.0. If a copy of the MPL was not distributed with this
 #- file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -9,7 +9,7 @@ module Weltel
 		respond_to(:html, :js)
 
 		#
-		def create_records
+		def create_checkups
 			# send reminders
 			date = Date.today.monday
 			Weltel::Factory.service.create_checkups(date)
@@ -17,7 +17,7 @@ module Weltel
 		end
 
 		#
-		def update_records
+		def update_checkups
 			Weltel::Factory.service.update_checkups
 			render(:text => "OK")
 		end

@@ -46,14 +46,14 @@ module Weltel
 		def create
 			begin
 				@patient = Weltel::Patient.find(params[:patient_id])
-				message = params[:message]
 
-				body = message[:body]
-				body = Sms::MessageTemplate.find(params[:message_template_id]).body	if body.blank?
+				message_template_id = params[:message_template_id]
+				message = params[:message]
+				body = message[:body].blank? ? Sms::MessageTemplate.find(message_template_id) : message[:body]
 
 				Weltel::Patient.transaction do
-					if @patient.records.active
-						@message = @patient.records.active.send_message(body)
+					if @patient.current_checkup
+						@message = @patient.current_checkup.send_message(body)
 					else
 						@message = @patient.subscriber.send_message(body)
 					end

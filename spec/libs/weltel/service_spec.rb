@@ -1,9 +1,8 @@
-#-  -*- encoding : utf-8 -*- 
+#-  -*- encoding : utf-8 -*-
 #- This Source Code Form is subject to the terms of the Mozilla Public
 #- License, v. 2.0. If a copy of the MPL was not distributed with this
 #- file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# -*- encoding : utf-8 -*-
 require "spec_helper"
 
 describe Weltel::Service do
@@ -13,20 +12,14 @@ describe Weltel::Service do
 
 		create(:message_template, :name => :checkup)
 
-		Weltel::Factory.service.create_records(Date.today.monday)
-	end
-
-	#
-	it "creates a record" do
-		patient = create(:patient)
-
-		Weltel::Factory.service.create_record(Date.today.monday, patient, "Are you ok?")
+		Weltel::Factory.service.create_checkups(Date.today.monday)
 	end
 
 	#
 	it "updates records" do
-		create(:record)
+		create(:system)
+		create(:checkup)
 
-		Weltel::Factory.service.update_records(Date.today.monday)
+		Weltel::Factory.service.update_checkups
 	end
 end

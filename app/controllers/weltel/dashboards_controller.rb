@@ -30,7 +30,7 @@ module Weltel
       	.joins{current_result.outer}
       	.active
       	.filtered_by(@filter_attribute, @filter_value)
-      	.sorted_by(@sort_attribute, @sort_order.to_sym)
+      	.sorted_by(@sort_attribute, @sort_order)
 
       if !@search.blank?
         @patients = @patients.search(@search)
