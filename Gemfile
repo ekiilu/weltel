@@ -61,22 +61,22 @@ gem "squeel"
 HOME_PATH = File.expand_path("~/mambo/gems")
 DEV_GIT = "http://dev.verticallabs.ca/git/mambo/gems"
 
-gem "mambo-authentication", :path => "#{HOME_PATH}/authentication" #MAMBO_LOCAL
-#gem "mambo-authentication", :git => "#{DEV_GIT}/authentication.git", :branch => 'ar' #MAMBO_DEV
+#gem "mambo-authentication", :path => "#{HOME_PATH}/authentication" #MAMBO_LOCAL
+gem "mambo-authentication", :git => "#{DEV_GIT}/authentication.git", :branch => 'ar' #MAMBO_DEV
 #gem "mambo-authentication", ">= 0.0.10" #MAMBO_PUBLIC
 
-gem "mambo-twilio_adapter", :path => "#{HOME_PATH}/twilio_adapter" #MAMBO_LOCAL
-#gem "mambo-twilio_adapter", :git => "#{DEV_GIT}/twilio_adapter.git", :branch => 'ar' #MAMBO_DEV
+#gem "mambo-twilio_adapter", :path => "#{HOME_PATH}/twilio_adapter" #MAMBO_LOCAL
+gem "mambo-twilio_adapter", :git => "#{DEV_GIT}/twilio_adapter.git", :branch => 'ar' #MAMBO_DEV
 #gem "mambo-twilio_adapter", ">= 0.0.13" #MAMBO_PUBLIC
 
-gem "mambo-sms", :path => "#{HOME_PATH}/sms" #MAMBO_LOCAL
-#gem "mambo-sms", :git => "#{DEV_GIT}/sms.git", :branch => 'ar' #MAMBO_DEV
+#gem "mambo-sms", :path => "#{HOME_PATH}/sms" #MAMBO_LOCAL
+gem "mambo-sms", :git => "#{DEV_GIT}/sms.git", :branch => 'ar' #MAMBO_DEV
 #gem "mambo-sms", ">= 0.0.15" #MAMBO_PUBLIC
 
-gem "mambo-messaging", :path => "#{HOME_PATH}/messaging" #MAMBO_LOCAL
-#gem "mambo-messaging", :git => "#{DEV_GIT}/messaging.git", :branch => 'ar' #MAMBO_DEV
+#gem "mambo-messaging", :path => "#{HOME_PATH}/messaging" #MAMBO_LOCAL
+gem "mambo-messaging", :git => "#{DEV_GIT}/messaging.git", :branch => 'ar' #MAMBO_DEV
 #gem "mambo-messaging", ">= 0.0.7" #MAMBO_PUBLIC
 
-gem "mambo-support", :path => "#{HOME_PATH}/support" #MAMBO_LOCAL
-#gem "mambo-support", :git => "#{DEV_GIT}/support.git", :branch => 'ar' #MAMBO_DEV
+#gem "mambo-support", :path => "#{HOME_PATH}/support" #MAMBO_LOCAL
+gem "mambo-support", :git => "#{DEV_GIT}/support.git", :branch => 'ar' #MAMBO_DEV
 #gem "mambo-support", ">= 0.0.9" #MAMBO_PUBLIC
