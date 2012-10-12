@@ -12,8 +12,10 @@ GIT
     delayed_mail (0.0.2)
       delayed_job
 
-PATH
-  remote: /home/cdion/mambo/gems/adapters
+GIT
+  remote: https://github.com/verticallabs/mambo-adapters.git
+  revision: 9521df48060af5615a940de3f74bea3d30ad7c0a
+  branch: ar
   specs:
     mambo-adapters (0.0.14)
       mambo-sms
@@ -22,8 +24,10 @@ PATH
       recursive-open-struct
       twilio-rb
 
-PATH
-  remote: /home/cdion/mambo/gems/authentication
+GIT
+  remote: https://github.com/verticallabs/mambo-authentication.git
+  revision: 3cc97e40d30b3c82d372507168121e1fd01af76b
+  branch: ar
   specs:
     mambo-authentication (0.0.12)
       haml-rails
@@ -32,16 +36,20 @@ PATH
       squeel
       will_paginate
 
-PATH
-  remote: /home/cdion/mambo/gems/messaging
+GIT
+  remote: https://github.com/verticallabs/mambo-messaging.git
+  revision: 1218241abba5c051087502dca33521e7f7378e41
+  branch: ar
   specs:
     mambo-messaging (0.0.8)
       mambo-sms
       mambo-support
       rails
 
-PATH
-  remote: /home/cdion/mambo/gems/sms
+GIT
+  remote: https://github.com/verticallabs/mambo-sms.git
+  revision: 3343d39f3029435f5b5ecfddc500b2306408e8f6
+  branch: ar
   specs:
     mambo-sms (0.0.20)
       enumerated_attribute
@@ -52,8 +60,10 @@ PATH
       squeel
       will_paginate
 
-PATH
-  remote: /home/cdion/mambo/gems/support
+GIT
+  remote: https://github.com/verticallabs/mambo-support.git
+  revision: de013039458176d7068f0ee5bda29255713aff5d
+  branch: ar
   specs:
     mambo-support (0.0.10)
       mmcopyrights
