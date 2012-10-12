@@ -7,7 +7,7 @@ module Weltel
 	class Factory
 		#
 		def self.sender
-			Adapters::Gammu::Sender.new
+			Adapters::Gammu::Sender.new(AppConfig.twilio.phone_number)
 		end
 
 		#
