@@ -29,7 +29,7 @@ class AppConfig
   def self.substitute(string, options)
     if string
       options.keys.each do |key|
-        string.gsub!("\#\{#{key.to_s.upcase}\}", options[key])
+        string.gsub!("\#\{#{key.to_s.upcase}\}", options[key]) unless options[key].nil?
       end
     end
     string
