@@ -3,7 +3,6 @@
 #- License, v. 2.0. If a copy of the MPL was not distributed with this
 #- file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# -*- encoding : utf-8 -*-
 app_root = File.expand_path("#{File.dirname(__FILE__)}/..")
 require "#{app_root}/lib/app_config.rb"
 AppConfig.load("#{app_root}/config/app_config.yml")
@@ -30,10 +29,10 @@ every(5.minutes) do
 	command("curl #{AppConfig.deployment.internal_host}/weltel/task/receive_responses")
 end
 
-every(AppConfig.time_zone, :monday, :at => '12:00') do
+every(:monday, :at => '12:00') do
   command("curl #{AppConfig.deployment.internal_host}/weltel/task/create_checkups")
 end
 
-every(AppConfig.time_zone, :wednesday, :at => '12:00') do
+every(:wednesday, :at => '12:00') do
   command("curl #{AppConfig.deployment.internal_host}/weltel/task/update_checkups")
 end
