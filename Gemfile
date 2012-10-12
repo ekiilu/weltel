@@ -1,4 +1,3 @@
-#source "http://gems.verticallabs.ca"
 source "http://rubygems.org"
 
 # rails
@@ -52,8 +51,8 @@ gem "exception_notification"
 gem "whenever", :require => false
 gem "delayed_job"
 gem "delayed_job_active_record"
-gem "delayed_mail"
-gem "vertical-feedbacker", "0.0.2"
+gem "delayed_mail", :git => 'https://github.com/verticallabs/delayed_mail.git'
+#gem "vertical-feedbacker", "0.0.2"
 gem "will_paginate"
 gem "active_link_to"
 gem "squeel"
