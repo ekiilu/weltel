@@ -1,4 +1,4 @@
-source "http://gems.verticallabs.ca"
+#source "http://gems.verticallabs.ca"
 source "http://rubygems.org"
 
 # rails
