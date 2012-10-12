@@ -1,3 +1,8 @@
+#-  -*- encoding : utf-8 -*-
+#- This Source Code Form is subject to the terms of the Mozilla Public
+#- License, v. 2.0. If a copy of the MPL was not distributed with this
+#- file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 # -*- encoding : utf-8 -*-
 module Weltel
 	class ResponsesController < ApplicationController
@@ -5,6 +10,7 @@ module Weltel
 		respond_to(:html)
 		layout("private/application")
 
+		#
     before_filter(:only => :index) do
     	page_param(:responses, 20)
       sort_param(:responses, :name, :asc)

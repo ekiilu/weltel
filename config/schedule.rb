@@ -1,3 +1,8 @@
+#-  -*- encoding : utf-8 -*-
+#- This Source Code Form is subject to the terms of the Mozilla Public
+#- License, v. 2.0. If a copy of the MPL was not distributed with this
+#- file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 # -*- encoding : utf-8 -*-
 app_root = File.expand_path("#{File.dirname(__FILE__)}/..")
 require "#{app_root}/lib/app_config.rb"
@@ -26,9 +31,9 @@ every(5.minutes) do
 end
 
 every_in_time_zone(AppConfig.time_zone, :monday, :at => '12:00') do
-  command("curl #{AppConfig.deployment.internal_host}/weltel/task/create_records")
+  command("curl #{AppConfig.deployment.internal_host}/weltel/task/create_checkups")
 end
 
 every_in_time_zone(AppConfig.time_zone, :wednesday, :at => '12:00') do
-  command("curl #{AppConfig.deployment.internal_host}/weltel/task/update_records")
+  command("curl #{AppConfig.deployment.internal_host}/weltel/task/update_checkups")
 end

@@ -1,3 +1,8 @@
+#-  -*- encoding : utf-8 -*-
+#- This Source Code Form is subject to the terms of the Mozilla Public
+#- License, v. 2.0. If a copy of the MPL was not distributed with this
+#- file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 require "spec_helper"
 
 describe Weltel::Clinic do
@@ -44,7 +49,7 @@ describe Weltel::Clinic do
 				b = create(:clinic, :name => "BB")
 				c = create(:clinic, :name => "CC")
 
-				clinics = subject.sorted_by(:name, :desc)
+				clinics = subject.sorted_by("name", :desc)
 
 				clinics.count.should == 3
 				clinics.should == [c, b, a]

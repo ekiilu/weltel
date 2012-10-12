@@ -1,3 +1,7 @@
+//- This Source Code Form is subject to the terms of the Mozilla Public
+//- License, v. 2.0. If a copy of the MPL was not distributed with this
+//- file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 - content_for(:tabs) do
   = form_tag(weltel_dashboard_path, :method => :get) do
     = hidden_field_tag(:page, 1)
@@ -14,7 +18,7 @@
     - Weltel::Checkup::STATUSES.each do |status|
       .tab{:class => active_class(status == @status && @search.blank?)}
         .content
-          = link_to(t("weltel.patient_records.statuses.#{status}"), params.merge(:status => status, :page => 1), :class => "#{active_class(status == @status.to_sym)} #{status.to_s} status")
+          = link_to(checkup_status_t(status), params.merge(:status => status, :page => 1), :class => "#{active_class(status == @status.to_sym)} #{status.to_s} status")
 
 - if is_study_dashboard?(@view.to_sym)
   = render("study_table")
@@ -32,7 +36,7 @@
         return false;
       });
 
-      $('select.current_state').live('change', function(e) {
+      $('select.current_result').live('change', function(e) {
         var klass = $(e.target).find(':selected').attr('class');
         $(e.target).attr('class', 'current_state state ' + klass);
       });

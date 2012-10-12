@@ -1,3 +1,7 @@
+//- This Source Code Form is subject to the terms of the Mozilla Public
+//- License, v. 2.0. If a copy of the MPL was not distributed with this
+//- file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 = render({:partial => "shared/errors", :object => @patient})
 = form_for([@patient]) do |p|
   %fieldset
@@ -8,6 +12,9 @@
         %li
           = s.label(:phone_number)
           = s.telephone_field(:phone_number, {:required => true, :placeholder => "2223334444", :size => 10, :maxlength => 10})
+        %li
+          = s.label(:active)
+          = s.check_box(:active, :disabled => true)
       %li
         = p.label(:active)
         = p.check_box(:active)

@@ -1,3 +1,8 @@
+#-  -*- encoding : utf-8 -*-
+#- This Source Code Form is subject to the terms of the Mozilla Public
+#- License, v. 2.0. If a copy of the MPL was not distributed with this
+#- file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 # -*- encoding : utf-8 -*-
 require "spec_helper"
 
@@ -17,8 +22,11 @@ describe Weltel::Patient do
 		subject { create(:patient) }
 		it { should have_one(:subscriber) }
 		it { should belong_to(:clinic) }
-		it { should have_many(:records).dependent(:destroy) }
-		it { should have_many(:states).through(:records) }
+		it { should have_many(:checkups).dependent(:destroy) }
+		it { should have_one(:current_checkup) }
+		it { should have_many(:results).through(:checkups) }
+		it { should have_one(:initial_result) }
+		it { should have_one(:current_result) }
 	end
 
 	#
@@ -67,13 +75,13 @@ describe Weltel::Patient do
 			end
 
 			#
-			it "filters by clinic" do
+			it "filters" do
 				create(:patient)
 				create(:patient)
 				expected = create(:patient)
 
 				c = Weltel::Clinic.table_name
-				patients = subject.joins(:clinic).filtered_by("#{c}.id", expected.clinic.id)
+				patients = subject.joins{clinic}.filtered_by("clinic.id", expected.clinic.id)
 
 				patients.count.should == 1
 				patients[0].should == expected
@@ -85,56 +93,10 @@ describe Weltel::Patient do
 				a = create(:patient, :user_name => "AA")
 				b = create(:patient, :user_name => "BB")
 
-				patients = subject.sorted_by(:user_name, :asc)
+				patients = subject.sorted_by("user_name", :asc)
 
 				patients.count.should == 3
 				patients.should == [a, b, c]
-			end
-
-			#
-			it "sorts by subscriber phone number" do
-				a = create(:subscriber, :phone_number => "2222222222").patient
-				c = create(:subscriber, :phone_number => "4444444444").patient
-				b = create(:subscriber, :phone_number => "3333333333").patient
-
-				s = Sms::Subscriber.table_name
-				patients = subject.joins(:subscriber).sorted_by("#{s}.phone_number", :desc)
-
-				patients.count.should == 3
-				patients.should == [c, b, a]
-			end
-
-			#
-			it "sorts by clinic name" do
-				b = create(:patient, :clinic => create(:clinic, :name => "BB"))
-				c = create(:patient, :clinic => create(:clinic, :name => "CC"))
-				a = create(:patient, :clinic => create(:clinic, :name => "AA"))
-
-				c = Weltel::Clinic.table_name
-				patients = subject.joins(:clinic).sorted_by("#{c}.name", :asc)
-
-				patients.count.should == 3
-				patients.should == [a, b, c]
-			end
-
-			it "filters by state" do
-				create(:patient)
-				subject.with_state(:unknown).count
-			end
-
-			it "filters by active record" do
-				create(:patient)
-				subject.with_active_record.count
-			end
-
-			it "filters by no active record" do
-				create(:patient)
-				subject.without_active_record.count
-			end
-
-			it "filters by no active record created before" do
-				create(:patient)
-				subject.without_active_record_created_on(Date.today).count
 			end
 		end
 	end

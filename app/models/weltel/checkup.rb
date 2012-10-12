@@ -1,4 +1,8 @@
-# -*- encoding : utf-8 -*-
+#-  -*- encoding : utf-8 -*-
+#- This Source Code Form is subject to the terms of the Mozilla Public
+#- License, v. 2.0. If a copy of the MPL was not distributed with this
+#- file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 module Weltel
 	class Checkup < ActiveRecord::Base
 		#
@@ -37,12 +41,12 @@ module Weltel
 
 			# initial result
 			def initial
-				where(:initial => true).first
+				where{initial == true}.first
 			end
 
 			# current result
 			def current
-				where(:current => true).first
+				where{current == true}.first
 			end
 		end
 
@@ -125,23 +129,23 @@ module Weltel
 		# class methods
 		#
 		def self.current
-			where(:current => true)
+			where{current == true}
 		end
 
 		#
 		def self.created_on(date)
-			where(:created_on => date)
+			where{created_on == date}
 		end
 
 		#
 		def self.created_before(date)
-			where("created_on < ?", date)
+			where{created_on < date}
 		end
 
 		#
 		def self.without_current_result
-			includes(:current_result)
-			.where(:weltel_results => {:id => nil})
+			joins{current_result.outer}
+			.where{current_result.id == nil}
 		end
 	end
 end

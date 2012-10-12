@@ -1,3 +1,8 @@
+#-  -*- encoding : utf-8 -*-
+#- This Source Code Form is subject to the terms of the Mozilla Public
+#- License, v. 2.0. If a copy of the MPL was not distributed with this
+#- file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 # -*- encoding : utf-8 -*-
 module Weltel
 	class PatientsController < ApplicationController
@@ -5,6 +10,7 @@ module Weltel
 		respond_to(:html)
 		layout("private/application")
 
+		#
     before_filter(:only => :index) do
     	session_param(:patients, :search, "")
     	page_param(:patients, 20)
@@ -14,13 +20,15 @@ module Weltel
 
 		# patient list
 		def index
-			@clinics = Weltel::Clinic.sorted_by(:name, :asc)
+			@clinics = Weltel::Clinic
+				.sorted_by("name", :asc)
+
 			@patients = Weltel::Patient
 				.joins{subscriber}
 				.joins{clinic.outer}
 				.search(@search)
-				.filtered_by(@filter_attribute.to_sym, @filter_value)
-				.sorted_by(@sort_attribute.to_sym, @sort_order.to_sym)
+				.filtered_by(@filter_attribute, @filter_value)
+				.sorted_by(@sort_attribute, @sort_order)
 				.paginate(:page => @page, :per_page => @per_page)
 
 			respond_with(@patients)

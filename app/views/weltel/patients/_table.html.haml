@@ -1,3 +1,7 @@
+//- This Source Code Form is subject to the terms of the Mozilla Public
+//- License, v. 2.0. If a copy of the MPL was not distributed with this
+//- file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 %table
   %tr
     = sorted_table_header_tag(:user_name) do
@@ -6,13 +10,16 @@
     = sorted_table_header_tag(:study_number) do
       = t(".study_number")
 
-    = sorted_table_header_tag(:subscriber_phone_number) do
+    = sorted_table_header_tag("subscriber.phone_number") do
       = t(".phone_number")
 
-    = filter_table_header_tag(:clinic_name, clinic_name_options) do
+    = filter_table_header_tag("clinic.name", clinic_name_options) do
       = t(".clinic")
 
+    = table_header_tag(t(".subscribed"))
+
     = table_header_tag(t(".active"))
+
     = table_header_tag(t(".actions"))
 
     - if @patients.empty?

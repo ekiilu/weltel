@@ -1,4 +1,8 @@
-# -*- encoding : utf-8 -*-
+#-  -*- encoding : utf-8 -*-
+#- This Source Code Form is subject to the terms of the Mozilla Public
+#- License, v. 2.0. If a copy of the MPL was not distributed with this
+#- file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 module Weltel
 	class Response < ActiveRecord::Base
 		#
@@ -22,19 +26,6 @@ module Weltel
 		# instance methods
 		def name=(name)
 			super(name.blank? ? name : name.downcase)
-		end
-
-		# class methods
-		#
-		def self.filtered_by(key, value)
-			return where{true} if value.blank?
-			where{{key => value}}
-		end
-
-		#
-		def self.sorted_by(key, order)
-			return where{true} if key.blank?
-			order{__send__(key).__send__(order)}
 		end
 	end
 end

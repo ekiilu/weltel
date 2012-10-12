@@ -1,3 +1,8 @@
+#-  -*- encoding : utf-8 -*-
+#- This Source Code Form is subject to the terms of the Mozilla Public
+#- License, v. 2.0. If a copy of the MPL was not distributed with this
+#- file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 # -*- encoding : utf-8 -*-
 require "spec_helper"
 
@@ -31,7 +36,7 @@ describe Weltel::Response do
 			create(:response)
 			expected = create(:response, :name => name)
 
-			responses = Weltel::Response.filtered_by(:name, name)
+			responses = Weltel::Response.filtered_by("name", name)
 
 			responses.count.should == 1
 			responses[0].should == expected
@@ -42,7 +47,7 @@ describe Weltel::Response do
 			expected = create(:response, :name => "A")
 			create(:response, :name => "C")
 
-			responses = Weltel::Response.sorted_by(:name, :asc)
+			responses = Weltel::Response.sorted_by("name", :asc)
 
 			responses.count.should == 3
 			responses[0].should == expected

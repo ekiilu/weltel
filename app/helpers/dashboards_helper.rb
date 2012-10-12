@@ -1,15 +1,20 @@
+#-  -*- encoding : utf-8 -*-
+#- This Source Code Form is subject to the terms of the Mozilla Public
+#- License, v. 2.0. If a copy of the MPL was not distributed with this
+#- file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 # -*- encoding : utf-8 -*-
 module DashboardsHelper
   def is_study_dashboard?(view)
     view == :study
   end
 
-	#
+  #
   def result_values_tabs_tag
-  	Weltel::Result::VALUES.each do |result|
-  		content_tag(:div, :class => "tab #{active_class(result == @state && @search.blank?)}") do
+  	RESULT_VALUES.each do |value|
+  		content_tag(:div, :class => "tab #{active_class(value == @state && @search.blank?)}") do
   			content_tag(:div, :class => "content") do
-  				link_to(t("weltel.patient_record_states.values.#{result}"), params.merge(:state => result, :page => 1), :class => "#{active_class(result == @state.to_sym)} #{result} state")
+  				link_to(result_value_t(value), params.merge(:state => value, :page => 1), :class => "#{active_class(value == @state.to_sym)} #{value} state")
   			end
   		end
   	end
@@ -21,14 +26,15 @@ module DashboardsHelper
 
 	#
   def initial_result_tag(result)
-  	value = result.nil? ? :pending : result.value
-		content_tag(:div, t("weltel.patient_record_states.values.#{value}"), :class => "state #{value}")
+  	value = result_value(result)
+		content_tag(:div, result_value_t(value), :class => result_value_class(value))
   end
 
 	#
 	def current_result_form_tag(patient, checkup, result)
+		value = result_value(result)
     form_for(checkup, :url => weltel_patient_checkup_path(patient, checkup)) do |f|
-    	select_tag(:current_result, options_for_select(result_value_options, result.value), :onchange => submit_form, :class => "current_state #{result.value}")
+    	select_tag(:current_result, options_for_select(result_value_options, value), :onchange => submit_form, :class => "current_state #{value}")
     end
 	end
 

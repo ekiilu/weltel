@@ -1,3 +1,8 @@
+#-  -*- encoding : utf-8 -*-
+#- This Source Code Form is subject to the terms of the Mozilla Public
+#- License, v. 2.0. If a copy of the MPL was not distributed with this
+#- file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 # -*- encoding : utf-8 -*-
 Weltel::Application.routes.draw do
 	# root
@@ -20,8 +25,8 @@ Weltel::Application.routes.draw do
 
 		# tasks
 		resource(:task, :only => []) do
-			get(:create_records)
-			get(:update_records)
+			get(:create_checkups)
+			get(:update_checkups)
 			get(:receive_responses)
 		end
 

@@ -1,4 +1,8 @@
-# -*- encoding : utf-8 -*-
+#-  -*- encoding : utf-8 -*-
+#- This Source Code Form is subject to the terms of the Mozilla Public
+#- License, v. 2.0. If a copy of the MPL was not distributed with this
+#- file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 module Weltel
 	class PatientMessagesController < ApplicationController
 		include Authentication::AuthenticatedController
@@ -42,14 +46,14 @@ module Weltel
 		def create
 			begin
 				@patient = Weltel::Patient.find(params[:patient_id])
-				message = params[:message]
 
-				body = message[:body]
-				body = Sms::MessageTemplate.find(params[:message_template_id]).body	if body.blank?
+				message_template_id = params[:message_template_id]
+				message = params[:message]
+				body = message[:body].blank? ? Sms::MessageTemplate.find(message_template_id) : message[:body]
 
 				Weltel::Patient.transaction do
-					if @patient.records.active
-						@message = @patient.records.active.send_message(body)
+					if @patient.current_checkup
+						@message = @patient.current_checkup.send_message(body)
 					else
 						@message = @patient.subscriber.send_message(body)
 					end

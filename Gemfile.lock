@@ -1,6 +1,24 @@
 GIT
-  remote: http://dev.verticallabs.ca/git/mambo/gems/authentication.git
-  revision: 089eee76ed94a6437e7ecfda7616204b3694c228
+  remote: https://github.com/jeffp/enumerated_attribute.git
+  revision: 84221b872f7f71152994b212520c833742a263e3
+  specs:
+    enumerated_attribute (0.3.0.beta1)
+      meta_programming (>= 0.2.1)
+
+GIT
+  remote: https://github.com/verticallabs/mambo-adapters.git
+  revision: 03d500e27bb0cc68111a46a6e8f16f1fcebd14be
+  branch: ar
+  specs:
+    mambo-adapters (0.0.14)
+      mambo-sms
+      mambo-support
+      rails
+      twilio-rb
+
+GIT
+  remote: https://github.com/verticallabs/mambo-authentication.git
+  revision: 3cc97e40d30b3c82d372507168121e1fd01af76b
   branch: ar
   specs:
     mambo-authentication (0.0.12)
@@ -11,8 +29,8 @@ GIT
       will_paginate
 
 GIT
-  remote: http://dev.verticallabs.ca/git/mambo/gems/messaging.git
-  revision: cbed97d7aadc14653e97749af48b48e8593c07ce
+  remote: https://github.com/verticallabs/mambo-messaging.git
+  revision: 1218241abba5c051087502dca33521e7f7378e41
   branch: ar
   specs:
     mambo-messaging (0.0.8)
@@ -21,8 +39,8 @@ GIT
       rails
 
 GIT
-  remote: http://dev.verticallabs.ca/git/mambo/gems/sms.git
-  revision: 7cb4efe12ca05b60657a047675cf970531802a5b
+  remote: https://github.com/verticallabs/mambo-sms.git
+  revision: 80d9677784ab8a93aa886b259d4004deb548e349
   branch: ar
   specs:
     mambo-sms (0.0.20)
@@ -35,31 +53,13 @@ GIT
       will_paginate
 
 GIT
-  remote: http://dev.verticallabs.ca/git/mambo/gems/support.git
-  revision: bc30359e0c663aa0e3c37fb9f3255264f906b5d2
+  remote: https://github.com/verticallabs/mambo-support.git
+  revision: c9af5fb0e4cfcaacfbed65893a92a9b007d44528
   branch: ar
   specs:
     mambo-support (0.0.10)
       mmcopyrights
       rails
-
-GIT
-  remote: http://dev.verticallabs.ca/git/mambo/gems/twilio_adapter.git
-  revision: 8cc9f01168d66155ff24a271c2c21bb67c034403
-  branch: ar
-  specs:
-    mambo-twilio_adapter (0.0.14)
-      mambo-sms
-      mambo-support
-      rails
-      twilio-rb
-
-GIT
-  remote: https://github.com/jeffp/enumerated_attribute.git
-  revision: 84221b872f7f71152994b212520c833742a263e3
-  specs:
-    enumerated_attribute (0.3.0.beta1)
-      meta_programming (>= 0.2.1)
 
 GEM
   remote: http://gems.verticallabs.ca/
@@ -236,7 +236,7 @@ GEM
       hike (~> 1.2)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    squeel (1.0.11)
+    squeel (1.0.13)
       activerecord (~> 3.0)
       activesupport (~> 3.0)
       polyamorous (~> 0.5.0)
@@ -249,7 +249,7 @@ GEM
     thor (0.16.0)
     tilt (1.3.3)
     tlsmail (0.0.1)
-    treetop (1.4.10)
+    treetop (1.4.11)
       polyglot
       polyglot (>= 0.3.1)
     twilio-rb (2.2.0)
@@ -295,11 +295,11 @@ DEPENDENCIES
   haml-rails
   jquery-rails
   magic_encoding
+  mambo-adapters!
   mambo-authentication!
   mambo-messaging!
   mambo-sms!
   mambo-support!
-  mambo-twilio_adapter!
   mysql2
   rails (~> 3.2)
   recursive-open-struct
