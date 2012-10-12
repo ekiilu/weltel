@@ -4,8 +4,8 @@
 #- file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 # -*- encoding : utf-8 -*-
-Feedbacker::Engine.config.mail_settings = {
-      :to => 'support@verticallabs.ca',
-      :from => 'Weltel Application <weltel@verticallabs.ca>',
-      :subject => 'Weltel feedback'
-    }
+#Feedbacker::Engine.config.mail_settings = {
+#      :to => 'support@verticallabs.ca',
+#      :from => 'Weltel Application <weltel@verticallabs.ca>',
+#      :subject => 'Weltel feedback'
+#    }
