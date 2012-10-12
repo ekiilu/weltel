@@ -41,6 +41,7 @@ en:
         study_number: "Study Number"
         phone_number: "Phone Number"
         clinic: "Clinic"
+        subscribed: "Subscribed"
         active: "Active"
         actions: "Actions"
         no_patients: "No Patients Found"

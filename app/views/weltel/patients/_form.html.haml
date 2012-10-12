@@ -12,6 +12,9 @@
         %li
           = s.label(:phone_number)
           = s.telephone_field(:phone_number, {:required => true, :placeholder => "2223334444", :size => 10, :maxlength => 10})
+        %li
+          = s.label(:active)
+          = s.check_box(:active, :disabled => true)
       %li
         = p.label(:active)
         = p.check_box(:active)

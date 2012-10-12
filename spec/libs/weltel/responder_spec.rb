@@ -7,12 +7,14 @@
 require "spec_helper"
 
 describe Weltel::Responder do
+	subject { Weltel::Factory.responder }
+
 	#
 	it "responds to unknown patient" do
 		create(:message_template, :name => :unknown)
 		message = create(:unknown_message, :body => "test")
 
-		response = Weltel::Factory.responder.respond_to_message(message, true)
+		response = subject.respond_to_message(message, true)
 
 		response.should_not be_nil
 	end
@@ -22,7 +24,7 @@ describe Weltel::Responder do
 		create(:message_template, :name => :inactive)
 		message = create(:inactive_message, :body => "test")
 
-		response = Weltel::Factory.responder.respond_to_message(message, true)
+		response = subject.respond_to_message(message, true)
 
 		response.should_not be_nil
 	end
@@ -32,7 +34,7 @@ describe Weltel::Responder do
 		create(:message_template, :name => :help)
 		message = create(:active_message, :body => "help")
 
-		response = Weltel::Factory.responder.respond_to_message(message, true)
+		response = subject.respond_to_message(message, true)
 
 		response.should_not be_nil
 	end
@@ -42,7 +44,7 @@ describe Weltel::Responder do
 		create(:message_template, :name => :stop)
 		message = create(:active_message, :body => "stop")
 
-		response = Weltel::Factory.responder.respond_to_message(message, true)
+		response = subject.respond_to_message(message, true)
 
 		response.should_not be_nil
 	end
@@ -52,7 +54,7 @@ describe Weltel::Responder do
 		create(:message_template, :name => :start)
 		message = create(:active_message, :body => "start")
 
-		response = Weltel::Factory.responder.respond_to_message(message, true)
+		response = subject.respond_to_message(message, true)
 
 		response.should_not be_nil
 	end

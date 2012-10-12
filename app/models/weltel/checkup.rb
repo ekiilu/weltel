@@ -41,12 +41,12 @@ module Weltel
 
 			# initial result
 			def initial
-				where(:initial => true).first
+				where{initial == true}.first
 			end
 
 			# current result
 			def current
-				where(:current => true).first
+				where{current == true}.first
 			end
 		end
 

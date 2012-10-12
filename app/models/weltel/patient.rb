@@ -5,9 +5,6 @@
 
 module Weltel
 	class Patient < ActiveRecord::Base
-
-		include Support::ModelHelper
-
 		#
 		def self.table_name
 			"weltel_patients"
@@ -45,7 +42,7 @@ module Weltel
 
 			# current checkups
 			def current
-				where(:current => true).first
+				where{current == true}.first
 			end
 		end
 
@@ -62,12 +59,12 @@ module Weltel
 
 			# initial result
 			def initial
-				where(:initial => true).first
+				where{initial == true}.first
 			end
 
 			# current result
 			def current
-				where(:current => true).first
+				where{current == true}.first
 			end
 		end
 
@@ -114,6 +111,12 @@ module Weltel
 			return where{true} if search.blank?
 			search = "%#{search}%"
 			where{(user_name =~ search) | (study_number =~ search)}
+		end
+
+		#
+		def self.with_active_subscriber
+			joins{subscriber}
+			.where{subscriber.active == true}
 		end
 
     #

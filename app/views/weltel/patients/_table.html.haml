@@ -16,7 +16,10 @@
     = filter_table_header_tag("clinic.name", clinic_name_options) do
       = t(".clinic")
 
+    = table_header_tag(t(".subscribed"))
+
     = table_header_tag(t(".active"))
+
     = table_header_tag(t(".actions"))
 
     - if @patients.empty?
