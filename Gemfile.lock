@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: https://github.com/verticallabs/mambo-adapters.git
-  revision: a6f89a217b17edd5e465e47134d5858681273d8e
+  revision: 9521df48060af5615a940de3f74bea3d30ad7c0a
   branch: ar
   specs:
     mambo-adapters (0.0.14)
