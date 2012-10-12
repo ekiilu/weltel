@@ -2,8 +2,10 @@ twilio:
   phone_number: '7788002767'
   account_sid: 'AC5e98a9a0d24a4dcbbc3126473d142d35'
   auth_token: 'da2c9e85efafa8848b3e705ae3a2afe9'
-demo_mode: true
 time_zone: "Pacific Time (US & Canada)"
+demo_enabled: true
+update:
+  refresh: 10
 deployment:
   server: 'localhost'
   app_name: 'weltel'
@@ -18,17 +20,18 @@ deployment:
   processes:
     unicorn:
       start: "bundle exec unicorn_rails -E #{RAILS_ENV} -c #{APP_ROOT}/config/unicorn.rb -D"
-      stop: "kill -QUIT #{PID}"
-      restart: "kill -USR2 #{PID}"
+      stop: "kill -QUIT $(cat #{PID_FILE})"
+      restart: "kill -USR2 $(cat #{PID_FILE})"
       workers: 2
       port: 3000
+      process_name: 'mambo_unicorn'
     dj:
       start: "bundle exec rake jobs:work"
       daemonize: true
     gammu:
       config_file: '/home/paul/dev/weltel/config/gammurc'
       start: 'gammu-smsd -c /home/paul/dev/weltel/config/gammurc'
-      stop: "kill -TERM #{PID}" 
+      stop: "kill -TERM $(cat #{PID_FILE})"
       daemonize: true
   monitoring:
     log_file: "monitoring.log"
