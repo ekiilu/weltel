@@ -6,6 +6,13 @@ GIT
       meta_programming (>= 0.2.1)
 
 GIT
+  remote: https://github.com/verticallabs/delayed_mail.git
+  revision: a6395dfb1b182389a1bb7b4dbf6a0968b191eaab
+  specs:
+    delayed_mail (0.0.2)
+      delayed_job
+
+GIT
   remote: https://github.com/verticallabs/mambo-adapters.git
   revision: a0b3fa7f48b2138e2f80ac43ae01868c7c102b4f
   branch: ar
@@ -63,7 +70,6 @@ GIT
       rails
 
 GEM
-  remote: http://gems.verticallabs.ca/
   remote: http://rubygems.org/
   specs:
     actionmailer (3.2.8)
@@ -126,8 +132,6 @@ GEM
     delayed_job_active_record (0.3.3)
       activerecord (>= 2.1.0, < 4)
       delayed_job (~> 3.0)
-    delayed_mail (0.0.2)
-      delayed_job
     diff-lcs (1.1.3)
     erubis (2.7.0)
     eventmachine (1.0.0)
@@ -267,8 +271,6 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
-    vertical-feedbacker (0.0.2)
-      rails (~> 3.2)
     whenever (0.7.3)
       activesupport (>= 2.3.4)
       chronic (~> 0.6.3)
@@ -287,7 +289,7 @@ DEPENDENCIES
   database_cleaner
   delayed_job
   delayed_job_active_record
-  delayed_mail
+  delayed_mail!
   enumerated_attribute!
   exception_notification
   execjs
@@ -313,6 +315,5 @@ DEPENDENCIES
   tlsmail
   uglifier
   unicorn
-  vertical-feedbacker (= 0.0.2)
   whenever
   will_paginate
