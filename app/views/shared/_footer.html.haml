@@ -4,10 +4,10 @@
 
 #page_footer
   = yield :footer
-  - if authenticated_user
-    = feedbacker_tag(nil, nil, {:name => authenticated_user.name, :email => authenticated_user.email_address})
-  - else
-    = feedbacker_tag(nil, nil, {:name => nil, :email => nil})
+  //  - if authenticated_user
+  //    = feedbacker_tag(nil, nil, {:name => authenticated_user.name, :email => authenticated_user.email_address})
+  //  - else
+  //    = feedbacker_tag(nil, nil, {:name => nil, :email => nil})
 
 #subfooter
   = yield :subfooter

@@ -191,7 +191,7 @@ ActiveRecord::Schema.define(:version => 20121008231655) do
     t.integer  "subscriber_id"
     t.integer  "parent_id"
     t.string   "status",                       :null => false
-    t.string   "phone_number",  :limit => 10,  :null => false
+    t.string   "phone_number",  :limit => 12,  :null => false
     t.string   "body",          :limit => 160
     t.string   "sid",           :limit => 34
     t.datetime "created_at",                   :null => false
@@ -208,7 +208,7 @@ ActiveRecord::Schema.define(:version => 20121008231655) do
 
   create_table "sms_subscribers", :force => true do |t|
     t.boolean  "active",                     :default => true, :null => false
-    t.string   "phone_number", :limit => 10,                   :null => false
+    t.string   "phone_number", :limit => 12,                   :null => false
     t.datetime "created_at",                                   :null => false
     t.datetime "updated_at",                                   :null => false
     t.integer  "patient_id",                                   :null => false
