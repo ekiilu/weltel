@@ -1,7 +1,7 @@
 twilio:
-  phone_number: '6042103431'
-  account_sid: 'AC237b652f53a64bd19e62f62ee2a3d2e4'
-  auth_token: '0652039bfaaa607bf5af942001dd9b72'
+  phone_number: 'your number'
+  account_sid: 'your account sid'
+  auth_token: 'your auth token'
 time_zone: "Pacific Time (US & Canada)"
 demo_enabled: true
 update:
@@ -26,7 +26,7 @@ deployment:
       port: 3000
       process_name: 'mambo_unicorn'
     dj:
-      start: "bundle exec rake jobs:work"
+      start: "cd #{APP_ROOT} && bundle exec rake jobs:work"
       daemonize: true
     gammu:
       config_file: '/www/weltel/shared/config/gammurc'

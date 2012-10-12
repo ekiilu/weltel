@@ -26,7 +26,7 @@ deployment:
       port: 3000
       process_name: 'mambo_unicorn'
     dj:
-      start: "bundle exec rake jobs:work"
+      start: "cd #{APP_ROOT} && bundle exec rake jobs:work"
       daemonize: true
     gammu:
       config_file: '/home/paul/dev/weltel/config/gammurc'
