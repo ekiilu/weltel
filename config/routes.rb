@@ -10,7 +10,7 @@ Weltel::Application.routes.draw do
 
 	mount Authentication::Engine => "/authentication"
 	mount Sms::Engine => "/sms"
-  mount Feedbacker::Engine => "/feedback"
+  #mount Feedbacker::Engine => "/feedback"
 
 	# admin
 	namespace(:weltel) do
