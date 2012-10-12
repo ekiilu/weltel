@@ -31,8 +31,8 @@ module Weltel
     #DebugLevel = 2
       eos
 
-      logger.debug("Setting gammu config")
-      logger.debug(config_string)
+      Rails.logger.debug("Setting gammu config")
+      Rails.logger.debug(config_string)
 
       config_string
     end

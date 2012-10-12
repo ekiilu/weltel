@@ -21,7 +21,7 @@ module Weltel
 		# validations
     validates(:user_name, :presence => true, :length => {:in => 2..32}, :format => /^\w*$/)
     validates(:study_number, :length => {:maximum => 32}, :format => /^\w*$/, :allow_blank => true)
-    validates(:contact_phone_number, :length => {:is => 10}, :format => /^\d*$/, :allow_blank => true)
+    validates(:contact_phone_number, :length => {:in => 10..12}, :format => /^\d*$/, :allow_blank => true)
 
 		# associations
 		# subscriber

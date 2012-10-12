@@ -12,7 +12,7 @@ module Weltel
 		#
     def update
       params.select! {|k,v| Adapters::Connection.valid_keys.include?(k.to_sym) }
-      Adapters::Connection.save_config(:current, params.merge({:type => Adapters::Gammu::Connection.to_s}))
+      Adapters::Connection.save_config(:current, params.merge({:type => Weltel::Connection.to_s}))
       @connection = Adapters::Connection.load_config(:current)
 
       if @connection.type

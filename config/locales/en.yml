@@ -48,6 +48,7 @@ en:
         unknown: 'Unknown'
         not_available: 'Not available: '
     tests:
+      sent: 'Test Message Sent'
       new:
         test_connection: 'Test Connection'
         phone_number: 'Phone Number'
