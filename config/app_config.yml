@@ -20,8 +20,8 @@ deployment:
   processes:
     unicorn:
       start: "bundle exec unicorn_rails -E #{RAILS_ENV} -c #{APP_ROOT}/config/unicorn.rb -D"
-      stop: "kill -QUIT #{PID}"
-      restart: "kill -USR2 #{PID}"
+      stop: "kill -QUIT $(cat #{PID_FILE})"
+      restart: "kill -USR2 $(cat #{PID_FILE})"
       workers: 2
       port: 3000
       process_name: 'mambo_unicorn'
@@ -31,7 +31,7 @@ deployment:
     gammu:
       config_file: '/home/paul/dev/weltel/config/gammurc'
       start: 'gammu-smsd -c /home/paul/dev/weltel/config/gammurc'
-      stop: "kill -TERM #{PID}" 
+      stop: "kill -TERM $(cat #{PID_FILE})"
       daemonize: true
   monitoring:
     log_file: "monitoring.log"

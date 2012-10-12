@@ -11,15 +11,11 @@ Weltel::Application.routes.draw do
 	namespace(:weltel) do
     # system
     resource(:system, :only => [:show]) do
-      resource(:connection, :only => [:edit, :update]) do
+      resource(:connection, :only => [:edit, :update, :destroy]) do
         resource(:test, :only => [:new, :create])
       end
       resource(:version, :only => [:show, :update])
-      resources(:logs, :only => [:index, :destroy, :show], :constraints => { :id => /.*/ })
-      resources(:help, :only => [:index, :show])
-      resource(:data, :only => [:show])
-      resource(:demo, :only => [:show])
-      resource(:time_zone, :only => [:show])
+      resources(:logs, :only => [:destroy, :show], :constraints => { :id => /.*/ })
     end
 
 		# tasks

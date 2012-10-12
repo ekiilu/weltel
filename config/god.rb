@@ -35,7 +35,8 @@ AppConfig.processes.to_h.each_value do |process_config|
     :app_root => AppConfig.deployment.app_root,
     :working_directory => AppConfig.deployment.working_directory,
     :pid_file => pid_file,
-    :logfile => "#{AppConfig.deployment.log_directory}/#{process_config.process_name}.log",
+    :pid => File.exist?(pid_file) ? File.open(pid_file).read.chomp : nil,
+    :log_file => "#{AppConfig.deployment.log_directory}/#{process_config.process_name}.log",
   }
 
   God.watch do |w|
@@ -43,9 +44,9 @@ AppConfig.processes.to_h.each_value do |process_config|
     w.interval    = 30.seconds
     w.dir         = env[:working_directory]
 
-    w.pid_file    = "#{pid_directory}/#{process_config.process_name}.pid" if !process_config.daemonize
+    w.pid_file    = env[:pid_file] if !process_config.daemonize
     w.env         = Hash[ env.collect {|k,v| [k.to_s.upcase, v] } ] 
-    w.log         = env[:logfile]
+    w.log         = env[:log_file]
 
     w.group       = AppConfig.deployment.monitoring.group_name, 
 

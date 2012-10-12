@@ -1,17 +1,31 @@
 %h1= t('.system_admin')
 
-%dl
-  %dt= link_to(t('.configure_connection'), edit_weltel_system_connection_path, :class => 'button')
-  %dd= t('.about_configure_connection')
+%table{:class => 'system'}
+  - if AppConfig.demo_enabled
+    %tr
+      %td
+        %h2= t('.features')
+      %td
+        = link_to(t(".test_checkup"), create_records_weltel_task_path, {:remote => true, :class => "button"})
+        = link_to(t('.test_late'), update_records_weltel_task_path, {:remote => true, :class => "button"})
 
-  %dt= link_to(t('.test_connection'), new_weltel_system_connection_test_path, :class => 'button')
-  %dd= t('.about_test_connection')
+  %tr
+    %td
+      %h2= t('.connections')
+    %td
+      = link_to(t('.setup_connection'), edit_weltel_system_connection_path, :class => 'button')
+      = link_to(t('.test_connection'), new_weltel_system_connection_test_path, :class => 'button') 
+      = link_to(t('.reset_connection'), weltel_system_connection_path, :method => :delete, :class => 'button') 
 
-  %dt= link_to(t('.manage_updates'), weltel_system_version_path, :class => 'button')
-  %dd= t('.about_manage_updates')
+  %tr
+    %td
+      %h2= t('.updates')
+    %td
+      = link_to(t('.check_for_updates'), weltel_system_version_path, :class => 'button')
 
-  %dt= link_to(t('.demonstrate_features'), weltel_system_demo_path, :class => 'button')
-  %dd= t('.about_demonstrate_features')
-
-  %dt= link_to(t('.inspect_logs'), weltel_system_logs_path, :class => 'button')
-  %dd= t('.about_inspect_logs')
+  %tr
+    %td
+      %h2= t('.logs')
+    %td
+      - @logs.each do |log|
+        = link_to(log.gsub('.log', ''), weltel_system_log_path(:id => log), :class => 'log-file')

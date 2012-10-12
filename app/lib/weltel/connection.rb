@@ -21,6 +21,10 @@ module Weltel
       raise("Not implemented: please subclass Weltel::Connection")
     end
 
+    def self.received
+      raise("Not implemented: please subclass Weltel::Connection")
+    end
+
     def self.save_config(name, hash)
       hash.each do |k, v|
         Weltel::Config.create!(:name => name.to_s, :key => k.to_s, :value => v.to_s)

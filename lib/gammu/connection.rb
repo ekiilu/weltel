@@ -13,11 +13,31 @@ module Gammu
     end
 
     def self.send_sms(phone_number, message)
-      OutboxItem.create!(:Text => message, :DestinationNumber => phone_number)
+      query = <<-q
+        INSERT INTO outbox (DestinationNumber,  TextDecoded,  CreatorID,  Coding) 
+        VALUES ('#{phone_number}', '#{message}', 'Weltel System','Default_No_Compression');
+      q
+      ActiveRecord::Base.connection.execute(query)
+      true
     end
 
     def self.reset
+      self.write
       system('god restart mambo_gammu')
+    end
+
+    def self.received
+      Gammu::InboxItem.all.map do |item| 
+        {
+          :phone_number => item.read_attribute(:SenderNumber),
+          :message => item.read_attribute(:TextDecoded),
+          :time => item.read_attribute(:ReceivingDateTime)
+        } 
+      end
+    end
+
+    def self.clear_received
+      Gammu::InboxItem.destroy_all
     end
 
     def self.write
@@ -35,12 +55,15 @@ module Gammu
   [smsd]
     Service = sql
     Driver = native_mysql
-    PIN = 1234
     User = #{database_config['username']}
     Password = #{database_config['password']}
     PC = localhost
     Database = #{database_config['database']}
     Logfile = #{AppConfig.deployment.log_directory}/gammu.log
+    DeliveryReport = sms
+    ResetFrequency = 300
+    MaxRetries = 3
+    #DebugLevel = 2
       eos
 
       logger.debug("Setting gammu config")

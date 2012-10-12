@@ -160,6 +160,11 @@ a
 b
   font-weight: bold
 
+h1
+  font-size: 2em
+  font-weight: bold
+  margin: 10px 0px
+
 h2
   font-size: 1.1em
   font-weight: bold
@@ -574,3 +579,19 @@ option
   box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.15)
   right: -20px
   bottom: 33px
+
+.log-file
+  padding: 8px
+  display: inline-block
+  margin: 0px 10px 10px 0px
+  color: black
+  +bg-gradient($gray, darken($gray, $colorshift))
+  +border-radius($radius)
+  &:hover
+    +bg-gradient(lighten($gray, $colorshift/2), $gray)
+
+ol.connections
+  input[type='text'], select, textarea
+    width: 300px
+  textarea
+    height: 200px

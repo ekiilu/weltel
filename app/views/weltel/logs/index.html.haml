@@ -1,2 +1,6 @@
-- @logs.each do |log|
-  = link_to(log, weltel_system_log_path(:id => log))
+%h1= t('.logs')
+
+%table
+  - @logs.each do |log|
+    %tr
+      %td= link_to(log, weltel_system_log_path(:id => log))

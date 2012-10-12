@@ -26,20 +26,23 @@ en:
     systems:
       show:
         system_admin: 'Server Administration'
-        configure_connection: 'Configure Connection'
-        about_configure_connection: 'blah'
+        setup_connection: 'Setup Connection'
         test_connection: "Test Connection"
-        about_test_connection: 'blah'
-        manage_updates: "Manage Updates"
-        about_manage_updates: 'blah'
-        demonstrate_features: "Demonstrate Features"
-        about_demonstrate_features: 'blah'
+        reset_connection: "Reset Connection"
+        check_for_updates: "Check For Updates"
+        features: "Features"
+        connections: 'Connections'
+        updates: "Updates"
+        logs: "Logs"
+        test_checkup: 'Test Checkup'
+        test_late: 'Test Late'
     connections:
       edit:
         connection_configuration: "Connection configuration"
         device: "Device"
         extra: "Extra"
         save: 'Save'
+        unknown: 'Unknown'
         not_available: 'Not available: '
     tests:
       new:
@@ -57,7 +60,10 @@ en:
         update_link: "Update"
         version: "Current Version"
         revision: "Revision"
-        do_update: "Do Update"
+        do_update: "Do Update"  
+    logs:
+      index:
+        logs: "System Logs"
     patients:
       created: "Patient Created"
       updated: "Patient Updated"
