@@ -6,16 +6,16 @@
       %td
         %h2= t('.features')
       %td
-        = link_to(t(".test_checkup"), create_records_weltel_task_path, {:remote => true, :class => "button"})
-        = link_to(t('.test_late'), update_records_weltel_task_path, {:remote => true, :class => "button"})
+        = link_to(t(".test_checkup"), create_checkups_weltel_task_path, {:remote => true, :class => "button"})
+        = link_to(t('.test_late'), create_checkups_weltel_task_path, {:remote => true, :class => "button"})
 
   %tr
     %td
       %h2= t('.connections')
     %td
       = link_to(t('.setup_connection'), edit_weltel_system_connection_path, :class => 'button')
-      = link_to(t('.test_connection'), new_weltel_system_connection_test_path, :class => 'button') 
-      = link_to(t('.reset_connection'), weltel_system_connection_path, :method => :delete, :class => 'button') 
+      = link_to(t('.test_connection'), new_weltel_system_connection_test_path, :class => 'button')
+      = link_to(t('.reset_connection'), weltel_system_connection_path, :method => :delete, :class => 'button')
 
   %tr
     %td

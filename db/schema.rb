@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121008231655) do
+ActiveRecord::Schema.define(:version => 20121012041550) do
 
   create_table "authentication_roles", :force => true do |t|
     t.boolean  "system",                   :default => false, :null => false

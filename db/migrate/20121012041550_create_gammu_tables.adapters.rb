@@ -1,3 +1,4 @@
+# This migration comes from adapters (originally 20121008231655)
 #-  -*- encoding : utf-8 -*- 
 #- This Source Code Form is subject to the terms of the Mozilla Public
 #- License, v. 2.0. If a copy of the MPL was not distributed with this

@@ -13,12 +13,12 @@ module Weltel
 
     def edit
       @connection = Connection.load_config(:current)
-      @available_devices = Connection.available_devices 
+      @available_devices = Connection.available_devices
     end
 
     def update
       params.select! {|k,v| Connection.valid_keys.include?(k.to_sym) }
-      Connection.save_config(:current, params.merge({:type => Gammu::Connection.to_s}))
+      Connection.save_config(:current, params.merge({:type => Adapters::Gammu::Connection.to_s}))
       @connection = Connection.load_config(:current)
       connection_class = @connection.type.constantize
       connection_class.reset

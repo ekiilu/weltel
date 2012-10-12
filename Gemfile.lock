@@ -14,13 +14,14 @@ GIT
 
 GIT
   remote: https://github.com/verticallabs/mambo-adapters.git
-  revision: 03d500e27bb0cc68111a46a6e8f16f1fcebd14be
+  revision: a0b3fa7f48b2138e2f80ac43ae01868c7c102b4f
   branch: ar
   specs:
     mambo-adapters (0.0.14)
       mambo-sms
       mambo-support
       rails
+      recursive-open-struct
       twilio-rb
 
 GIT
