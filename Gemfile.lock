@@ -48,7 +48,7 @@ GIT
 
 GIT
   remote: https://github.com/verticallabs/mambo-sms.git
-  revision: 80d9677784ab8a93aa886b259d4004deb548e349
+  revision: 3343d39f3029435f5b5ecfddc500b2306408e8f6
   branch: ar
   specs:
     mambo-sms (0.0.20)
