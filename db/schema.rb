@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121012041550) do
+ActiveRecord::Schema.define(:version => 20121012215052) do
 
   create_table "authentication_roles", :force => true do |t|
     t.boolean  "system",                   :default => false, :null => false
@@ -44,12 +44,6 @@ ActiveRecord::Schema.define(:version => 20121012041550) do
 
   add_index "authentication_users", ["email_address"], :name => "index_authentication_users_on_email_address", :unique => true
   add_index "authentication_users", ["name"], :name => "index_authentication_users_on_name", :unique => true
-
-  create_table "configs", :id => false, :force => true do |t|
-    t.string "name"
-    t.string "key"
-    t.text   "value"
-  end
 
   create_table "daemons", :id => false, :force => true do |t|
     t.text "Start", :null => false
@@ -217,6 +211,12 @@ ActiveRecord::Schema.define(:version => 20121012041550) do
   add_index "sms_subscribers", ["active"], :name => "index_sms_subscribers_on_active"
   add_index "sms_subscribers", ["patient_id"], :name => "index_sms_subscribers_on_patient_id"
   add_index "sms_subscribers", ["phone_number"], :name => "index_sms_subscribers_on_phone_number", :unique => true
+
+  create_table "support_configs", :id => false, :force => true do |t|
+    t.string "name"
+    t.string "key"
+    t.text   "value"
+  end
 
   create_table "weltel_checkups", :force => true do |t|
     t.integer  "patient_id",                       :null => false
