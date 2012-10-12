@@ -30,10 +30,10 @@ every(5.minutes) do
 	command("curl #{AppConfig.deployment.internal_host}/weltel/task/receive_responses")
 end
 
-every_in_time_zone(AppConfig.time_zone, :monday, :at => '12:00') do
+every(AppConfig.time_zone, :monday, :at => '12:00') do
   command("curl #{AppConfig.deployment.internal_host}/weltel/task/create_checkups")
 end
 
-every_in_time_zone(AppConfig.time_zone, :wednesday, :at => '12:00') do
+every(AppConfig.time_zone, :wednesday, :at => '12:00') do
   command("curl #{AppConfig.deployment.internal_host}/weltel/task/update_checkups")
 end
