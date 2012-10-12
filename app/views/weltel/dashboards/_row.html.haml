@@ -8,30 +8,30 @@
   %td
     %h3= patient.study_number
   %td
-    = initial_result_tag(patient.initial_result)
+    = result_value_tag(patient.initial_result)
   %td
-    = current_result_form_tag(patient, patient.current_checkup, patient.current_result)
+    = result_value_select_tag(patient, patient.current_checkup, patient.current_result)
   %td
-    = status_tag(patient, patient.current_checkup)
+    = checkup_status_select_tag(patient, patient.current_checkup)
   %td
-    = contact_method_tag(patient, patient.current_checkup)
+    = checkup_contact_method_select_tag(patient, patient.current_checkup)
   %td
     = patient.clinic.name
   %td.actions
     = link_to(t(".messages_link", :count => patient.subscriber.messages.received.count), weltel_patient_messages_path(patient), :class => "button")
     = link_to('+', '#', :class => 'toggle_details')
 
-//%tr.patient_last
-//  - first_sent = active_record.messages.sent.first
-//  %td.first{:colspan => 4}
-//    - if first_sent
-//      - first_received = active_record.messages.received_or_read.first
-//      - if first_sent
-//        %h3 Initial response
-//        = exchange_tag(nil, first_received, [nil, 'messaging.no_initial_receive'])
-//    - else
-//      = exchange_tag(nil, nil, ['messaging.no_initial_send', nil])
-//  %td.last{:colspan => 5}
-//    - if first_received
-//      %h3 Most recent messages
-//      = exchange_tag(active_record.messages.sent.last, active_record.messages.received_or_read.last)
+%tr.patient_last
+  - first_sent = patient.current_checkup.messages.sent.first
+  %td.first{:colspan => 4}
+    - if first_sent
+      - first_received = patient.current_checkup.messages.received_or_read.first
+      - if first_sent
+        %h3 Initial response
+        = exchange_tag(nil, first_received, [nil, 'messaging.no_initial_receive'])
+    - else
+      = exchange_tag(nil, nil, ['messaging.no_initial_send', nil])
+  %td.last{:colspan => 5}
+    - if first_received
+      %h3 Most recent messages
+      = exchange_tag(patient.current_checkup.messages.sent.last, patient.current_checkup.messages.received_or_read.last)

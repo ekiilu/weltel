@@ -148,6 +148,7 @@ module Weltel
 
 		#
     def self.filter_by_current_result_value(value)
+    	return where{current_result.id == nil} if value.to_sym == :pending
 			where{current_result.value == value}
     end
 	end

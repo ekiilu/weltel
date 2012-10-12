@@ -25,7 +25,7 @@ en:
   weltel:
     systems:
       show:
-        system_admin: 'Server Administration'
+        system_admin: 'System Administration'
         setup_connection: 'Setup Connection'
         test_connection: "Test Connection"
         reset_connection: "Reset Connection"
@@ -37,10 +37,13 @@ en:
         test_checkup: 'Test Checkup'
         test_late: 'Test Late'
     connections:
+      updated: "Connection Updated"
+      destroyed: "Connection Reset"
       edit:
-        connection_configuration: "Connection configuration"
+        connection_configuration: "Connection Configuration"
         device: "Device"
         extra: "Extra"
+        cancel: "Cancel"
         save: 'Save'
         unknown: 'Unknown'
         not_available: 'Not available: '
@@ -49,6 +52,7 @@ en:
         test_connection: 'Test Connection'
         phone_number: 'Phone Number'
         message: 'Message'
+        cancel: "Cancel"
         send: 'Send'
         sent: 'Sent test message!'
         failed: 'Could not send test message.'
@@ -60,10 +64,14 @@ en:
         update_link: "Update"
         version: "Current Version"
         revision: "Revision"
-        do_update: "Do Update"  
+        do_update: "Do Update"
     logs:
+      destroyed: "Log Cleared"
       index:
         logs: "System Logs"
+      show:
+        cancel: "Cancel"
+        clear: "Clear"
     patients:
       created: "Patient Created"
       updated: "Patient Updated"

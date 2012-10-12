@@ -1,0 +1,2 @@
+= form_for(checkup, :url => weltel_patient_checkup_path(patient, checkup)) do |f|
+  = select_tag(:contact_method, options_for_select(checkup_contact_method_options, checkup.contact_method), :onchange => submit_form)

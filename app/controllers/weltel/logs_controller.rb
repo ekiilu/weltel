@@ -8,7 +8,14 @@ module Weltel
     def destroy
       @filename = params[:id]
       File.open(File.join(Rails.root, 'log', @filename), 'w') {|f| f.write('') }
+      flash[:notice] = t(".destroyed")
       redirect_to(weltel_system_path)
     end
-  end
+
+	private
+		#
+		def t(key)
+			I18n.t(key, :scope => [:weltel, :logs])
+		end
+	end
 end

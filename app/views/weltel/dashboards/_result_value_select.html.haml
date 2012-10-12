@@ -1,0 +1,12 @@
+- value = result_value(result)
+= form_for(checkup, :url => weltel_patient_checkup_path(patient, checkup)) do |f|
+  = select_tag(:current_result, options_for_select(result_value_options, value), :onchange => submit_form, :class => "current_state #{value}")
+
+- content_for(:scripts) do
+  :javascript
+    $(function() {
+      $('select.current_result').live('change', function(e) {
+        var klass = $(e.target).find(':selected').attr('class');
+        $(e.target).attr('class', 'current_state state ' + klass);
+      });
+    });

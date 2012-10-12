@@ -10,45 +10,33 @@ module DashboardsHelper
   end
 
   #
-  def result_values_tabs_tag
-  	RESULT_VALUES.each do |value|
-  		content_tag(:div, :class => "tab #{active_class(value == @state && @search.blank?)}") do
-  			content_tag(:div, :class => "content") do
-  				link_to(result_value_t(value), params.merge(:state => value, :page => 1), :class => "#{active_class(value == @state.to_sym)} #{value} state")
-  			end
-  		end
-  	end
+  def clinical_tabs_tag
+  	render(:partial => "clinical_tabs")
   end
 
 	#
-  def checkup_status_tabs_tag
+  def study_tabs_tag
+  	render(:partial => "study_tabs")
   end
 
 	#
-  def initial_result_tag(result)
+  def result_value_tag(result)
   	value = result_value(result)
 		content_tag(:div, result_value_t(value), :class => result_value_class(value))
   end
 
 	#
-	def current_result_form_tag(patient, checkup, result)
-		value = result_value(result)
-    form_for(checkup, :url => weltel_patient_checkup_path(patient, checkup)) do |f|
-    	select_tag(:current_result, options_for_select(result_value_options, value), :onchange => submit_form, :class => "current_state #{value}")
-    end
+	def result_value_select_tag(patient, checkup, result)
+		render(:partial => "result_value_select", :locals => {:patient => patient, :checkup => checkup, :result => result})
 	end
 
 	#
-  def status_tag(patient, checkup)
-		form_for(checkup, :url => weltel_patient_checkup_path(patient, checkup)) do |f|
-    	select_tag(:status, options_for_select(checkup_status_options, checkup.status), :onchange => submit_form, :class => "status #{checkup.status}")
-    end
+  def checkup_status_select_tag(patient, checkup)
+		render(:partial => "checkup_status_select", :locals => {:patient => patient, :checkup => checkup})
   end
 
 	#
-  def contact_method_tag(patient, checkup)
-    form_for(checkup, :url => weltel_patient_checkup_path(patient, checkup)) do |f|
-    	select_tag(:contact_method, options_for_select(checkup_contact_method_options, checkup.contact_method), :onchange => submit_form)
-    end
+  def checkup_contact_method_select_tag(patient, checkup)
+  	render(:partial => "checkup_contact_method_select", :locals => {:patient => patient, :checkup => checkup})
   end
 end

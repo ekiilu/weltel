@@ -1,0 +1,4 @@
+- Weltel::Checkup::STATUSES.each do |status|
+  .tab{:class => active_class(status == @status && @search.blank?)}
+    .content
+      = link_to(checkup_status_t(status), params.merge(:status => status, :page => 1), :class => "#{active_class(status == @status)} #{status} status")

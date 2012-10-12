@@ -9,16 +9,10 @@
     = submit_tag(t(".search"))
 
   - if is_study_dashboard?(@view.to_sym)
-    - Weltel::Result::VALUES.each do |state|
-      .tab{:class => active_class(state == @state && @search.blank?)}
-        .content
-          = link_to(t("weltel.patient_record_states.values.#{state}"), params.merge(:state => state, :page => 1), :class => "#{active_class(state == @state.to_sym)} #{state.to_s} state")
+    = study_tabs_tag
 
   - else
-    - Weltel::Checkup::STATUSES.each do |status|
-      .tab{:class => active_class(status == @status && @search.blank?)}
-        .content
-          = link_to(checkup_status_t(status), params.merge(:status => status, :page => 1), :class => "#{active_class(status == @status.to_sym)} #{status.to_s} status")
+    = clinical_tabs_tag
 
 - if is_study_dashboard?(@view.to_sym)
   = render("study_table")
@@ -34,11 +28,6 @@
       $('a.toggle_details').live('click', function(e) {
         $(e.target).parents('tr').next().toggle();
         return false;
-      });
-
-      $('select.current_result').live('change', function(e) {
-        var klass = $(e.target).find(':selected').attr('class');
-        $(e.target).attr('class', 'current_state state ' + klass);
       });
 
       $('td.actions .toggle_details').live('click', function(e) {

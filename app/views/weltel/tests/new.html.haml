@@ -9,4 +9,5 @@
         = label_tag(t(".message"))
         = text_field_tag('message', nil, :maxlength => 100)
       %li
+        = link_to(t(".cancel"), weltel_system_path, :class => "button")
         = submit_tag(t(".send"))
