@@ -11,7 +11,7 @@
         = s.hidden_field(:active)
         %li
           = s.label(:phone_number)
-          = s.telephone_field(:phone_number, {:required => true, :placeholder => "2223334444", :size => 10, :maxlength => 10})
+          = s.telephone_field(:phone_number, {:required => true, :placeholder => "2223334444", :size => 12, :maxlength => 12})
         %li
           = s.label(:active)
           = s.check_box(:active, :disabled => true)
@@ -26,10 +26,10 @@
         = p.text_field(:study_number, {:size => 16})
       %li
         = p.label(:contact_phone_number)
-        = p.telephone_field(:contact_phone_number, {:placeholder => "2223334444", :size => 10, :maxlength => 10})
+        = p.telephone_field(:contact_phone_number, {:placeholder => "2223334444", :size => 12, :maxlength => 12})
       %li
         = p.label(:clinic_id)
-        = p.select(:clinic_id, options_from_collection_for_select(Weltel::Clinic.all, :id, :name, @patient.clinic_id))
+        = p.select(:clinic_id, options_from_collection_for_select(Weltel::Clinic.all, :id, :name, @patient.clinic_id), :include_blank => true)
   %fieldset
     .center
       = link_to(t(".cancel"), weltel_patients_path, :class => "button")

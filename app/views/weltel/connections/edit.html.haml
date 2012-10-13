@@ -16,5 +16,6 @@
         = label_tag(:extra)
         = text_area_tag(:extra, @connection.extra)
       %li
+        = link_to(t(".cancel"), weltel_system_path, :class => "button")
         = submit_tag(t(".save"))
 

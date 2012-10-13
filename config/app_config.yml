@@ -1,7 +1,7 @@
 twilio:
-  phone_number: '7788002767'
-  account_sid: 'AC5e98a9a0d24a4dcbbc3126473d142d35'
-  auth_token: 'da2c9e85efafa8848b3e705ae3a2afe9'
+  phone_number: 'your number'
+  account_sid: 'your account sid'
+  auth_token: 'your auth token'
 time_zone: "Pacific Time (US & Canada)"
 demo_enabled: true
 update:
@@ -11,12 +11,12 @@ deployment:
   app_name: 'weltel'
   app_repo: "https://github.com/weltel/weltel.git"
   app_branch: 'ar'
-  deploy_to: '/home/paul/dev/weltel' 
-  app_root: '/home/paul/dev/weltel'
-  working_directory: "/home/paul/dev/weltel/tmp"
+  deploy_to: '/www/weltel'
+  app_root: '/www/weltel/current'
+  working_directory: "/www/weltel/shared"
   internal_host: "http://localhost:3000"
-  rails_env: 'development'
-  log_directory: "/home/paul/dev/weltel/log"
+  rails_env: 'production'
+  log_directory: "/www/weltel/shared/log"
   processes:
     unicorn:
       start: "bundle exec unicorn_rails -E #{RAILS_ENV} -c #{APP_ROOT}/config/unicorn.rb -D"
@@ -26,15 +26,15 @@ deployment:
       port: 3000
       process_name: 'mambo_unicorn'
     dj:
-      start: "bundle exec rake jobs:work"
+      start: "cd #{APP_ROOT} && bundle exec rake jobs:work"
       daemonize: true
     gammu:
-      config_file: '/home/paul/dev/weltel/config/gammurc'
-      start: 'gammu-smsd -c /home/paul/dev/weltel/config/gammurc'
+      config_file: '/www/weltel/shared/config/gammurc'
+      start: 'gammu-smsd -c /www/weltel/shared/config/gammurc'
       stop: "kill -TERM $(cat #{PID_FILE})"
       daemonize: true
   monitoring:
     log_file: "monitoring.log"
     group_name: 'mambo'
-  uid: 'paul'
-  gid: 'paul'
+  uid: 'cdion'
+  gid: 'cdion'

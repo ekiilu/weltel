@@ -21,7 +21,7 @@ module Weltel
 		# validations
     validates(:user_name, :presence => true, :length => {:in => 2..32}, :format => /^\w*$/)
     validates(:study_number, :length => {:maximum => 32}, :format => /^\w*$/, :allow_blank => true)
-    validates(:contact_phone_number, :length => {:is => 10}, :format => /^\d*$/, :allow_blank => true)
+    validates(:contact_phone_number, :length => {:in => 10..12}, :format => /^\d*$/, :allow_blank => true)
 
 		# associations
 		# subscriber
@@ -138,17 +138,18 @@ module Weltel
 
 		#
     def self.filter_by_current_checkup_status(status)
-    	where{current_checkup.status == status}
+    	where{current_checkup.status == status.to_s}
     end
 
 		#
     def self.filter_by_initial_result_value(value)
-			where{initial_result.value == value}
+			where{initial_result.value == value.to_s}
     end
 
 		#
     def self.filter_by_current_result_value(value)
-			where{current_result.value == value}
+    	return where{current_result.id == nil} if value.to_sym == :pending
+			where{current_result.value == value.to_s}
     end
 	end
 end

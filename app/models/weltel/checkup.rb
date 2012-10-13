@@ -71,12 +71,6 @@ module Weltel
       contact_method != :none ? contact_method.to_s : ""
     end
 
-		#
-    def state_changed?
-    	raise "fixme"
-      #initial_state.value != active_state.value
-    end
-
     #
 		def send_message(body)
 			messages.create!(

@@ -9,7 +9,7 @@ module Weltel
 
       script = Rails.root.to_s + "/script/update_needed"
       output = `#{script}`
-      @update_needed = (output =~ /.*Update needed.*/)
+      @update_available = (output =~ /.*True.*/)
 
       revision_file = File.join(Rails.root, 'REVISION')
       @revision = File.exist?(revision_file) ? File.open(revision_file).read : 'development'
@@ -24,7 +24,7 @@ module Weltel
 			Process.detach(pid)
 			logger.error(pid)
 			FileUtils.touch("/www/weltel/shared/deploy")
-			redirect_to(weltel_update_path)
+			redirect_to(weltel_system_version_path)
 		end
 	end
 end

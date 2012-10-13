@@ -113,6 +113,7 @@ namespace :deploy do
   task :upload_config, :roles => :app do
     config_files.each do |filename|
       full_path = File.join(deployment_config_path, filename)
+      raise "Missing config file: #{full_path}" unless File.exist?(full_path)
       top.upload(full_path, "#{shared_path}/config/#{filename}")
     end 
   end

@@ -1,0 +1,4 @@
+- ResultsHelper::RESULT_VALUES.each do |value|
+  .tab{:class => active_class(value == @state && @search.blank?)}
+    .content
+      = link_to(result_value_t(value), params.merge(:state => value, :page => 1), :class => "#{active_class(value == @state)} #{value} state")

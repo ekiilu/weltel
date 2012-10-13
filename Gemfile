@@ -47,7 +47,7 @@ gem "certified"
 # need git version until this is released: https://github.com/jeffp/enumerated_attribute/pull/45
 gem "enumerated_attribute", :git => "https://github.com/jeffp/enumerated_attribute.git"
 gem "recursive-open-struct"
-gem "exception_notification"
+#gem "exception_notification"
 gem "whenever", :require => false
 gem "delayed_job"
 gem "delayed_job_active_record"

@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: https://github.com/verticallabs/mambo-adapters.git
-  revision: a0b3fa7f48b2138e2f80ac43ae01868c7c102b4f
+  revision: 91f01c9b70f025ebb4083da77b40a6c21d23946b
   branch: ar
   specs:
     mambo-adapters (0.0.14)
@@ -48,7 +48,7 @@ GIT
 
 GIT
   remote: https://github.com/verticallabs/mambo-sms.git
-  revision: 80d9677784ab8a93aa886b259d4004deb548e349
+  revision: 8ed0b129ceaa08d1e4b36ec5f9e2b782fa3ea1aa
   branch: ar
   specs:
     mambo-sms (0.0.20)
@@ -62,7 +62,7 @@ GIT
 
 GIT
   remote: https://github.com/verticallabs/mambo-support.git
-  revision: c9af5fb0e4cfcaacfbed65893a92a9b007d44528
+  revision: de013039458176d7068f0ee5bda29255713aff5d
   branch: ar
   specs:
     mambo-support (0.0.10)
@@ -126,7 +126,7 @@ GEM
     compass-rails (1.0.3)
       compass (>= 0.12.2, < 0.14)
     daemons (1.1.9)
-    database_cleaner (0.8.0)
+    database_cleaner (0.9.1)
     delayed_job (3.0.3)
       activesupport (~> 3.0)
     delayed_job_active_record (0.3.3)
@@ -135,8 +135,6 @@ GEM
     diff-lcs (1.1.3)
     erubis (2.7.0)
     eventmachine (1.0.0)
-    exception_notification (2.6.1)
-      actionmailer (>= 3.0.4)
     execjs (1.4.0)
       multi_json (~> 1.0)
     factory_girl (4.1.0)
@@ -267,7 +265,7 @@ GEM
     uglifier (1.3.0)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
-    unicorn (4.3.1)
+    unicorn (4.4.0)
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
@@ -291,7 +289,6 @@ DEPENDENCIES
   delayed_job_active_record
   delayed_mail!
   enumerated_attribute!
-  exception_notification
   execjs
   factory_girl_rails
   god

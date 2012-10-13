@@ -26,7 +26,6 @@
             = active_link_to(t(".message_templates_link"), sms.message_templates_path, :class => "button")
             = active_link_to(t(".responses_link"), main_app.weltel_responses_path, :class => "button")
             = active_link_to(t(".users_link"), authentication.users_path, :class => "button")
-            = active_link_to(t(".roles_link"), authentication.roles_path, :class => "button")
             = active_link_to(t(".clinics_link"), main_app.weltel_clinics_path, :class => "button")
             - content_for(:footer) do
               = active_link_to(t(".system_link"), main_app.weltel_system_path, :class => "button")
