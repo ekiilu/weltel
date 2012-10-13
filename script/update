@@ -6,4 +6,4 @@ deploy_dir=`dirname $(readlink -f $script_dir)`
 cd $deploy_dir
 cp config/app_config.yml config/deployments/local/app_config.yml
 cp config/database.yml config/deployments/local/database.yml
-cap local deploy 2>&1 > update.log
+bundle exec cap local deploy 2>&1 > update.log
