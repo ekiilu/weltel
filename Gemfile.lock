@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: https://github.com/verticallabs/mambo-adapters.git
-  revision: 9521df48060af5615a940de3f74bea3d30ad7c0a
+  revision: 91f01c9b70f025ebb4083da77b40a6c21d23946b
   branch: ar
   specs:
     mambo-adapters (0.0.14)
@@ -48,7 +48,7 @@ GIT
 
 GIT
   remote: https://github.com/verticallabs/mambo-sms.git
-  revision: 3343d39f3029435f5b5ecfddc500b2306408e8f6
+  revision: 8ed0b129ceaa08d1e4b36ec5f9e2b782fa3ea1aa
   branch: ar
   specs:
     mambo-sms (0.0.20)

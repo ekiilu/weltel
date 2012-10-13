@@ -14,8 +14,10 @@ module Weltel
 
 		#
 		def receive_responses
-			messages = poller.poll
-			respond_to_messages(messages, true)
+			ActiveRecord::Base.transaction do
+				messages = poller.poll
+				respond_to_messages(messages, true)
+			end
 		end
 
 	protected
@@ -48,6 +50,8 @@ module Weltel
 			return :inactive if !subscriber.active?
 
 			# patient
+			#patient = Weltel::Patient.find(subscriber.patient_id)
+			# TODO WTF?!?
 			patient = subscriber.patient
 
 			# inactive patient
@@ -55,6 +59,8 @@ module Weltel
 
 			# alert
 			alerter.alert(patient, message)
+
+			return nil if message.body.nil?
 
 			body = message.body.strip.downcase
 
@@ -80,7 +86,7 @@ module Weltel
 			message.checkup = checkup
 
 			# find response
-			response = Weltel::Response.first_by_name(body)
+			response = Weltel::Response.get_by_name(body)
 
 			if response.nil? # unknown response
 				checkup.change_result(:unknown, AppConfig.system_user)

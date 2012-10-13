@@ -138,18 +138,18 @@ module Weltel
 
 		#
     def self.filter_by_current_checkup_status(status)
-    	where{current_checkup.status == status}
+    	where{current_checkup.status == status.to_s}
     end
 
 		#
     def self.filter_by_initial_result_value(value)
-			where{initial_result.value == value}
+			where{initial_result.value == value.to_s}
     end
 
 		#
     def self.filter_by_current_result_value(value)
     	return where{current_result.id == nil} if value.to_sym == :pending
-			where{current_result.value == value}
+			where{current_result.value == value.to_s}
     end
 	end
 end

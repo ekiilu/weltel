@@ -27,5 +27,10 @@ module Weltel
 		def name=(name)
 			super(name.blank? ? name : name.downcase)
 		end
+
+		# class methods
+		def self.get_by_name(value)
+			where{name == value.to_s}.first
+		end
 	end
 end
