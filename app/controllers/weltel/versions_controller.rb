@@ -24,7 +24,7 @@ module Weltel
 			Process.detach(pid)
 			logger.error(pid)
 			FileUtils.touch("/www/weltel/shared/deploy")
-			redirect_to(weltel_update_path)
+			redirect_to(weltel_version_path)
 		end
 	end
 end
