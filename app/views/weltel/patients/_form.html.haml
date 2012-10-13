@@ -29,7 +29,7 @@
         = p.telephone_field(:contact_phone_number, {:placeholder => "2223334444", :size => 12, :maxlength => 12})
       %li
         = p.label(:clinic_id)
-        = p.select(:clinic_id, options_from_collection_for_select(Weltel::Clinic.all, :id, :name, @patient.clinic_id))
+        = p.select(:clinic_id, options_from_collection_for_select(Weltel::Clinic.all, :id, :name, @patient.clinic_id), :include_blank => true)
   %fieldset
     .center
       = link_to(t(".cancel"), weltel_patients_path, :class => "button")

@@ -16,7 +16,7 @@
   %td
     = checkup_contact_method_select_tag(patient, patient.current_checkup)
   %td
-    = patient.clinic.name
+    = patient.clinic.nil? ? "" : patient.clinic.name
   %td.actions
     = link_to(t(".messages_link", :count => patient.subscriber.messages.received.count), weltel_patient_messages_path(patient), :class => "button")
     = link_to('+', '#', :class => 'toggle_details')
