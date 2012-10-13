@@ -9,7 +9,7 @@ module Weltel
 
       script = Rails.root.to_s + "/script/update_needed"
       output = `#{script}`
-      @update_needed = (output =~ /.*True*/)
+      @update_needed = (output =~ /.*True.*/)
 
       revision_file = File.join(Rails.root, 'REVISION')
       @revision = File.exist?(revision_file) ? File.open(revision_file).read : 'development'
