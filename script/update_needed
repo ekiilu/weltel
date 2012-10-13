@@ -12,9 +12,9 @@ echo "Local head is   $local_head"
 echo "Remote head is  $remote_head"
 
 if [ -n "$remote_head" ] && [ -n "$local_head" ] && [ "$local_head" != "$remote_head" ]; then
-  echo "Update needed"
+  echo "True"
   exit 1;
 else
-  echo "No update needed"
+  echo "False"
   exit 0;
 fi
