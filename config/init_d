@@ -1,0 +1,58 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:             god
+# Required-Start:       $all
+# Required-Stop:        $all
+# Default-Start:        2 3 4 5
+# Default-Stop:         0 1 6
+# Short-Description:    God
+### END INIT INFO
+
+NAME=god
+DESC=god
+
+set -e
+
+dir=/www/weltel/current
+god_user=weltel
+god_command='bundle exec god'
+god_config='config/god.rb'
+pid=/www/weltel/shared/pids/god.pid
+# Make sure the binary and the config file are present before proceeding
+
+. /lib/lsb/init-functions
+
+RETVAL=0
+
+case "$1" in
+  start)
+    echo -n "Starting $DESC: "
+    su - $god_user -c "cd $dir && $god_command -c $god_config -P $pid -l log/god.log"
+    RETVAL=$?
+    echo "$NAME."
+    ;;
+  stop)
+    echo -n "Stopping $DESC: "
+    kill `cat /var/run/god.pid`
+    RETVAL=$?
+    echo "$NAME."
+    ;;
+  restart)
+    echo -n "Restarting $DESC: "
+    kill `cat $pid`
+    su - $god_user -c "cd $dir && $god_command -c $god_config -P $pid -l log/god.log"
+    RETVAL=$?
+    echo "$NAME."
+    ;;
+  status)
+    su - $god_user -c "cd $dir && $god_command status"
+    RETVAL=$?
+    ;;
+  *)
+    echo "Usage: god {start|stop|restart|status}"
+    exit 1
+    ;;
+esac
+
+exit $RETVAL
