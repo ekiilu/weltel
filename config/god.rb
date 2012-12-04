@@ -26,10 +26,12 @@ God::Contacts::Email.defaults do |d|
   d.server_password = 'v3rt1c4l'
 end
 
-God.contact(:email) do |c|
-  c.name = 'Support'
-  c.group = 'developers'
-  c.to_email = 'support@verticallabs.ca'
+if AppConfig.deployment.rails_env != 'development'
+  God.contact(:email) do |c|
+    c.name = 'Support'
+    c.group = 'developers'
+    c.to_email = 'support@verticallabs.ca'
+  end
 end
 
 AppConfig.processes.to_h.each_value do |process_config|

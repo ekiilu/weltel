@@ -7,7 +7,7 @@ demo_enabled: true
 update:
   refresh: 10
 deployment:
-  server: 'localhost'
+  server: 'weltel.verticallabs.ca'
   app_name: 'weltel'
   app_repo: "https://github.com/weltel/weltel.git"
   app_branch: 'ar'
@@ -36,5 +36,5 @@ deployment:
   monitoring:
     log_file: "monitoring.log"
     group_name: 'mambo'
-  uid: 'weltel'
-  gid: 'weltel'
+  uid: 'web'
+  gid: 'web'
