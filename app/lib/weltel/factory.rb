@@ -7,12 +7,12 @@ module Weltel
 	class Factory
 		#
 		def self.sender
-			Adapters::Twilio::Sender.new(AppConfig.twilio.phone_number)
+			Adapters::TwilioAdapter::Sender.new(AppConfig.twilio.phone_number)
 		end
 
 		#
 		def self.poller
-			Adapters::Twilio::Poller.new(AppConfig.twilio.phone_number)
+			Adapters::TwilioAdapter::Poller.new(AppConfig.twilio.phone_number)
 		end
 
 		#
