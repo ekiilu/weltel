@@ -32,7 +32,11 @@ end
 
 # deploy
 gem "execjs"
-gem "therubyracer"
+
+# BLAH: https://github.com/cowboyd/therubyracer/issues/215
+gem "libv8", "~> 3.3.10"
+gem "therubyracer", "0.10.2"
+
 gem "capistrano", ">= 2.9.0"
 gem "capistrano_colors"
 gem "unicorn"
@@ -44,15 +48,13 @@ gem "tlsmail", :require => false
 gem "certified"
 
 # application
-# need git version until this is released: https://github.com/jeffp/enumerated_attribute/pull/45
-gem "enumerated_attribute", :git => "https://github.com/jeffp/enumerated_attribute.git"
+gem "enumerated_attribute"
 gem "recursive-open-struct"
-#gem "exception_notification"
+gem "exception_notification"
 gem "whenever", :require => false
 gem "delayed_job"
 gem "delayed_job_active_record"
-gem "delayed_mail", :git => 'https://github.com/verticallabs/delayed_mail.git'
-#gem "vertical-feedbacker", "0.0.2"
+gem "delayed_mail", :git => "https://github.com/verticallabs/delayed_mail.git"
 gem "will_paginate"
 gem "active_link_to"
 gem "squeel"
