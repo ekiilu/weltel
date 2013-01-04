@@ -28,6 +28,7 @@ set :repository, AppConfig.deployment.app_repo
 set :deploy_to, AppConfig.deployment.deploy_to
 set :branch, AppConfig.deployment.app_branch
 set :user, AppConfig.deployment.uid
+set :rails_env, AppConfig.deployment.rails_env
 role :web, AppConfig.deployment.server
 role :app, AppConfig.deployment.server
 role :db, AppConfig.deployment.server, :primary => true
@@ -43,7 +44,6 @@ set :use_sudo, false
 set :using_rvm, false
 set :scm, :git
 set :deploy_via, :remote_cache
-set :rails_env, 'production'
 ssh_options[:forward_agent] = true
 
 # setup whenever
@@ -52,8 +52,8 @@ require "whenever/capistrano"
 
 # hooks
 before "deploy", "deploy:upload_config"
-before "deploy:assets:precompile", "deploy:symlink_config"
-after "deploy:symlink_config", "deploy:migrate"
+before "whenever:update_crontab", "deploy:symlink_config"
+after "bundle:install", "deploy:migrate"
 after "deploy:restart", "deploy:delete_deploy_file"
 
 # helpers
