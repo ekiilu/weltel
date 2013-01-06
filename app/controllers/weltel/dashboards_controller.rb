@@ -13,7 +13,7 @@ module Weltel
       sort_param(:dashboard, :user_name, :asc)
       filter_param(:dashboard)
       session_param(:dashboard, :search, "")
-      session_param(:dashboard, :view, :study)
+      session_param(:dashboard, :view, :todo)
       if is_study_dashboard?(@view.to_sym)
         session_param(:dashboard, :state, :negative)
       else

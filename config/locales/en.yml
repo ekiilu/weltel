@@ -13,7 +13,7 @@ en:
     private:
       application:
         study_dashboard_link: "Overview"
-        clinic_dashboard_link: "To Do"
+        clinic_dashboard_link: "Todo"
         patients_link: "Patients"
         message_templates_link: "Templates"
         responses_link: "Dictionary"
@@ -147,7 +147,7 @@ en:
       open: "Open"
       closed: "Closed"
       show:
-        clinic_view: 'To Do'
+        clinic_view: 'Todo'
         study_view: 'Overview'
         search: "Find Patients"
         notes: "Notes"
@@ -156,7 +156,7 @@ en:
         study_number: "Study #"
         phone_number: "Phone Number"
         initial_result: "Initial Result"
-        current_result: "Current Result"
+        current_result: "This Week's Status"
         status: "Status"
         contact_method: "Contact Method"
         actions: 'Actions'
@@ -166,7 +166,7 @@ en:
         study_number: "Study Number"
         phone_number: "Phone Number"
         initial_result: "Initial Result"
-        current_result: "Current Result"
+        current_result: "This Week's Status"
         status: "Status"
         contact_method: "Contact Method"
         actions: 'Actions'
@@ -178,7 +178,7 @@ en:
         study_number: "Study Number"
         phone_number: "Phone Number"
         initial_result: "Initial Result"
-        current_result: "Current Result"
+        current_result: "This Week's Status"
         status: "Status"
         contact_method: "Contact Method"
         actions: 'Actions'

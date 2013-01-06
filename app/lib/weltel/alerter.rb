@@ -12,10 +12,11 @@ module Weltel
 
 		#
 		def alert(patient, message)
-			body = "#{patient.user_name}: #{message.body}"[0..159]
+			length = patient.user_name.length + 2
+			body = "#{patient.user_name}: #{message.body}"[0..length]
 
 			Authentication::User.with_phone_number.each do |user|
-				message = patient.subscriber.send_message(body)
+				message = Sms::Message.send_message(user.phone_number, body)
 				sender.send(message)
 			end
 		end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121012215052) do
+ActiveRecord::Schema.define(:version => 20130106013143) do
 
   create_table "authentication_roles", :force => true do |t|
     t.boolean  "system",                   :default => false, :null => false
@@ -37,13 +37,14 @@ ActiveRecord::Schema.define(:version => 20121012215052) do
     t.string   "name",            :limit => 64,                     :null => false
     t.string   "email_address",   :limit => 128,                    :null => false
     t.string   "password_digest", :limit => 64,                     :null => false
-    t.string   "phone_number",    :limit => 10
+    t.string   "phone_number",    :limit => 12
     t.datetime "created_at",                                        :null => false
     t.datetime "updated_at",                                        :null => false
   end
 
   add_index "authentication_users", ["email_address"], :name => "index_authentication_users_on_email_address", :unique => true
   add_index "authentication_users", ["name"], :name => "index_authentication_users_on_name", :unique => true
+  add_index "authentication_users", ["phone_number"], :name => "index_authentication_users_on_phone_number", :unique => true
 
   create_table "daemons", :id => false, :force => true do |t|
     t.text "Start", :null => false

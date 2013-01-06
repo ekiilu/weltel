@@ -7,14 +7,14 @@
     %h3= link_to(patient.user_name, edit_weltel_patient_path(patient))
   %td
     %h3= patient.study_number
-  %td
-    = result_value_tag(patient.initial_result)
+  //%td
+  //= result_value_tag(patient.initial_result)
   %td
     = result_value_select_tag(patient, patient.current_checkup, patient.current_result)
   %td
     = checkup_status_select_tag(patient, patient.current_checkup)
-  %td
-    = checkup_contact_method_select_tag(patient, patient.current_checkup)
+  //%td
+  //= checkup_contact_method_select_tag(patient, patient.current_checkup)
   %td
     = patient.clinic.nil? ? "" : patient.clinic.name
   %td.actions

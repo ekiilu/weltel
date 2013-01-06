@@ -18,7 +18,7 @@ GIT
 
 GIT
   remote: https://github.com/verticallabs/mambo-authentication.git
-  revision: 3cc97e40d30b3c82d372507168121e1fd01af76b
+  revision: 5ce6359ea3ef1507f198e0d3d95e8b5b60aef1a3
   branch: ar
   specs:
     mambo-authentication (0.0.12)

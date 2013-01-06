@@ -10,16 +10,16 @@
     = sorted_table_header_tag(:study_number) do
       = t(".study_number")
 
-    = sorted_table_header_tag("initial_result.value") do
-      = t(".initial_result")
+    //= sorted_table_header_tag("initial_result.value") do
+    //= t(".initial_result")
 
     = table_header_tag(t(".current_result"))
 
     = sorted_table_header_tag("current_checkup.status") do
       = t(".status")
 
-    = filter_table_header_tag("current_checkup.contact_method", checkup_contact_method_options) do
-      = t(".contact_method")
+    //= filter_table_header_tag("current_checkup.contact_method", checkup_contact_method_options) do
+    //= t(".contact_method")
 
     = filter_table_header_tag("clinic.name", clinic_name_options) do
       = t(".clinic")
