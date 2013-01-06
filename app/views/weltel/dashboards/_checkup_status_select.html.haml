@@ -1,2 +1,5 @@
 = form_for(checkup, :url => weltel_patient_checkup_path(patient, checkup)) do |f|
-  = select_tag(:status, options_for_select(checkup_status_options, checkup.status), :onchange => submit_form, :class => "status #{checkup.status}")
+  = f.select(:status, |
+    options_for_select(checkup_status_options, checkup.status), |
+    {}, |
+    :onchange => submit_form, :class => "status #{checkup.status}")

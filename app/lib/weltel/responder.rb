@@ -24,15 +24,6 @@ module Weltel
 		attr_reader(:poller)
 		attr_reader(:alerter)
 
-		#
-		def reply(message)
-			key, params = process_message(message)
-
-			return nil if key.nil?
-
-			Sms::MessageTemplate.get_by_name(key).body % params
-		end
-
 	private
 		HELP_COMMANDS = ["help"]
 		STOP_COMMANDS = ["stop", "cancel", "quit", "unsubscribe"]
@@ -40,6 +31,15 @@ module Weltel
 
 		#
 		def respond(message)
+			key = respond_with_key(message)
+
+			return key if key.nil?
+
+			Sms::MessageTemplate.get_by_name(key).body
+		end
+
+		#
+		def respond_with_key(message)
 			# subscriber
 			subscriber = message.subscriber
 

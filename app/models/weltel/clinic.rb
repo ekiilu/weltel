@@ -13,7 +13,10 @@ module Weltel
     attr_accessible(:system, :name)
 
 		# validations
-    validates(:name, :uniqueness => true, :length => {:in => 2..64}, :format => /^[\w ]*$/, :allow_blank => true)
+    validates(:name,
+    	:uniqueness => true,
+    	:length => {:in => 2..64},
+    	:format => /^[\w\s[:punct:]]*$/)
 
 		# associations
 		has_many(:patients,

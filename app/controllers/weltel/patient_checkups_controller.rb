@@ -11,12 +11,18 @@ module Weltel
 
     #
 		def update
+			weltel_checkup = params[:weltel_checkup]
       @patient = Weltel::Patient.find(params[:patient_id])
       @checkup = @patient.checkups.find(params[:id])
 
-      @checkup.change_result(params[:current_result].to_sym, authenticated_user) if params[:current_result]
-      @checkup.reload
-      @checkup.attributes = params.select{|k, v| [:status, :contact_method].include?(k.to_sym)}
+      current_result = weltel_checkup[:current_result]
+      if current_result
+				@checkup.change_result(current_result.to_sym, authenticated_user)
+				@checkup.reload
+			end
+
+			weltel_checkup = weltel_checkup.select{|k,v| [:status].include?(k.to_sym)}
+      @checkup.assign_attributes(weltel_checkup)
       @checkup.save!
 
       redirect_to(weltel_dashboard_path)

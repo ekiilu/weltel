@@ -63,7 +63,7 @@ module Weltel
 			begin
 				weltel_response = params[:weltel_response]
 				@response = Weltel::Response.find(params[:id])
-				@response.attributes = weltel_response
+				@response.assign_attributes(weltel_response)
 				@response.save!
 				flash[:notice] = t(:updated)
 				respond_with(@response, :location => weltel_responses_path)

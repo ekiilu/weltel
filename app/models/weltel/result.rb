@@ -21,10 +21,14 @@ module Weltel
 		enum_attr(:value, VALUES, :init => :unknown, :nil => false)
 
 		# validations
-		validates(:user, :presence => true)
-		validates(:initial, :inclusion => {:in => [true, false]})
-		validates(:current, :inclusion => {:in => [true, false]})
-		validates(:value, :presence => true)
+		validates(:user,
+			:presence => true)
+		validates(:initial,
+			:inclusion => {:in => [true, false]})
+		validates(:current,
+			:inclusion => {:in => [true, false]})
+		validates(:value,
+			:presence => true)
 
 		# associations
 		# checkup

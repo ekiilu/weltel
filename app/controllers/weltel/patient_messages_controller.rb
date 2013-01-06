@@ -51,7 +51,7 @@ module Weltel
 				message = params[:message]
 				body = message[:body].blank? ? Sms::MessageTemplate.find(message_template_id).body : message[:body]
 
-				Weltel::Patient.transaction do
+				ActiveRecord::Base.transaction do
 					if @patient.current_checkup
 						@message = @patient.current_checkup.send_message(body)
 					else

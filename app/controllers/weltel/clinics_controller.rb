@@ -56,7 +56,7 @@ module Weltel
 			begin
 				weltel_clinic = params[:weltel_clinic]
 				@clinic = Weltel::Clinic.find(params[:id])
-				@clinic.attributes = weltel_clinic
+				@clinic.assign_attributes(weltel_clinic)
 				@clinic.save!
 				flash[:notice] = t(:updated)
 				respond_with(@clinic, :location => weltel_clinics_path)

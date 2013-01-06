@@ -24,8 +24,10 @@ module Weltel
     enum_attr(:contact_method, CONTACT_METHODS, :init => :none, :nil => false)
 
 		# validations
-		validates(:current, :inclusion => {:in => [true, false]})
-		validates(:created_on, :presence => true)
+		validates(:current,
+			:inclusion => {:in => [true, false]})
+		validates(:created_on,
+			:presence => true)
 
 		# associations
 		# patient

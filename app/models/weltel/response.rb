@@ -19,7 +19,11 @@ module Weltel
     enum_attr(:value, VALUES, :init => :positive)
 
 		# validations
-    validates(:name, :presence => true, :uniqueness => true, :length => {:maximum => 160}, :format => /^[\w ]*$/)
+    validates(:name,
+    	:presence => true,
+    	:uniqueness => true,
+    	:length => {:maximum => 160},
+    	:format => /^[\w\s[:punct:]]*$/)
 
 		# associations
 

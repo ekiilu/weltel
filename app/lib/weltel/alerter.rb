@@ -12,7 +12,7 @@ module Weltel
 
 		#
 		def alert(patient, message)
-			length = patient.user_name.length + 2
+			length = 160 - patient.user_name.length - 2
 			body = "#{patient.user_name}: #{message.body}"[0..length]
 
 			Authentication::User.with_phone_number.each do |user|

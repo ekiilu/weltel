@@ -71,7 +71,7 @@ module Weltel
 				Weltel::Patient.transaction do
 					weltel_patient = params[:weltel_patient]
 					@patient = Weltel::Patient.find(params[:id])
-					@patient.attributes = weltel_patient
+					@patient.assign_attributes(weltel_patient)
 					@patient.save!
 					flash[:notice] = t(:updated)
 					respond_with(@patient, :location => weltel_patients_path)

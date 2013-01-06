@@ -66,8 +66,8 @@ DEV_GIT = "https://github.com/verticallabs"
 gem "mambo-authentication", :git => "#{DEV_GIT}/mambo-authentication.git", :branch => 'ar' #MAMBO_DEV
 #gem "mambo-authentication", ">= 0.0.10" #MAMBO_PUBLIC
 
-#gem "mambo-adapters", :path => "#{HOME_PATH}/adapters" #MAMBO_LOCAL
-gem "mambo-adapters", :git => "#{DEV_GIT}/mambo-adapters.git", :branch => 'ar' #MAMBO_DEV
+gem "mambo-adapters", :path => "#{HOME_PATH}/adapters" #MAMBO_LOCAL
+#gem "mambo-adapters", :git => "#{DEV_GIT}/mambo-adapters.git", :branch => 'ar' #MAMBO_DEV
 #gem "mambo-adapters", ">= 0.0.13" #MAMBO_PUBLIC
 
 #gem "mambo-sms", :path => "#{HOME_PATH}/sms" #MAMBO_LOCAL
