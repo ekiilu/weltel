@@ -49,7 +49,7 @@ module Weltel
 
 				message_template_id = params[:message_template_id]
 				message = params[:message]
-				body = message[:body].blank? ? Sms::MessageTemplate.find(message_template_id) : message[:body]
+				body = message[:body].blank? ? Sms::MessageTemplate.find(message_template_id).body : message[:body]
 
 				Weltel::Patient.transaction do
 					if @patient.current_checkup
