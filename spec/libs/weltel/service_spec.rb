@@ -7,16 +7,15 @@ require "spec_helper"
 
 describe Weltel::Service do
 	#
-	it "creates records" do
+	it "creates checkups" do
 		create(:patient)
-
 		create(:message_template, :name => :checkup)
 
 		Weltel::Factory.service.create_checkups(Date.today.monday)
 	end
 
 	#
-	it "updates records" do
+	it "updates checkups" do
 		create(:system)
 		create(:checkup)
 

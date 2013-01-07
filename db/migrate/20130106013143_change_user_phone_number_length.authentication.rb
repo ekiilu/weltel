@@ -1,5 +1,5 @@
 # This migration comes from authentication (originally 20130106012440)
-class ChangeUserPhoneNumberLengthAndMakeUnique < ActiveRecord::Migration
+class ChangeUserPhoneNumberLength < ActiveRecord::Migration
   def up
   	change_column :authentication_users, :phone_number, :string, :limit => 12
   	add_index :authentication_users, :phone_number, :unique => true

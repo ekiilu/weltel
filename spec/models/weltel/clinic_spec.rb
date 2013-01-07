@@ -17,7 +17,7 @@ describe Weltel::Clinic do
 	#
 	context "associations" do
 		subject { create(:clinic) }
-		it { should have_many(:patients).dependent(:restrict) }
+		it { should have_many(:patients).dependent(:nullify) }
 	end
 
 	context "methods" do

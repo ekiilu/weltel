@@ -14,8 +14,7 @@ describe Weltel::Response do
 		it { should validate_presence_of(:name) }
 		it { should validate_uniqueness_of(:name) }
 		it { should ensure_length_of(:name).is_at_most(160) }
-		it { should validate_format_of(:name).with("name") }
-		it { should validate_format_of(:name).not_with("!") }
+		it { should validate_format_of(:name).with("name.!? ") }
 	end
 
 	#

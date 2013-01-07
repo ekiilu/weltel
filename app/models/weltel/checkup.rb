@@ -12,6 +12,7 @@ module Weltel
 
 		# attributes
 		attr_accessible(
+			:user_id,
 			:current,
 			:status,
 			:contact_method,

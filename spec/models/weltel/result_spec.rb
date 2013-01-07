@@ -11,7 +11,6 @@ describe Weltel::Result do
 		subject { create(:result) }
 
 		it { should validate_presence_of(:user) }
-		it { should validate_presence_of(:value) }
 	end
 
 	#

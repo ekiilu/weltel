@@ -15,7 +15,7 @@ describe Weltel::PatientCheckupsController do
 		describe "update" do
 			before do
 				patient = create(:patient_with_current_checkup)
-				post(:update, :patient_id => patient.id, :id => patient.current_checkup.id)
+				post(:update, :patient_id => patient.id, :id => patient.current_checkup.id, :weltel_checkup => {})
 			end
 
 			#

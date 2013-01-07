@@ -7,7 +7,7 @@ require "spec_helper"
 
 describe Weltel::TasksController do
 	#
-	it "creates records" do
+	it "creates checkups" do
 		create(:message_template, :name => :checkup)
 		create(:patient)
 
@@ -15,8 +15,8 @@ describe Weltel::TasksController do
 	end
 
 	#
-	it "updates records" do
-		create(:user, :system => true, :email_address => 'system@verticallabs.ca')
+	it "updates checkups" do
+		create(:system)
 		create(:checkup)
 
 		get :update_checkups

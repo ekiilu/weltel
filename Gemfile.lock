@@ -5,6 +5,18 @@ GIT
     delayed_mail (0.0.2)
 
 GIT
+  remote: https://github.com/verticallabs/mambo-adapters.git
+  revision: cc4eff387f6e60bc02211593acf47fc0142cdac7
+  branch: ar
+  specs:
+    mambo-adapters (0.0.14)
+      mambo-sms
+      mambo-support
+      rails
+      recursive-open-struct
+      twilio-rb
+
+GIT
   remote: https://github.com/verticallabs/mambo-authentication.git
   revision: 5ce6359ea3ef1507f198e0d3d95e8b5b60aef1a3
   branch: ar
@@ -48,16 +60,6 @@ GIT
     mambo-support (0.0.10)
       mmcopyrights
       rails
-
-PATH
-  remote: /home/cdion/mambo/gems/adapters
-  specs:
-    mambo-adapters (0.0.14)
-      mambo-sms
-      mambo-support
-      rails
-      recursive-open-struct
-      twilio-rb
 
 GEM
   remote: http://rubygems.org/
