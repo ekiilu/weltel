@@ -1,4 +1,4 @@
-#-  -*- encoding : utf-8 -*- 
+#-  -*- encoding : utf-8 -*-
 #- This Source Code Form is subject to the terms of the Mozilla Public
 #- License, v. 2.0. If a copy of the MPL was not distributed with this
 #- file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -37,8 +37,8 @@ task deployment do
   #null task, just for syntax
 end
 
-# set defaults 
-set :shared_children, %w(system log pids sockets config)
+# set defaults
+set :shared_children, %w(system log pids sockets config tmp)
 set :config_files, %w(app_config.yml database.yml)
 set :use_sudo, false
 set :using_rvm, false
@@ -115,7 +115,7 @@ namespace :deploy do
       full_path = File.join(deployment_config_path, filename)
       raise "Missing config file: #{full_path}" unless File.exist?(full_path)
       top.upload(full_path, "#{shared_path}/config/#{filename}")
-    end 
+    end
   end
 
   desc "Symlinks config"
@@ -171,7 +171,7 @@ namespace :deploy do
 
       require 'sass'
       sass_input = File.read("./app/assets/stylesheets/application.css.sass")
-      sass_output = Sass::Engine.new(sass_input).render 
+      sass_output = Sass::Engine.new(sass_input).render
 
       require 'haml'
       haml_input = File.read("./app/views/layouts/maintenance.html.haml")
