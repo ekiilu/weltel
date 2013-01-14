@@ -21,20 +21,20 @@ module Weltel
 
 		# create checkups
 		def create_checkups(date)
+			archive_checkups(date)
+
+			body = Sms::MessageTemplate.get_by_name(:checkup).body
+
+			patients = Weltel::Patient
+				.active
+				.with_active_subscriber
+				.without_current_checkup
+
+			patients += Weltel::Patient
+				.active
+				.with_current_checkup_not_created_on(date)
+
 			ActiveRecord::Base.transaction do
-				archive_checkups(date)
-
-				body = Sms::MessageTemplate.get_by_name(:checkup).body
-
-				patients = Weltel::Patient
-					.active
-					.with_active_subscriber
-					.without_current_checkup
-
-				patients += Weltel::Patient
-					.active
-					.with_current_checkup_not_created_on(date)
-
 				patients.each do |patient|
 					checkup = patient.create_checkup(date)
 					message = checkup.send_message(body)
