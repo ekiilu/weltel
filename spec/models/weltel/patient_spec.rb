@@ -98,6 +98,12 @@ describe Weltel::Patient do
 				patients.count.should == 3
 				patients.should == [a, b, c]
 			end
+
+			it "creates csv data" do
+				3.times { create(:patient) }
+				subject.to_csv.should be_a(String)
+				(subject.to_csv.split("\n").size-1).should == subject.all.size
+			end
 		end
 	end
 end

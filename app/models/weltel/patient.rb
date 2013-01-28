@@ -4,161 +4,171 @@
 #- file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 module Weltel
-	class Patient < ActiveRecord::Base
-		#
-		def self.table_name
-			"weltel_patients"
-		end
+  class Patient < ActiveRecord::Base
+    #
+    def self.table_name
+      "weltel_patients"
+    end
 
     attr_accessible(
-    	:subscriber_attributes,
-    	:clinic_id,
-    	:active,
-    	:user_name,
-    	:study_number,
-    	:contact_phone_number)
+      :subscriber_attributes,
+      :clinic_id,
+      :active,
+      :user_name,
+      :study_number,
+      :contact_phone_number)
 
-		# validations
+    # validations
     validates(
-    	:user_name,
-    	:presence => true,
-    	:length => {:in => 2..32},
-    	:format => /^[\w]*$/)
+      :user_name,
+      :presence => true,
+      :length => {:in => 2..32},
+      :format => /^[\w]*$/)
     validates(:study_number,
-    	:length => {:maximum => 32},
-    	:format => /^[\w]*$/)
+      :length => {:maximum => 32},
+      :format => /^[\w]*$/)
     validates(:contact_phone_number,
-    	:length => {:in => 10..12},
-    	:format => /^[\d]*$/,
-    	:allow_blank => true)
+      :length => {:in => 10..12},
+      :format => /^[\d]*$/,
+      :allow_blank => true)
 
-		# associations
-		# subscriber
-		has_one(:subscriber,
-			:class_name => "Sms::Subscriber",
-			:dependent => :destroy)
+    # associations
+    # subscriber
+    has_one(:subscriber,
+      :class_name => "Sms::Subscriber",
+      :dependent => :destroy)
 
-		# clinic
-		belongs_to(:clinic,
-			:class_name => "Weltel::Clinic",
-			:inverse_of => :patients)
+    # clinic
+    belongs_to(:clinic,
+      :class_name => "Weltel::Clinic",
+      :inverse_of => :patients)
 
-		# all checkups
-		has_many(:checkups,
-			:class_name => "Weltel::Checkup",
-			:dependent => :destroy,
-			:inverse_of => :patient) do
+    # all checkups
+    has_many(:checkups,
+      :class_name => "Weltel::Checkup",
+      :dependent => :destroy,
+      :inverse_of => :patient) do
 
-			# current checkups
-			def current
-				where{current == true}.first
-			end
-		end
+      # current checkups
+      def current
+        where{current == true}.first
+      end
+    end
 
-		# current checkup
-		has_one(:current_checkup,
-			:class_name => "Weltel::Checkup",
-			:inverse_of => :patient,
-			:conditions => {:current => true})
+    # current checkup
+    has_one(:current_checkup,
+      :class_name => "Weltel::Checkup",
+      :inverse_of => :patient,
+      :conditions => {:current => true})
 
-		# all results
-		has_many(:results,
-			:class_name => "Weltel::Result",
-			:through => :checkups) do
+    # all results
+    has_many(:results,
+      :class_name => "Weltel::Result",
+      :through => :checkups) do
 
-			# initial result
-			def initial
-				where{initial == true}.first
-			end
+      # initial result
+      def initial
+        where{initial == true}.first
+      end
 
-			# current result
-			def current
-				where{current == true}.first
-			end
-		end
+      # current result
+      def current
+        where{current == true}.first
+      end
+    end
 
-		# initial result
-		has_one(:initial_result,
-			:class_name => "Weltel::Result",
-			:through => :current_checkup,
-			:source => :initial_result)
+    # initial result
+    has_one(:initial_result,
+      :class_name => "Weltel::Result",
+      :through => :current_checkup,
+      :source => :initial_result)
 
-		# current result
-		has_one(:current_result,
-			:class_name => "Weltel::Result",
-			:through => :current_checkup,
-			:source => :current_result)
+    # current result
+    has_one(:current_result,
+      :class_name => "Weltel::Result",
+      :through => :current_checkup,
+      :source => :current_result)
 
-		# nested
-		accepts_nested_attributes_for(:subscriber)
+    # nested
+    accepts_nested_attributes_for(:subscriber)
 
-		# instance methods
-		# create a checkup for date
-		def create_checkup(date)
-			transaction do
-				c = current_checkup
-				if c
-					c.current = false
-					c.save!
-				end
-				checkups.create!(
-					:current => true,
-					:created_on => date
-				)
-			end
-		end
+    # instance methods
+    # create a checkup for date
+    def create_checkup(date)
+      transaction do
+        c = current_checkup
+        if c
+          c.current = false
+          c.save!
+        end
+        checkups.create!(
+          :current => true,
+          :created_on => date
+        )
+      end
+    end
 
-		# class methods
-		#
-		# active patients
-		def self.active
-			where{active == true}
-		end
+    # class methods
+    #
+    # active patients
+    def self.active
+      where{active == true}
+    end
 
-		# search patients
-		def self.search(search)
-			return where{true} if search.blank?
-			search = "%#{search}%"
-			where{(user_name =~ search) | (study_number =~ search)}
-		end
+    # search patients
+    def self.search(search)
+      return where{true} if search.blank?
+      search = "%#{search}%"
+      where{(user_name =~ search) | (study_number =~ search)}
+    end
 
-		#
-		def self.with_active_subscriber
-			joins{subscriber}
-			.where{subscriber.active == true}
-		end
+    #
+    def self.with_active_subscriber
+      joins{subscriber}
+      .where{subscriber.active == true}
+    end
 
     #
     def self.with_current_checkup
       joins{current_checkup}
     end
 
-		#
+    #
     def self.with_current_checkup_not_created_on(date)
-    	joins{current_checkup}
-    	.where{current_checkup.created_on != date}
+      joins{current_checkup}
+      .where{current_checkup.created_on != date}
     end
 
-		#
+    #
     def self.without_current_checkup
-			joins{current_checkup.outer}
-			.where{current_checkup.id == nil}
+      joins{current_checkup.outer}
+      .where{current_checkup.id == nil}
     end
 
-		#
+    #
     def self.filter_by_current_checkup_status(status)
-    	where{current_checkup.status == status.to_s}
+      where{current_checkup.status == status.to_s}
     end
 
-		#
+    #
     def self.filter_by_initial_result_value(value)
-			where{initial_result.value == value.to_s}
+      where{initial_result.value == value.to_s}
     end
 
-		#
+    #
     def self.filter_by_current_result_value(value)
-    	return where{current_result.id == nil} if value.to_sym == :pending
-			where{current_result.value == value.to_s}
+      return where{current_result.id == nil} if value.to_sym == :pending
+      where{current_result.value == value.to_s}
     end
-	end
+
+    def self.to_csv
+      CSV.generate do |csv|
+        csv << column_names
+        all.each do |patient|
+          csv << patient.attributes.values_at(*column_names)
+        end
+      end
+    end
+
+  end
 end
