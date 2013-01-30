@@ -33,7 +33,7 @@ module Weltel
 
 			respond_to do |format|
 				format.html { @patients }
-      	format.csv { send_data @patients.to_csv }
+      	format.csv { send_data Weltel::Patient.to_csv }
 			end
 			# respond_with(@patients)
 		end

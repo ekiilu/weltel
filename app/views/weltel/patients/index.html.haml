@@ -4,6 +4,7 @@
 
 - content_for :actions do
   = link_to(t(".new_link"), new_weltel_patient_path, :id => "add_patient", :class => "button")
+  = link_to("Download CSV", {:action => "index", :format => "csv"},:id => "download_csv", :class => "button" )
 
   = form_tag(weltel_patients_path, {:id => "search_patients", :method => :get}) do
     = hidden_field_tag(:page, 1)
