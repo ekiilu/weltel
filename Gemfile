@@ -71,7 +71,8 @@ gem "mambo-adapters", :git => "#{DEV_GIT}/mambo-adapters.git", :branch => 'ar' #
 #gem "mambo-adapters", ">= 0.0.13" #MAMBO_PUBLIC
 
 #gem "mambo-sms", :path => "#{HOME_PATH}/sms" #MAMBO_LOCAL
-gem "mambo-sms", :git => "#{DEV_GIT}/mambo-sms.git", :branch => 'ar' #MAMBO_DEV
+# gem "mambo-sms", :git => "#{DEV_GIT}/mambo-sms.git", :branch => 'ar' #MAMBO_DEV
+gem "mambo-sms", :git => "https://github.com/garbles/mambo-sms.git", :branch => 'export-to-csv' #TESTING FOR WORKING CSV
 #gem "mambo-sms", ">= 0.0.15" #MAMBO_PUBLIC
 
 #gem "mambo-messaging", :path => "#{HOME_PATH}/messaging" #MAMBO_LOCAL
