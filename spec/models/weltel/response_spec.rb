@@ -51,5 +51,11 @@ describe Weltel::Response do
 			responses.count.should == 3
 			responses[0].should == expected
 		end
+
+		it "creates csv data" do
+			3.times { create(:response) }
+			Weltel::Response.to_csv.should be_a(String)
+			(Weltel::Response.to_csv.split("\n").size-1).should == Weltel::Response.all.size
+		end
 	end
 end

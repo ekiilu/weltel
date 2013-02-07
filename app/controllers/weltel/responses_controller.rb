@@ -23,7 +23,12 @@ module Weltel
 				.filtered_by(@filter_attribute, @filter_value)
 				.sorted_by(@sort_attribute, @sort_order)
 				.paginate(:page => @page, :per_page => @per_page)
-			respond_with(@responses)
+
+			respond_to do |format|
+				format.html { @responses }
+      	format.csv { send_data Weltel::Response.to_csv }
+			end
+			# respond_with(@responses)
 		end
 
 		#

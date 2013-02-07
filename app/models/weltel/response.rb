@@ -36,5 +36,15 @@ module Weltel
 		def self.get_by_name(value)
 			where{name == value.to_s}.first
 		end
+
+    def self.to_csv
+      CSV.generate do |csv|
+        csv << column_names
+        all.each do |response|
+          csv << response.attributes.values_at(*column_names)
+        end
+      end
+    end
+
 	end
 end

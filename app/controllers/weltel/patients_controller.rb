@@ -31,7 +31,11 @@ module Weltel
 				.sorted_by(@sort_attribute, @sort_order)
 				.paginate(:page => @page, :per_page => @per_page)
 
-			respond_with(@patients)
+			respond_to do |format|
+				format.html { @patients }
+      	format.csv { send_data Weltel::Patient.to_csv }
+			end
+			# respond_with(@patients)
 		end
 
 		# new patient form
