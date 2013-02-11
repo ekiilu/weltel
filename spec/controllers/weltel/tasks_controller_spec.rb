@@ -12,6 +12,7 @@ describe Weltel::TasksController do
 		create(:patient)
 
 		get :create_checkups
+		Delayed::Job.count.should == Weltel::Checkup.count
 	end
 
 	#

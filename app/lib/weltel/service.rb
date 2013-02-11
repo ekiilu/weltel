@@ -34,11 +34,12 @@ module Weltel
 				.active
 				.with_current_checkup_not_created_on(date)
 
-			ActiveRecord::Base.transaction do
-				patients.each do |patient|
+			patients.each do |patient|
+				ActiveRecord::Base.transaction do
 					checkup = patient.create_checkup(date)
 					message = checkup.send_message(body)
-					sender.send(message)
+					# sender.send(message)
+					sender.delay(:queue => 'checkups').send(message)
 				end
 			end
 		end
