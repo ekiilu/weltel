@@ -38,8 +38,7 @@ module Weltel
 				ActiveRecord::Base.transaction do
 					checkup = patient.create_checkup(date)
 					message = checkup.send_message(body)
-					# sender.send(message)
-					sender.delay(:queue => 'checkups').send(message)
+					sender.send(message)
 				end
 			end
 		end

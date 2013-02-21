@@ -6,20 +6,52 @@
 require "spec_helper"
 
 describe Weltel::TasksController do
-	#
-	it "creates checkups" do
-		create(:message_template, :name => :checkup)
-		create(:patient)
 
-		get :create_checkups
-		Delayed::Job.count.should == Weltel::Checkup.count
+	let!(:message_template) { create(:message_template, :name => :checkup) }
+	let!(:patient) { create(:patient) }
+	let!(:system) { create(:system) }
+	let!(:checkup) { create(:checkup) }
+
+	#
+	describe '#create_checkups' do
+		context 'working' do
+			it "creates checkups" do
+				get :create_checkups
+
+				response.body.should == "OK"
+				response.status.should == 200
+			end
+		end
+
+		context 'failing' do
+			it 'returns 404' do
+				Weltel::Service.any_instance.stub(:create_checkups).and_raise(Exception.new)
+
+				get :create_checkups
+
+				response.status.should == 404
+			end
+		end
 	end
 
-	#
-	it "updates checkups" do
-		create(:system)
-		create(:checkup)
+	describe '#update_checkups' do
+		context 'working' do
+			it "updates checkups" do
+				get :update_checkups
 
-		get :update_checkups
+				response.body.should == "OK"
+				response.status.should == 200
+			end
+		end
+
+		context 'failing' do
+			it 'returns 404' do
+				Weltel::Factory.service.stub(:update_checkups).and_raise(Exception.new)
+
+				get :update_checkups
+
+				response.status.should_not == 404
+			end
+		end
 	end
 end
