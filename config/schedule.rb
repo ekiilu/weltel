@@ -36,3 +36,7 @@ end
 every(:wednesday, :at => '12:00') do
   command("curl #{AppConfig.deployment.internal_host}/weltel/task/update_checkups")
 end
+
+# every(24.hours) do
+#   command.delay("backup perform --trigger sql_backup --root-path data")
+# end
