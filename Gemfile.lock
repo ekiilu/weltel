@@ -1,18 +1,4 @@
 GIT
-  remote: https://github.com/garbles/mambo-sms.git
-  revision: f0ec7352cd987d12fef9b9e4520c37ddcb8760ac
-  branch: export-to-csv
-  specs:
-    mambo-sms (0.0.20)
-      enumerated_attribute
-      haml-rails
-      mambo-authentication
-      mambo-support
-      rails
-      squeel
-      will_paginate
-
-GIT
   remote: https://github.com/verticallabs/delayed_mail.git
   revision: 720df3bd295fcd7e413225174101194e79e5c764
   specs:
@@ -51,6 +37,20 @@ GIT
       mambo-sms
       mambo-support
       rails
+
+GIT
+  remote: https://github.com/verticallabs/mambo-sms.git
+  revision: cf389016f30bd91f32cf0e75ecea09ec89d2fc71
+  branch: ar
+  specs:
+    mambo-sms (0.0.20)
+      enumerated_attribute
+      haml-rails
+      mambo-authentication
+      mambo-support
+      rails
+      squeel
+      will_paginate
 
 GIT
   remote: https://github.com/verticallabs/mambo-support.git

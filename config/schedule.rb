@@ -30,9 +30,9 @@ every(5.minutes) do
 end
 
 every(:monday, :at => '12:00') do
-  command("curl #{AppConfig.deployment.internal_host}/weltel/task/create_checkups")
+  command.delay("curl #{AppConfig.deployment.internal_host}/weltel/task/create_checkups")
 end
 
 every(:wednesday, :at => '12:00') do
-  command("curl #{AppConfig.deployment.internal_host}/weltel/task/update_checkups")
+  command.delay("curl #{AppConfig.deployment.internal_host}/weltel/task/update_checkups")
 end

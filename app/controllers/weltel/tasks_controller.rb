@@ -11,14 +11,20 @@ module Weltel
 		def create_checkups
 			# send reminders
 			date = Date.today.monday
-			Weltel::Factory.service.create_checkups(date)
-			render(:text => "OK")
+			if Weltel::Factory.service.create_checkups(date)
+				render(:text => "OK")
+			else
+				render(:text => "FAIL", :status => 404)
+			end
 		end
 
 		#
 		def update_checkups
-			Weltel::Factory.service.update_checkups
-			render(:text => "OK")
+			if Weltel::Factory.service.update_checkups
+				render(:text => "OK")
+			else
+				render(:text => "FAIL", :status => 404)
+			end
 		end
 
 		#
