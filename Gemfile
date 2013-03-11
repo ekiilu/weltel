@@ -47,6 +47,10 @@ gem "god"
 gem "tlsmail", :require => false
 gem "certified"
 
+# sql backup
+gem "backup"
+gem "dropbox-sdk", '~> 1.2.0'
+
 # application
 gem "enumerated_attribute"
 gem "recursive-open-struct"
