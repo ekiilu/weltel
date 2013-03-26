@@ -1,13 +1,12 @@
 GIT
-  remote: https://github.com/verticallabs/delayed_mail.git
+  remote: https://github.com/weltel/delayed_mail.git
   revision: 720df3bd295fcd7e413225174101194e79e5c764
   specs:
     delayed_mail (0.0.2)
 
 GIT
-  remote: https://github.com/verticallabs/mambo-adapters.git
+  remote: https://github.com/weltel/mambo-adapters.git
   revision: cc4eff387f6e60bc02211593acf47fc0142cdac7
-  branch: ar
   specs:
     mambo-adapters (0.0.14)
       mambo-sms
@@ -17,9 +16,8 @@ GIT
       twilio-rb
 
 GIT
-  remote: https://github.com/verticallabs/mambo-authentication.git
+  remote: https://github.com/weltel/mambo-authentication.git
   revision: 5ce6359ea3ef1507f198e0d3d95e8b5b60aef1a3
-  branch: ar
   specs:
     mambo-authentication (0.0.12)
       haml-rails
@@ -29,9 +27,8 @@ GIT
       will_paginate
 
 GIT
-  remote: https://github.com/verticallabs/mambo-messaging.git
+  remote: https://github.com/weltel/mambo-messaging.git
   revision: 1218241abba5c051087502dca33521e7f7378e41
-  branch: ar
   specs:
     mambo-messaging (0.0.8)
       mambo-sms
@@ -39,9 +36,8 @@ GIT
       rails
 
 GIT
-  remote: https://github.com/verticallabs/mambo-sms.git
-  revision: cf389016f30bd91f32cf0e75ecea09ec89d2fc71
-  branch: ar
+  remote: https://github.com/weltel/mambo-sms.git
+  revision: a3ddd34b6f624cbec5352423f1d6cd7d91d58185
   specs:
     mambo-sms (0.0.20)
       enumerated_attribute
@@ -53,9 +49,8 @@ GIT
       will_paginate
 
 GIT
-  remote: https://github.com/verticallabs/mambo-support.git
+  remote: https://github.com/weltel/mambo-support.git
   revision: de013039458176d7068f0ee5bda29255713aff5d
-  branch: ar
   specs:
     mambo-support (0.0.10)
       mmcopyrights
@@ -93,6 +88,9 @@ GEM
       i18n (~> 0.6)
       multi_json (~> 1.0)
     arel (3.0.2)
+    backup (3.1.3)
+      open4 (~> 1.3.0)
+      thor (>= 0.15.4, < 2)
     bourne (1.1.2)
       mocha (= 0.10.5)
     builder (3.0.4)
@@ -128,6 +126,8 @@ GEM
       activerecord (>= 2.1.0, < 4)
       delayed_job (~> 3.0)
     diff-lcs (1.1.3)
+    dropbox-sdk (1.2)
+      json
     enumerated_attribute (0.2.16)
       meta_programming (>= 0.2.1)
     erubis (2.7.0)
@@ -167,8 +167,8 @@ GEM
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.7.6)
-    jwt (0.1.5)
-      multi_json (>= 1.0)
+    jwt (0.1.8)
+      multi_json (>= 1.5)
     kgio (2.8.0)
     libv8 (3.3.10.4)
     magic_encoding (0.0.2)
@@ -183,7 +183,7 @@ GEM
     mocha (0.10.5)
       metaclass (~> 0.0.1)
     multi_json (1.5.0)
-    multi_xml (0.5.2)
+    multi_xml (0.5.3)
     multipart-post (1.1.5)
     mysql2 (0.3.11)
     net-scp (1.0.4)
@@ -193,6 +193,7 @@ GEM
     net-ssh (2.6.3)
     net-ssh-gateway (1.1.0)
       net-ssh (>= 1.99.1)
+    open4 (1.3.0)
     polyamorous (0.5.0)
       activerecord (~> 3.0)
     polyglot (0.3.3)
@@ -273,7 +274,7 @@ GEM
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
-    twilio-rb (2.2.1)
+    twilio-rb (2.2.2)
       activesupport (>= 3.0.0)
       builder (>= 2.1.2)
       crack (~> 0.3.2)
@@ -302,6 +303,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_link_to
+  backup
   capistrano (>= 2.9.0)
   capistrano_colors
   certified
@@ -311,6 +313,7 @@ DEPENDENCIES
   delayed_job
   delayed_job_active_record
   delayed_mail!
+  dropbox-sdk (~> 1.2.0)
   enumerated_attribute
   exception_notification
   execjs
